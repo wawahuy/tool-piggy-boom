@@ -16,7 +16,7 @@ const path = require('path');
 const file = path.join(__dirname, '../../user.json');
 let datas = [];
 if (fs.existsSync(file)) {
-  datas = JSON.stringify(fs.readFileSync(file));
+  datas = JSON.parse(fs.readFileSync(file));
 }
 
 
@@ -31,7 +31,7 @@ function addUser(req, res) {
     uid:  oRes._d.uid,
     data: oReq
   }
-  datas = datas.filter(o => o.id != data.uid);
+  datas = datas.filter(o => o.uid != data.uid);
   datas.push(data);
   fs.writeFileSync(file, JSON.stringify(datas));
 }
