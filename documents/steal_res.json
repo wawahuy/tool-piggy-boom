@@ -1,0 +1,63 @@
+{
+  "_t": 1615026079.648594,
+  "_s": [],
+  "_d": {
+    "ret": 0,
+    "data": {
+      "siteuid": 0,
+      "count": 0,
+      "maxSteal": 1,
+      "king": false,
+      "money": 2672398,
+      "isChanged": 0,
+      "nextTarget": {
+        "isvip1": 2,
+        "isvvip": 0,
+        "name": "Ivy Eng",
+        "cur_pic": 0,
+        "cur_flag": 19,
+        "fbpic": "https:\/\/graph.facebook.com\/304762689864269\/picture?type=normal&height=100&width=100&access_token=1707883516108963|f54ad9faada2a45b4bfe2730353e0842",
+        "picFrameId": 0,
+        "money": "480600"
+      },
+      "stealInfo": [
+        {
+          "king": false,
+          "name": "\u85cd\u5c0f\u9cf3",
+          "cur_pic": "0",
+          "cur_flag": "9",
+          "fbpic": "https:\/\/graph.facebook.com\/177170647418997\/picture?type=normal&height=100&width=100&access_token=1707883516108963|f54ad9faada2a45b4bfe2730353e0842",
+          "picFrameId": 0,
+          "money": 300500,
+          "isAgree": 1,
+          "isInstallKakao": 1,
+          "isFriend": false
+        },
+        {
+          "king": true,
+          "name": "Ivy Eng",
+          "cur_pic": 0,
+          "cur_flag": 19,
+          "fbpic": "https:\/\/graph.facebook.com\/304762689864269\/picture?type=normal&height=100&width=100&access_token=1707883516108963|f54ad9faada2a45b4bfe2730353e0842",
+          "picFrameId": 0,
+          "money": 480600,
+          "isAgree": 1,
+          "isInstallKakao": 1
+        },
+        {
+          "king": false,
+          "name": "\u5289\u7f8e\u795d",
+          "cur_pic": "0",
+          "cur_flag": "8",
+          "fbpic": "https:\/\/graph.facebook.com\/244857609218821\/picture?type=normal&height=100&width=100&access_token=1707883516108963|f54ad9faada2a45b4bfe2730353e0842",
+          "picFrameId": 4,
+          "money": 293400,
+          "isAgree": 1,
+          "isInstallKakao": 1
+        }
+      ],
+      "isShare": 0
+    },
+    "money": 2672398
+  }
+}

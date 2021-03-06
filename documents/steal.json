@@ -1,0 +1,121 @@
+{
+  "stealTarget": [
+    {
+      "planet": {
+        "cur_planet": 3,
+        "building": [
+          {
+            "lv": 0,
+            "st": 2,
+            "mi": 0
+          },
+          {
+            "lv": 0,
+            "st": 2,
+            "mi": 0
+          },
+          {
+            "lv": 0,
+            "st": 2,
+            "mi": 0
+          },
+          {
+            "lv": 1,
+            "st": 1,
+            "mi": 0
+          },
+          {
+            "lv": 3,
+            "st": 0,
+            "mi": 0
+          }
+        ],
+        "star": 54,
+        "shield": "1",
+        "mini_s": 6,
+        "mini_c": 0,
+        "mini_m": 3,
+        "mini_m_d": 5,
+        "mini_d_s": 0
+      }
+    },
+    {
+      "planet": {
+        "cur_planet": 54,
+        "building": [
+          {
+            "lv": 5,
+            "st": 0,
+            "mi": 0
+          },
+          {
+            "lv": 5,
+            "st": 0,
+            "mi": 0
+          },
+          {
+            "lv": 5,
+            "st": 0,
+            "mi": 0
+          },
+          {
+            "lv": 1,
+            "st": 0,
+            "mi": 0
+          },
+          {
+            "lv": 0,
+            "st": 0,
+            "mi": 0
+          }
+        ],
+        "star": 1794,
+        "shield": "3",
+        "mini_s": 13,
+        "mini_c": 0,
+        "mini_m": 3,
+        "mini_m_d": 5,
+        "mini_d_s": 0
+      }
+    },
+    {
+      "planet": {
+        "cur_planet": 215,
+        "building": [
+          {
+            "lv": 2,
+            "st": 0,
+            "mi": 0
+          },
+          {
+            "lv": 4,
+            "st": 0,
+            "mi": 1
+          },
+          {
+            "lv": 2,
+            "st": 0,
+            "mi": 0
+          },
+          {
+            "lv": 5,
+            "st": 0,
+            "mi": 1
+          },
+          {
+            "lv": 5,
+            "st": 0,
+            "mi": 1
+          }
+        ],
+        "star": 6146,
+        "shield": "2",
+        "mini_s": 34,
+        "mini_c": 3,
+        "mini_m": 3,
+        "mini_m_d": 5,
+        "mini_d_s": 0
+      }
+    }
+  ]
+}

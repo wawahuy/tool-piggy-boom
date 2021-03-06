@@ -1,9 +1,17 @@
+import moment from "moment";
+import fs from "fs";
+import path from "path";
+import * as _ from "lodash";
+import { AuthRequest, ELoginType, EGameStatus } from "./models/game_net/auth";
+import AuthService from "./game_services/auth_service";
+import { GameServiceConfig } from "./models/game_services";
 import GameService from "./game_services/game_services";
 import BCLogService from "./game_services/bclog_service";
-import moment from "moment";
-import { AuthRequest, ELoginType, GameServiceConfig } from "./models/game_services";
-import AuthService from "./game_services/auth_service";
 import ZhuanpanService from "./game_services/zhuanpan_services";
+import { EZhuanpanPlayRewardType } from "./models/game_net/zhuanpan";
+import WeaponService from "./game_services/weapon_service";
+import { EFireAttackType, FireRequest } from "./models/game_net/weapon";
+import { Firetarget } from "./models/game/fire";
 
 const datalogin: AuthRequest = {
   loginType: ELoginType.Login,
@@ -14,13 +22,47 @@ const datalogin: AuthRequest = {
   deviceModel: "samsung_SM-G975N|25|7.1.2",
 };
 
+
+async function attack(weaponService: WeaponService, fireTarget: Firetarget) {
+  console.log('attack');
+  const building = fireTarget.planet.building;
+  const attackID = (() => {
+    const lvs = _.map(building, 'lv');
+    for (const [i, value] of lvs.entries()) {
+      if (value) {
+        return i + 1;
+      }
+    }
+    return 0;
+  })();
+  if (!attackID) {
+    console.log('no attack ids!');
+    return false;
+  }
+  const d: FireRequest = {
+    id: attackID,
+    attackType: EFireAttackType.default,
+    puid: fireTarget.uid
+  }
+  const req = await weaponService.callFire(d);
+  console.log('attach reward', req?.reward);
+  return true;
+}
+
+async function steal(weaponService: WeaponService) {
+  console.log('steal');
+  const t = await weaponService.callSteal(0); 
+  console.log('steal money', t?.money);
+  console.log('next money', t?.nextTarget?.money);
+}
+
 (async () => {
   const authService = new AuthService();
   const dataLogin = await authService.login(datalogin);
   if (!dataLogin?.deviceToken || !dataLogin.mtkey || !dataLogin.skey || !dataLogin.uid) {
     return;
   }
-  
+
   const dataGame: GameServiceConfig = {
     deviceToken: dataLogin.deviceToken,
     mtkey: dataLogin.mtkey,
@@ -30,6 +72,17 @@ const datalogin: AuthRequest = {
   const gameService = new GameService(dataGame);
   const bcLogService = new BCLogService();
   const zhuanpanService = new ZhuanpanService(gameService);
+  const weaponService = new WeaponService(gameService);
+
+  if (dataLogin.status === EGameStatus.fire) {
+    console.log('re attack');
+    await attack(weaponService, dataLogin.fireTarget);
+  }
+
+  if (dataLogin.status === EGameStatus.steal) {
+    console.log('re steal');
+    await steal(weaponService);
+  }
 
   let tili = 1;
   while(tili) {
@@ -42,12 +95,22 @@ const datalogin: AuthRequest = {
 
     let type = data.rewardType;
     let time = data.time;
-    console.log(data);
+    console.log(type, data.time, data.tili);
 
     await bcLogService.callUserAction(dataGame.uid, tili);
-    if (['steal', 'fire'].includes(type)) {
-      break;
+
+    switch (type) {
+      case EZhuanpanPlayRewardType.fire:
+        await new Promise(r => setTimeout(r, 1000));
+        await attack(weaponService, data.fireTarget);
+        break;
+      
+      case EZhuanpanPlayRewardType.steal:
+        await new Promise(r => setTimeout(r, 1000));
+        await steal(weaponService);
+        break;
     }
+
     await new Promise(r => setTimeout(r, time + 3000));
   }
 })();

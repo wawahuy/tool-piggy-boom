@@ -59,7 +59,7 @@ class GameService {
     let dataObject: GameServiceResponse;
     try {
       dataObject = JSON.parse(data);
-      if (dataObject && dataObject?._d?.ret === 0) {
+      if (dataObject) {
         return dataObject._d;
       }
     } catch (e) {

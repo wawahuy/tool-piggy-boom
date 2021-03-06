@@ -1,4 +1,4 @@
-import { ZhuanpanPlayResponse } from "models/game_services";
+import { ZhuanpanPlayResponse } from "../models/game_net/zhuanpan";
 import GameService from "./game_services";
 
 export default class ZhuanpanService {

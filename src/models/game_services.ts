@@ -12,32 +12,3 @@ export interface GameServiceResponse {
     ret?: number;
   }
 }
-
-export enum ELoginType {
-  Login = 1
-}
-
-export interface AuthRequest {
-  loginType: ELoginType,
-  access_token: string,
-  deviceToken: string,
-  mac: string,
-  deviceModel: string,
-}
-
-export interface AuthResponse {
-  deviceToken: string,
-  uid: string,
-  name: string,
-  money: string,
-  maxTili: number,
-  tili: string,
-  mtkey: string,
-  skey: string,
-}
-
-export interface ZhuanpanPlayResponse {
-  tili: string;
-  rewardType: string;
-  time: number;
-}

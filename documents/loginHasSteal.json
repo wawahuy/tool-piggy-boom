@@ -1,0 +1,629 @@
+{
+  "_t": 1615028123.267067,
+  "_s": [],
+  "_d": {
+    "ret": 0,
+    "serverTime": 1615028122,
+    "wxConfig": {
+      "wx_params": "",
+      "wx_url": "",
+      "wx_appid": ""
+    },
+    "deviceToken": "bf8cNVkDLMcpH7T4iruwUg==",
+    "uid": "206383650",
+    "name": "Huy Nguyen",
+    "fbpic": "https://graph.facebook.com/413199769800716/picture?type=normal&height=100&width=100&access_token=1707883516108963|f54ad9faada2a45b4bfe2730353e0842",
+    "cur_pic": "0",
+    "cur_flag": "1",
+    "isInvite": 0,
+    "picFrameId": 4,
+    "picFrameTime": 80119048,
+    "isAgree": 1,
+    "isInstallKakao": 1,
+    "registerDay": 62,
+    "uploadErr": {
+      "uploadcgi": "https://planetpigth.aladinfun.com/planetpigth/m/",
+      "isUpload": 0
+    },
+    "beenWanted": 1,
+    "status": "steal",
+    "steal": "1",
+    "maxSteal": "1",
+    "guide": 0,
+    "guideV2": 0,
+    "bet": {
+      "stamina": [
+        {
+          "minStamina": 100,
+          "multiple": 8,
+          "maxStamina": 600
+        },
+        {
+          "minStamina": 200,
+          "multiple": 10,
+          "maxStamina": 1000
+        },
+        {
+          "minStamina": 300,
+          "multiple": 15,
+          "maxStamina": 1500
+        },
+        {
+          "minStamina": 400,
+          "multiple": 20,
+          "maxStamina": 2000
+        },
+        {
+          "minStamina": 600,
+          "multiple": 30,
+          "maxStamina": 2500
+        },
+        {
+          "minStamina": 800,
+          "multiple": 40,
+          "maxStamina": 3000
+        },
+        {
+          "minStamina": 1000,
+          "multiple": 50,
+          "maxStamina": 3500
+        },
+        {
+          "minStamina": 1500,
+          "multiple": 100,
+          "maxStamina": 4000
+        }
+      ],
+      "weight": {
+        "8": {
+          "shieldWeight": 100,
+          "stealWeight": 30,
+          "fireWeight": 100
+        },
+        "10": {
+          "shieldWeight": 100,
+          "stealWeight": 20,
+          "fireWeight": 100
+        },
+        "15": {
+          "shieldWeight": 100,
+          "stealWeight": 15,
+          "fireWeight": 100
+        },
+        "20": {
+          "shieldWeight": 100,
+          "stealWeight": 15,
+          "fireWeight": 100
+        },
+        "30": {
+          "shieldWeight": 100,
+          "stealWeight": 15,
+          "fireWeight": 100
+        },
+        "40": {
+          "shieldWeight": 100,
+          "stealWeight": 15,
+          "fireWeight": 100
+        },
+        "50": {
+          "shieldWeight": 100,
+          "stealWeight": 10,
+          "fireWeight": 100
+        },
+        "100": {
+          "shieldWeight": 100,
+          "stealWeight": 10,
+          "fireWeight": 100
+        }
+      },
+      "planetLimit": [],
+      "multiple": [
+        {
+          "minStamina": 0,
+          "minPlanet": 2,
+          "multiple": 2,
+          "maxStamina": 9999999
+        },
+        {
+          "minStamina": 0,
+          "minPlanet": 2,
+          "multiple": 3,
+          "maxStamina": 9999999
+        },
+        {
+          "minStamina": 50,
+          "minPlanet": 2,
+          "multiple": 5,
+          "maxStamina": 9999999
+        },
+        {
+          "minStamina": 200,
+          "minPlanet": 2,
+          "multiple": 10,
+          "maxStamina": 9999999
+        },
+        {
+          "minStamina": 300,
+          "minPlanet": 2,
+          "multiple": 20,
+          "maxStamina": 9999999
+        },
+        {
+          "minStamina": 500,
+          "minPlanet": 2,
+          "multiple": 30,
+          "maxStamina": 9999999
+        },
+        {
+          "minStamina": 800,
+          "minPlanet": 7,
+          "multiple": 50,
+          "maxStamina": 9999999
+        },
+        {
+          "minStamina": 1500,
+          "minPlanet": 7,
+          "multiple": 100,
+          "maxStamina": 9999999
+        }
+      ]
+    },
+    "money": "3560498",
+    "zhuanpan": {
+      "info": [
+        {
+          "id": 1,
+          "type": "starMutiple",
+          "value": "400"
+        },
+        {
+          "id": 2,
+          "type": "steal",
+          "value": "1"
+        },
+        {
+          "id": 3,
+          "type": "money",
+          "value": "34000"
+        },
+        {
+          "id": 4,
+          "type": "tili",
+          "value": "10"
+        },
+        {
+          "id": 5,
+          "type": "money",
+          "value": "14000"
+        },
+        {
+          "id": 6,
+          "type": "money",
+          "value": "68000"
+        },
+        {
+          "id": 7,
+          "type": "shield",
+          "value": "1"
+        },
+        {
+          "id": 8,
+          "type": "money",
+          "value": "24000"
+        },
+        {
+          "id": 9,
+          "type": "fire",
+          "value": "1"
+        },
+        {
+          "id": 10,
+          "type": "money",
+          "value": "136000"
+        }
+      ],
+      "maxTili": 50,
+      "tili": "340",
+      "time": 0,
+      "recover": 8,
+      "addRecover": 0,
+      "stealTarget": {
+        "isChanged": 0,
+        "isvip1": 2,
+        "isvvip": 0,
+        "name": "Ivy Eng",
+        "cur_pic": 0,
+        "cur_flag": 19,
+        "fbpic": "https://graph.facebook.com/304762689864269/picture?type=normal&height=100&width=100&access_token=1707883516108963|f54ad9faada2a45b4bfe2730353e0842",
+        "picFrameId": 0,
+        "money": "480600"
+      },
+      "superZhuanPanPlay": 1,
+      "superPlay": 0
+    },
+    "stealTarget": [
+      {
+        "planet": {
+          "cur_planet": 54,
+          "building": [
+            {
+              "lv": 5,
+              "st": 0,
+              "mi": 0
+            },
+            {
+              "lv": 5,
+              "st": 0,
+              "mi": 0
+            },
+            {
+              "lv": 5,
+              "st": 0,
+              "mi": 0
+            },
+            {
+              "lv": 1,
+              "st": 0,
+              "mi": 0
+            },
+            {
+              "lv": 0,
+              "st": 0,
+              "mi": 0
+            }
+          ],
+          "star": 1794,
+          "shield": "3",
+          "mini_s": 13,
+          "mini_c": 0,
+          "mini_m": 3,
+          "mini_m_d": 5,
+          "mini_d_s": 0
+        }
+      },
+      {
+        "planet": {
+          "cur_planet": 242,
+          "building": [
+            {
+              "lv": 0,
+              "st": 0,
+              "mi": 0
+            },
+            {
+              "lv": 0,
+              "st": 0,
+              "mi": 0
+            },
+            {
+              "lv": 1,
+              "st": 0,
+              "mi": 1
+            },
+            {
+              "lv": 0,
+              "st": 0,
+              "mi": 0
+            },
+            {
+              "lv": 1,
+              "st": 0,
+              "mi": 1
+            }
+          ],
+          "star": 8144,
+          "shield": "3",
+          "mini_s": 1427,
+          "mini_c": 2,
+          "mini_m": 3,
+          "mini_m_d": 5,
+          "mini_d_s": 2
+        }
+      },
+      {
+        "planet": {
+          "cur_planet": 213,
+          "building": [
+            {
+              "lv": 2,
+              "st": 0,
+              "mi": 0
+            },
+            {
+              "lv": 1,
+              "st": 0,
+              "mi": 0
+            },
+            {
+              "lv": 2,
+              "st": 0,
+              "mi": 0
+            },
+            {
+              "lv": 1,
+              "st": 0,
+              "mi": 0
+            },
+            {
+              "lv": 2,
+              "st": 0,
+              "mi": 0
+            }
+          ],
+          "star": 5749,
+          "shield": "3",
+          "mini_s": 5,
+          "mini_c": 0,
+          "mini_m": 3,
+          "mini_m_d": 5,
+          "mini_d_s": 0
+        }
+      }
+    ],
+    "platform": "planetpigth",
+    "isvip1": 1,
+    "isvvip": 0,
+    "vip1_expire": 80119049,
+    "vip1Reward": 0,
+    "planet": {
+      "cur_planet": 19,
+      "building": [
+        {
+          "lv": 0,
+          "st": 0,
+          "mi": 0
+        },
+        {
+          "lv": 0,
+          "st": 0,
+          "mi": 0
+        },
+        {
+          "lv": 0,
+          "st": 0,
+          "mi": 0
+        },
+        {
+          "lv": 0,
+          "st": 0,
+          "mi": 0
+        },
+        {
+          "lv": 0,
+          "st": 1,
+          "mi": 0
+        }
+      ],
+      "star": 567,
+      "shield": "3",
+      "mini_s": 11,
+      "mini_c": 0,
+      "mini_m": 3,
+      "mini_m_d": 5,
+      "mini_d_s": 0
+    },
+    "planetCount": 250,
+    "planetConfig": {
+      "buildingLength": 5,
+      "buildingNum": 5,
+      "shield": {
+        "max": 3
+      },
+      "price": [
+        [
+          1104000,
+          2070000,
+          2760000,
+          3450000,
+          4829000
+        ],
+        [
+          1794000,
+          2484000,
+          3174000,
+          3864000,
+          5933000
+        ],
+        [
+          2208000,
+          2898000,
+          3588000,
+          4277000,
+          7037000
+        ],
+        [
+          2622000,
+          3312000,
+          4002000,
+          4691000,
+          8141000
+        ],
+        [
+          3036000,
+          3726000,
+          4415000,
+          5105000,
+          9244000
+        ]
+      ],
+      "repairRate": 0.5,
+      "tiliRate": 1,
+      "repairLevelRate": [
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "moneyRate": 1.99528
+    },
+    "mtkey": "eb8145af3376105a8fa9470b122ec8e7",
+    "skey": "6235ac459e5cf7145154d122db377ee1",
+    "inviteSucc": 0,
+    "payHabbit": {
+      "type": "bluePay.sms_vn",
+      "tili": 0,
+      "payer": false,
+      "tiliGift": 0,
+      "nextili": 10
+    },
+    "pet": {
+      "island": 3,
+      "state": 1,
+      "picId": 3,
+      "petId": 2,
+      "lfTime": 3600,
+      "lv": 12
+    },
+    "invite_limit": 300,
+    "i_reward": {
+      "send": 20,
+      "succ": 20,
+      "limit": 300,
+      "times": 3,
+      "perMin": 200,
+      "limitCount": 5
+    },
+    "MARK_REWARD": {
+      "tili": 10
+    },
+    "IF_MARK": 1,
+    "MARK_STATUS": 0,
+    "loginFlag": 1,
+    "isCode": 1,
+    "tmoney": "25",
+    "isGuideComplete": 1,
+    "connectFbReward": 0,
+    "flagList": [],
+    "BLUE_ACT": [
+      123,
+      456
+    ],
+    "DOWN_NUM": 2,
+    "tongjiling": "4",
+    "vungle": 5,
+    "feedBackState": 0,
+    "isAmsg": 0,
+    "actPro": [],
+    "changeLog": [],
+    "dungeon": 3,
+    "showDungeon": 1,
+    "like": "34696",
+    "supEm": 1,
+    "CDN_ROOT": "https://planetsg-static.aladinfun.com/cdn/planet/platform/planetpigth/",
+    "APP_ROOT": "https://planetsg-static.aladinfun.com/app/cocos/clashofsky/",
+    "APP_DOMAIN": "planetpigth",
+    "BRODACAST_URL": [
+      "ws://150.109.0.41:80/ws"
+    ],
+    "goldConfig": "usergold-0e105fec.json",
+    "feedTag": "feed/20170717/",
+    "PLANET_RES": "planetRes_9e016a2257.json",
+    "skillConfig": "skill-4da52425.json",
+    "petConfig": "pet-b44112bd.json",
+    "propsConfig": "props-c4240111.json",
+    "planet_max": "132",
+    "switch": "001111000100000000000001011111",
+    "guideVersion": "1",
+    "petNewConfig": "pet-b8d6ed6f.json",
+    "isRPOpen": "0",
+    "fireFriend": 0,
+    "ndBingo": {
+      "isOn": 0
+    },
+    "chatEnabled": 1,
+    "multiConf": [
+      {
+        "multiple": 2,
+        "planet": 5
+      },
+      {
+        "multiple": 3,
+        "planet": 10
+      },
+      {
+        "multiple": 4,
+        "planet": 15
+      },
+      {
+        "multiple": 5,
+        "planet": 21
+      }
+    ],
+    "planet_module": {
+      "1": [
+        "magicTree",
+        "loginReward",
+        "sevenDay",
+        "invite"
+      ],
+      "2": [
+        "dungeon",
+        "pic",
+        "nicolas"
+      ],
+      "3": [
+        "miner",
+        "pet"
+      ],
+      "4": [
+        "rex",
+        "worldBoss",
+        "courtShip"
+      ],
+      "5": [
+        "family",
+        "worldChat",
+        "chat"
+      ],
+      "6": [
+        "pk"
+      ]
+    },
+    "funcActive": {
+      "miner": 1,
+      "bet": 1,
+      "pet": 1
+    },
+    "manorVersion": "3.2.0.0",
+    "manor": {
+      "planet": {
+        "show": 10000,
+        "unlock": 10
+      },
+      "rss": {
+        "level": 1,
+        "unlock": 0
+      },
+      "redDot": 0,
+      "friendList": {
+        "pageNum": 100
+      }
+    },
+    "chat": {
+      "api": "ws://129.226.2.251:80/imws",
+      "token": "c1add66b1db6ff1e6078795951a09648",
+      "room": {
+        "world": "711883554"
+      },
+      "sex": "f"
+    },
+    "inviteLimit": {
+      "fb": {
+        "numMax": 0,
+        "num": 0,
+        "reward": {
+          "tili": 2
+        }
+      },
+      "msg": {
+        "numMax": 5,
+        "num": 0,
+        "reward": {
+          "tili": 2
+        }
+      }
+    },
+    "isRegister": false
+  }
+}

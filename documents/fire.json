@@ -1,0 +1,261 @@
+{
+  "fireTarget": {
+    "uid": "205029366",
+    "name": "Ngoc Yeu Hien",
+    "cur_pic": 0,
+    "cur_flag": "16",
+    "fbpic": "https:\/\/graph.facebook.com\/1774974606067193\/picture?type=normal&height=100&width=100&access_token=1707883516108963|f54ad9faada2a45b4bfe2730353e0842",
+    "sex": "m",
+    "picFrameId": 0,
+    "star": 140,
+    "planet": {
+      "cur_planet": 14,
+      "building": [
+        {
+          "lv": 3,
+          "st": 0
+        },
+        {
+          "lv": 2,
+          "st": 0
+        },
+        {
+          "lv": 0,
+          "st": 0
+        },
+        {
+          "lv": 0,
+          "st": 0
+        },
+        {
+          "lv": 0,
+          "st": 0
+        }
+      ],
+      "star": 140
+    },
+    "flag": 0,
+    "revenge": {
+      "tongji": [],
+      "list": [
+        {
+          "uid": 202874279,
+          "name": "Ph\u1ea1m V\u0103n Qu\u00fd",
+          "cur_flag": "11",
+          "cur_pic": "0",
+          "fbpic": "https:\/\/graph.facebook.com\/355158348193264\/picture?type=normal&height=100&width=100&access_token=1707883516108963|f54ad9faada2a45b4bfe2730353e0842",
+          "isAgree": 1,
+          "isInstallKakao": 1,
+          "star": 3215,
+          "sex": "f",
+          "type": 0,
+          "building": 0,
+          "stealMoney": 0,
+          "attack": 0,
+          "steal": 0,
+          "familyId": 0,
+          "familyName": "",
+          "familyIcon": "",
+          "flag": 1
+        },
+        {
+          "uid": 306180643,
+          "name": "Josephssk",
+          "cur_flag": 21,
+          "cur_pic": 14,
+          "fbpic": "",
+          "isAgree": 1,
+          "isInstallKakao": 1,
+          "star": 3554,
+          "sex": "m",
+          "type": 0,
+          "building": 0,
+          "stealMoney": 0,
+          "attack": 0,
+          "steal": 0,
+          "familyId": 0,
+          "familyName": "",
+          "familyIcon": "",
+          "flag": 1
+        },
+        {
+          "uid": 303913934,
+          "name": "Yan Yan",
+          "cur_flag": 19,
+          "cur_pic": "0",
+          "fbpic": "https:\/\/graph.facebook.com\/109373276190706\/picture?type=normal&height=100&width=100&access_token=1707883516108963|f54ad9faada2a45b4bfe2730353e0842",
+          "isAgree": 1,
+          "isInstallKakao": 1,
+          "star": 2261,
+          "sex": "f",
+          "type": 0,
+          "building": 0,
+          "stealMoney": 0,
+          "attack": 0,
+          "steal": 0,
+          "familyId": 0,
+          "familyName": "",
+          "familyIcon": "",
+          "flag": 1
+        },
+        {
+          "uid": "7241605",
+          "name": "\u0e01\u0e48\u0e2d\u0e19' \u0e1a\u0e35.",
+          "cur_flag": 21,
+          "cur_pic": "0",
+          "fbpic": "https:\/\/graph.facebook.com\/159902561052202\/picture?type=normal&height=100&width=100&access_token=1707883516108963|f54ad9faada2a45b4bfe2730353e0842",
+          "star": 6873,
+          "type": 11,
+          "building": "5",
+          "stealMoney": 0,
+          "attack": 1,
+          "steal": true,
+          "isvip1": 1,
+          "isvvip": 0,
+          "isAgree": 1,
+          "isInstallKakao": 1,
+          "picFrameId": 4,
+          "sex": 4,
+          "flag": 0,
+          "familyId": 34637,
+          "familyName": "Laila",
+          "familyIcon": 27
+        }
+      ]
+    },
+    "friend": [
+      {
+        "uid": 206369282,
+        "attack": 0,
+        "steal": 0,
+        "flag": 1
+      },
+      {
+        "uid": 206382504,
+        "attack": 0,
+        "steal": 0,
+        "flag": 0
+      },
+      {
+        "uid": 205710652,
+        "attack": 0,
+        "steal": 0,
+        "flag": 0
+      },
+      {
+        "uid": 206149878,
+        "attack": 0,
+        "steal": 0,
+        "flag": 1
+      },
+      {
+        "uid": 204815346,
+        "attack": 0,
+        "steal": 0,
+        "flag": 1
+      },
+      {
+        "uid": 201600959,
+        "attack": 0,
+        "steal": 0,
+        "flag": 0
+      },
+      {
+        "uid": 206381615,
+        "attack": 0,
+        "steal": 0,
+        "flag": 0
+      },
+      {
+        "uid": 205615106,
+        "attack": 0,
+        "steal": 0,
+        "flag": 1
+      },
+      {
+        "uid": 206383670,
+        "attack": 0,
+        "steal": 0,
+        "flag": 0
+      },
+      {
+        "uid": 204237175,
+        "attack": 0,
+        "steal": 0,
+        "flag": 1
+      },
+      {
+        "uid": 206383672,
+        "attack": 0,
+        "steal": 0,
+        "flag": 0
+      },
+      {
+        "uid": 206355660,
+        "attack": 0,
+        "steal": 0,
+        "flag": 0
+      },
+      {
+        "uid": 206383536,
+        "attack": 0,
+        "steal": 0,
+        "flag": 0
+      },
+      {
+        "uid": 206379705,
+        "attack": 0,
+        "steal": 0,
+        "flag": 0
+      },
+      {
+        "uid": 206377905,
+        "attack": 0,
+        "steal": 0,
+        "flag": 1
+      },
+      {
+        "uid": 204880865,
+        "attack": 0,
+        "steal": 0,
+        "flag": 1
+      },
+      {
+        "uid": 206379998,
+        "attack": 0,
+        "steal": 0,
+        "flag": 0
+      },
+      {
+        "uid": 7791338,
+        "attack": 0,
+        "steal": 0,
+        "flag": 0
+      },
+      {
+        "uid": 206382146,
+        "attack": 0,
+        "steal": 0,
+        "flag": 0
+      },
+      {
+        "uid": 204748679,
+        "attack": 0,
+        "steal": 0,
+        "flag": 1
+      },
+      {
+        "uid": 206383656,
+        "attack": 0,
+        "steal": 0,
+        "flag": 0
+      }
+    ],
+    "starComp": 0,
+    "fireTargetCfg": {
+      "stranger": 10,
+      "revenge": 50,
+      "friend": 40
+    }
+  },
+}

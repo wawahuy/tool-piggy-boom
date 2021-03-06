@@ -1,28 +1,28 @@
 {
-  "_t": 1614780753.607639,
+  "_t": 1615028637.498605,
   "_s": [],
   "_d": {
     "ret": 0,
-    "serverTime": 1614780752,
+    "serverTime": 1615028636,
     "wxConfig": {
       "wx_params": "",
       "wx_url": "",
       "wx_appid": ""
     },
     "deviceToken": "bf8cNVkDLMcpH7T4iruwUg==",
-    "uid": "206404110",
-    "name": "Ziga Hey",
-    "fbpic": "https:\/\/graph.facebook.com\/117812423568489\/picture?type=normal&height=100&width=100&access_token=1707883516108963|f54ad9faada2a45b4bfe2730353e0842",
+    "uid": "206383650",
+    "name": "Huy Nguyen",
+    "fbpic": "https://graph.facebook.com/413199769800716/picture?type=normal&height=100&width=100&access_token=1707883516108963|f54ad9faada2a45b4bfe2730353e0842",
     "cur_pic": "0",
-    "cur_flag": "21",
+    "cur_flag": "1",
     "isInvite": 0,
-    "picFrameId": 0,
-    "picFrameTime": -1,
+    "picFrameId": 4,
+    "picFrameTime": 80118534,
     "isAgree": 1,
     "isInstallKakao": 1,
-    "registerDay": 11,
+    "registerDay": 62,
     "uploadErr": {
-      "uploadcgi": "https:\/\/planetpigth.aladinfun.com\/planetpigth\/m\/",
+      "uploadcgi": "https://planetpigth.aladinfun.com/planetpigth/m/",
       "isUpload": 0
     },
     "beenWanted": 1,
@@ -166,13 +166,13 @@
         }
       ]
     },
-    "money": "65000",
+    "money": "4041098",
     "zhuanpan": {
       "info": [
         {
           "id": 1,
-          "type": "money",
-          "value": "5000"
+          "type": "starMutiple",
+          "value": "400"
         },
         {
           "id": 2,
@@ -182,7 +182,7 @@
         {
           "id": 3,
           "type": "money",
-          "value": "25500"
+          "value": "34000"
         },
         {
           "id": 4,
@@ -192,12 +192,12 @@
         {
           "id": 5,
           "type": "money",
-          "value": "5500"
+          "value": "14000"
         },
         {
           "id": 6,
           "type": "money",
-          "value": "51000"
+          "value": "68000"
         },
         {
           "id": 7,
@@ -207,7 +207,7 @@
         {
           "id": 8,
           "type": "money",
-          "value": "15500"
+          "value": "24000"
         },
         {
           "id": 9,
@@ -217,54 +217,54 @@
         {
           "id": 10,
           "type": "money",
-          "value": "102000"
+          "value": "136000"
         }
       ],
       "maxTili": 50,
-      "tili": "80",
+      "tili": "340",
       "time": 0,
-      "recover": 6,
+      "recover": 8,
       "addRecover": 0,
       "stealTarget": {
         "isChanged": 0,
-        "isvip1": 0,
+        "isvip1": 1,
         "isvvip": 0,
-        "name": "s",
+        "name": "Phuong Lathi",
         "cur_pic": "0",
-        "cur_flag": "19",
-        "fbpic": "https:\/\/tfs.alipayobjects.com\/images\/partner\/T1J7NxXapaXXXXXXXX_100X100",
+        "cur_flag": 3,
+        "fbpic": "https://graph.facebook.com/606893229468807/picture?type=normal&height=100&width=100&access_token=1707883516108963|f54ad9faada2a45b4bfe2730353e0842",
         "picFrameId": 0,
-        "money": "428100"
+        "money": "456000"
       },
       "superZhuanPanPlay": 1,
       "superPlay": 0
     },
     "platform": "planetpigth",
-    "isvip1": 0,
+    "isvip1": 1,
     "isvvip": 0,
-    "vip1_expire": 0,
+    "vip1_expire": 80118535,
     "vip1Reward": 0,
     "planet": {
-      "cur_planet": 2,
+      "cur_planet": 19,
       "building": [
         {
           "lv": 0,
-          "st": 1,
+          "st": 0,
           "mi": 0
         },
         {
           "lv": 0,
-          "st": 1,
+          "st": 0,
           "mi": 0
         },
         {
           "lv": 0,
-          "st": 1,
+          "st": 0,
           "mi": 0
         },
         {
           "lv": 0,
-          "st": 1,
+          "st": 0,
           "mi": 0
         },
         {
@@ -273,15 +273,15 @@
           "mi": 0
         }
       ],
-      "star": 25,
+      "star": 567,
       "shield": "3",
-      "mini_s": 0,
+      "mini_s": 11,
       "mini_c": 0,
       "mini_m": 3,
       "mini_m_d": 5,
       "mini_d_s": 0
     },
-    "planetCount": 249,
+    "planetCount": 250,
     "planetConfig": {
       "buildingLength": 5,
       "buildingNum": 5,
@@ -290,39 +290,39 @@
       },
       "price": [
         [
-          88000,
-          165000,
-          219000,
-          274000,
-          383000
+          1104000,
+          2070000,
+          2760000,
+          3450000,
+          4829000
         ],
         [
-          143000,
-          197000,
-          252000,
-          307000,
-          471000
+          1794000,
+          2484000,
+          3174000,
+          3864000,
+          5933000
         ],
         [
-          176000,
-          230000,
-          285000,
-          340000,
-          558000
+          2208000,
+          2898000,
+          3588000,
+          4277000,
+          7037000
         ],
         [
-          208000,
-          263000,
-          318000,
-          372000,
-          646000
+          2622000,
+          3312000,
+          4002000,
+          4691000,
+          8141000
         ],
         [
-          241000,
-          296000,
-          351000,
-          405000,
-          734000
+          3036000,
+          3726000,
+          4415000,
+          5105000,
+          9244000
         ]
       ],
       "repairRate": 0.5,
@@ -334,10 +334,10 @@
         50,
         50
       ],
-      "moneyRate": 1
+      "moneyRate": 1.99528
     },
-    "mtkey": "f3a036437c65f034e2a59aeca060cd13",
-    "skey": "24a60bbd13e608b3bd2b68d77db3799a",
+    "mtkey": "9819cee971e688a173551fe42ab0bb36",
+    "skey": "c3cfa31c90ac159a1cbfa3d1f0c5028e",
     "inviteSucc": 0,
     "payHabbit": {
       "type": "bluePay.sms_vn",
@@ -348,16 +348,18 @@
     },
     "pet": {
       "island": 3,
-      "state": 0,
-      "picId": 0,
-      "petId": 0
+      "state": 1,
+      "picId": 3,
+      "petId": 2,
+      "lfTime": 3600,
+      "lv": 12
     },
     "invite_limit": 300,
     "i_reward": {
       "send": 20,
       "succ": 20,
       "limit": 300,
-      "times": 1,
+      "times": 3,
       "perMin": 200,
       "limitCount": 5
     },
@@ -368,6 +370,139 @@
     "MARK_STATUS": 0,
     "loginFlag": 1,
     "isCode": 1,
-    "tmoney": 0,
+    "tmoney": "25",
     "isGuideComplete": 1,
-    "connectFbReward": 0,"flagLi
+    "connectFbReward": 0,
+    "flagList": [],
+    "BLUE_ACT": [
+      123,
+      456
+    ],
+    "DOWN_NUM": 2,
+    "tongjiling": "4",
+    "vungle": 5,
+    "feedBackState": 0,
+    "isAmsg": 0,
+    "actPro": [],
+    "changeLog": [],
+    "dungeon": 3,
+    "showDungeon": 1,
+    "like": "34696",
+    "supEm": 1,
+    "CDN_ROOT": "https://planetsg-static.aladinfun.com/cdn/planet/platform/planetpigth/",
+    "APP_ROOT": "https://planetsg-static.aladinfun.com/app/cocos/clashofsky/",
+    "APP_DOMAIN": "planetpigth",
+    "BRODACAST_URL": [
+      "ws://150.109.0.41:80/ws"
+    ],
+    "goldConfig": "usergold-0e105fec.json",
+    "feedTag": "feed/20170717/",
+    "PLANET_RES": "planetRes_9e016a2257.json",
+    "skillConfig": "skill-4da52425.json",
+    "petConfig": "pet-b44112bd.json",
+    "propsConfig": "props-c4240111.json",
+    "planet_max": "132",
+    "switch": "001111000100000000000001011111",
+    "guideVersion": "1",
+    "petNewConfig": "pet-b8d6ed6f.json",
+    "isRPOpen": "0",
+    "fireFriend": 0,
+    "ndBingo": {
+      "isOn": 0
+    },
+    "chatEnabled": 1,
+    "multiConf": [
+      {
+        "multiple": 2,
+        "planet": 5
+      },
+      {
+        "multiple": 3,
+        "planet": 10
+      },
+      {
+        "multiple": 4,
+        "planet": 15
+      },
+      {
+        "multiple": 5,
+        "planet": 21
+      }
+    ],
+    "planet_module": {
+      "1": [
+        "magicTree",
+        "loginReward",
+        "sevenDay",
+        "invite"
+      ],
+      "2": [
+        "dungeon",
+        "pic",
+        "nicolas"
+      ],
+      "3": [
+        "miner",
+        "pet"
+      ],
+      "4": [
+        "rex",
+        "worldBoss",
+        "courtShip"
+      ],
+      "5": [
+        "family",
+        "worldChat",
+        "chat"
+      ],
+      "6": [
+        "pk"
+      ]
+    },
+    "funcActive": {
+      "miner": 1,
+      "bet": 1,
+      "pet": 1
+    },
+    "manorVersion": "3.2.0.0",
+    "manor": {
+      "planet": {
+        "show": 10000,
+        "unlock": 10
+      },
+      "rss": {
+        "level": 1,
+        "unlock": 0
+      },
+      "redDot": 0,
+      "friendList": {
+        "pageNum": 100
+      }
+    },
+    "chat": {
+      "api": "ws://129.226.2.251:80/imws",
+      "token": "c1add66b1db6ff1e6078795951a09648",
+      "room": {
+        "world": "711883554"
+      },
+      "sex": "f"
+    },
+    "inviteLimit": {
+      "fb": {
+        "numMax": 0,
+        "num": 0,
+        "reward": {
+          "tili": 2
+        }
+      },
+      "msg": {
+        "numMax": 5,
+        "num": 0,
+        "reward": {
+          "tili": 2
+        }
+      }
+    },
+    "isRegister": false
+  }
+}
