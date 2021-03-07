@@ -14,4 +14,4 @@ RUN npm run build
 
 EXPOSE 10002
 
-CMD "npm" "run" "production"
+CMD "npm" "run" "prod"
