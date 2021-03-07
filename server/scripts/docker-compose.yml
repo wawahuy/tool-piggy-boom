@@ -18,20 +18,19 @@ services:
       - "10003:6379"
     command: ["--requirepass", "Duan2ti!"]
     volumes:
-      - ".docker/data/redis:/data"
-      - ".docker/config/redis/redis.conf:/usr/local/etc/redis/redis.conf"
+      - "~/data/.docker/data/redis:/data"
+      - "~/data/.docker/config/redis/redis.conf:/usr/local/etc/redis/redis.conf"
     restart: always
 
   mongodb:
     image: mongo:4.2
     user: "1003:983"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: films
+      MONGO_INITDB_ROOT_USERNAME: heo
       MONGO_INITDB_ROOT_PASSWORD: Duan2ti!
-      MONGO_INITDB_ROOT_USERNAME: films
     command: ["--bind_ip", "0.0.0.0"]
     ports:
       - "10004:27017"
     volumes:
-      - ".docker/data/mongodb:/data/db"
+      - "~/data/.docker/data/mongodb:/data/db"
     restart: always

@@ -5,15 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "env-cmd -f ./env/dev.env nodemon",
+    "prod": "env-cmd -f ./env/prod.env ./dist",
     "build": "rimraf ./dist && tsc"
   },
-  "pkg": {
-    "assets": "dist/**/*",
-    "targets": [
-      "node12-win-x64"
-    ]
-  },
-  "bin": "./dist/index.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
