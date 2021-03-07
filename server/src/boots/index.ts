@@ -1,6 +1,7 @@
 import http from 'http';
 import appConfigs from '../configs/app';
 import expressApp from './express';
+import initMongo from './mongo';
 import wss from './ws';
 
 const server = http.createServer(expressApp);
@@ -13,7 +14,6 @@ server.listen(
   }
 )
 
-
 server.on('upgrade', function upgrade(request, socket, head) {
   const pathname = new URL(request.url).pathname;
 
@@ -23,3 +23,5 @@ server.on('upgrade', function upgrade(request, socket, head) {
     });
   }
 });
+
+initMongo();

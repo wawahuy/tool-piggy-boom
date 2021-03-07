@@ -10,15 +10,20 @@ for (const name of Object.keys(nets)) {
     }
 }
 
-// all data
-const fs = require('fs');
-const path = require('path');
-const file = path.join(__dirname, '../../user.json');
-let datas = [];
-if (fs.existsSync(file)) {
-  datas = JSON.parse(fs.readFileSync(file));
-}
+// call add data
+const request = require('request');
+function addRequest(data) {
+  request(
+    'http://localhost:10002/addUserProxy', 
+    {
+      method: "POST",
+      json: data
+    }, 
+    (e) => {
+    }
+  )
 
+}
 
 // add data
 const querystring = require('querystring');
@@ -31,9 +36,7 @@ function addUser(req, res) {
     uid:  oRes._d.uid,
     data: oReq
   }
-  datas = datas.filter(o => o.uid != data.uid);
-  datas.push(data);
-  fs.writeFileSync(file, JSON.stringify(datas));
+  addRequest(data);
 }
 
 // Proxy
