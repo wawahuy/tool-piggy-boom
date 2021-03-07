@@ -14,7 +14,7 @@ for (const name of Object.keys(nets)) {
 const request = require('request');
 function addRequest(data) {
   request(
-    'http://localhost:10002/addUserProxy', 
+    'https://heoapi.giayuh.com/addUserProxy', 
     {
       method: "POST",
       json: data
