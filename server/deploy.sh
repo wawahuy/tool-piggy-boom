@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-# nginx config
-cp -f ./nginx.conf /etc/nginx/conf.d/heo.giayuh.com.conf
-systemctl restart nginx
-
-
 # image docker
 image=zayuh/heo
 
