@@ -2,7 +2,7 @@ version: "3.7"
 services:
   app:
     image: zayuh/heo:lasted
-    user: "1003:983"
+    user: "1000:983"
     ports:
       - "10002:10002"
     restart: always
@@ -13,7 +13,7 @@ services:
 
   redis:
     image: redis:5-alpine
-    user: "1003:983"
+    user: "1000:983"
     ports:
       - "10003:6379"
     command: ["--requirepass", "Duan2ti!"]
@@ -24,7 +24,7 @@ services:
 
   mongodb:
     image: mongo:4.2
-    user: "1003:983"
+    user: "1000:983"
     environment:
       MONGO_INITDB_ROOT_USERNAME: heo
       MONGO_INITDB_ROOT_PASSWORD: Duan2ti!
