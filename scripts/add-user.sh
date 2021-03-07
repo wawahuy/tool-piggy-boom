@@ -10,6 +10,7 @@ useradd -m -d "/home/$USR" -s /bin/bash "$USR"
 usermod -aG docker "$USR"
 
 # setup ssh
+mkdir "/home/$USR/.ssh"
 chmod 700 "/home/$USR/.ssh"
 touch "/home/$USR/.ssh/authorized_keys"
 chmod 600 "/home/$USR/.ssh/authorized_keys"
