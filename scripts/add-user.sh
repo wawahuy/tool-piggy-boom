@@ -14,6 +14,9 @@ chmod 700 "/home/$USR/.ssh"
 touch "/home/$USR/.ssh/authorized_keys"
 chmod 600 "/home/$USR/.ssh/authorized_keys"
 
+# su $USR
+# please add pubic key to 'authorized_keys'
+
 # add folder data docker
 mkdir "/home/$USR/data"
 chown -R "$USR:users" "/home/$USR/data"
