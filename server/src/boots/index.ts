@@ -1,5 +1,4 @@
 import http from 'http';
-import url from 'url';
 import appConfigs from '../configs/app';
 import expressApp from './express';
 import wss from './ws';
@@ -16,9 +15,9 @@ server.listen(
 
 
 server.on('upgrade', function upgrade(request, socket, head) {
-  const pathname = url.parse(request.url).pathname;
+  const pathname = new URL(request.url).pathname;
 
-  if (pathname === '/ws') {
+  if (pathname === appConfigs.WS) {
     wss.handleUpgrade(request, socket, head, function done(ws) {
       wss.emit('connection', ws, request);
     });

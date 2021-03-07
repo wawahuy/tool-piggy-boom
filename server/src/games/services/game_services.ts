@@ -1,8 +1,8 @@
 import Axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import querystring from "querystring";
 import * as _ from "lodash";
-import { GameServiceConfig, GameServiceResponse } from "../models/game_services";
-import GameApiConfig from "../configs/game_api";
+import { GameServiceConfig, GameServiceResponse } from "../models/game_req/game";
+import GameApiConfig from "../../configs/game";
 
 class GameService {
   _client: AxiosInstance;

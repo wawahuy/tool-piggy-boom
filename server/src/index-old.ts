@@ -2,16 +2,16 @@ import moment from "moment";
 import fs from "fs";
 import path from "path";
 import * as _ from "lodash";
-import { AuthRequest, ELoginType, EGameStatus } from "./models/game_net/auth";
-import AuthService from "./game_services/auth_service";
-import { GameServiceConfig } from "./models/game_services";
-import GameService from "./game_services/game_services";
-import BCLogService from "./game_services/bclog_service";
-import ZhuanpanService from "./game_services/zhuanpan_services";
-import { EZhuanpanPlayRewardType } from "./models/game_net/zhuanpan";
-import WeaponService from "./game_services/weapon_service";
-import { EFireAttackType, FireRequest } from "./models/game_net/weapon";
-import { Firetarget } from "./models/game/fire";
+import { AuthRequest, ELoginType, EGameStatus } from "./games/models/game_req/auth";
+import AuthService from "./games/services/auth_service";
+import { GameServiceConfig } from "./games/models/game_req/game";
+import GameService from "./games/services/game_services";
+import BCLogService from "./games/services/bclog_service";
+import ZhuanpanService from "./games/services/zhuanpan_services";
+import { EZhuanpanPlayRewardType } from "./games/models/game_req/zhuanpan";
+import WeaponService from "./games/services/weapon_service";
+import { EFireAttackType, FireRequest } from "./games/models/game_req/weapon";
+import { Firetarget } from "./games/models/game/fire";
 
 const datalogin: AuthRequest = {
   loginType: ELoginType.Login,

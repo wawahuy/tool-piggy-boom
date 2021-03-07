@@ -1,11 +1,11 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import {
   GameServiceResponse,
-} from "../models/game_services";
-import GameApiConfig from "../configs/game_api";
+} from "../models/game_req/game";
+import GameApiConfig from "../../configs/game";
 import querystring from "querystring";
 import * as _ from "lodash";
-import { AuthRequest, AuthResponse } from "models/game_net/auth";
+import { AuthRequest, AuthResponse } from "games/models/game_req/auth";
 
 export default class AuthService {
   _client: AxiosInstance;

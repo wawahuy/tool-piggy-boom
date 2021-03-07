@@ -1,4 +1,4 @@
-import { FireRequest, FireResponse, StealResponse } from "../models/game_net/weapon";
+import { FireRequest, FireResponse, StealResponse } from "../models/game_req/weapon";
 import GameService from "./game_services";
 
 export default class WeaponService {
