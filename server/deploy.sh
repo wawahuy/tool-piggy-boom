@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # nginx config
-cp -f ./nginx.conf /etc/nginx/sites-enabled/heo.giayuh.com
+cp -f ./nginx.conf /etc/nginx/conf.d/heo.giayuh.com.conf
 systemctl restart nginx
 
 
