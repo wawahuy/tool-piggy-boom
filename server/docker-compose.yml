@@ -2,7 +2,7 @@ version: "3.7"
 services:
   app:
     image: zayuh/heo:lasted
-    user: "1000:983"
+    user: "1000:984"
     ports:
       - "10002:10002"
     restart: always
@@ -13,10 +13,10 @@ services:
 
   redis:
     image: redis:6.2.1
-    user: "1000:983"
+    user: "1000:984"
     # ports:
     #   - "10003:6379"
-    command: ["--requirepass", "Duan2.2ti!"]
+    command: ["--requirepass", "Duan2.22ti!"]
     volumes:
       - "~/data/.docker/data/redis:/data"
       - "~/data/.docker/config/redis/redis.conf:/usr/local/etc/redis/redis.conf"
@@ -24,10 +24,10 @@ services:
 
   mongodb:
     image: mongo:4.4.4
-    user: "1000:983"
+    user: "1000:984"
     environment:
       MONGO_INITDB_ROOT_USERNAME: heo
-      MONGO_INITDB_ROOT_PASSWORD: Duan2.2ti!
+      MONGO_INITDB_ROOT_PASSWORD: Duan2.22ti!
     command: ["--bind_ip", "0.0.0.0"]
     ports:
       - "10004:27017"
