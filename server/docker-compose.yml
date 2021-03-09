@@ -16,7 +16,7 @@ services:
     user: "1000:983"
     ports:
       - "10003:6379"
-    command: ["--requirepass", "Duan2ti!"]
+    command: ["--requirepass", "Duan2.2ti!"]
     volumes:
       - "~/data/.docker/data/redis:/data"
       - "~/data/.docker/config/redis/redis.conf:/usr/local/etc/redis/redis.conf"
@@ -27,7 +27,7 @@ services:
     user: "1000:983"
     environment:
       MONGO_INITDB_ROOT_USERNAME: heo
-      MONGO_INITDB_ROOT_PASSWORD: Duan2ti!
+      MONGO_INITDB_ROOT_PASSWORD: Duan2.2ti!
     command: ["--bind_ip", "0.0.0.0"]
     ports:
       - "10004:27017"
