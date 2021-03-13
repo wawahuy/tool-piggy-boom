@@ -1,22 +1,41 @@
-import Express from 'express';
+import express from "express";
+import cookieParser from "cookie-parser";
+import session from "express-session";
+import connectMongo from 'connect-mongo';
+import passport from "passport";
+import passportConfigs from "../configs/passport";
+import initMiddlewarePassport from "../middlewares/passport";
+import routerGlobals from "../routes";
+import dbConfigs from '../configs/db';
 
-const expressApp = Express();
+const app = express();
 
-expressApp.use(Express.json());
+// config express
+app.set("view engine", "ejs");
+app.use(express.json());
+app.use(express.urlencoded());
+app.use(cookieParser(passportConfigs.COOKIE_SECRET));
 
-// test add
-import ModelAccountGame from '../models/schema/account_game';
-expressApp.post('/addUserProxy', async (req, res) => {
-  const m = {
-    uid: req.body.uid,
-    loginType: req.body.data.loginType,
-    access_token: req.body.data.access_token,
-    deviceToken: req.body.data.deviceToken,
-    mac: req.body.data.mac,
-    deviceModel: req.body.data.deviceModel,
-  };
-  const r  = await ModelAccountGame.updateOne({ uid: req.body.uid }, m, { upsert: true }).then(e => null);
-  res.send(r);
-});
+// config passport & session
+app.use(session({ 
+  secret: passportConfigs.SESSION_SECRET,
+  cookie: {
+    maxAge: passportConfigs.SESSION_TTL
+  },
+  store: connectMongo.create({
+    mongoUrl: dbConfigs.MONGO_URI,
+    collectionName: dbConfigs.SESSION_DB,
+    ttl: passportConfigs.SESSION_TTL
+  })
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-export default expressApp;
+// init middlewares
+initMiddlewarePassport();
+
+// init routers global
+app.use(routerGlobals);
+
+
+export default app;

@@ -2,6 +2,7 @@ import http from 'http';
 import appConfigs from '../configs/app';
 import expressApp from './express';
 import initMongo from './mongo';
+import initJobs from './job';
 import wss from './ws';
 
 const server = http.createServer(expressApp);
@@ -25,3 +26,5 @@ server.on('upgrade', function upgrade(request, socket, head) {
 });
 
 initMongo();
+
+initJobs();
