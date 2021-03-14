@@ -20,7 +20,7 @@ app.use(cookieParser(passportConfigs.COOKIE_SECRET));
 app.use(session({ 
   secret: passportConfigs.SESSION_SECRET,
   cookie: {
-    maxAge: passportConfigs.SESSION_TTL
+    maxAge: passportConfigs.SESSION_TTL * 1000
   },
   store: connectMongo.create({
     mongoUrl: dbConfigs.MONGO_URI,
