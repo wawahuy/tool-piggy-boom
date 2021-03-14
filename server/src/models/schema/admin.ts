@@ -1,4 +1,5 @@
 import Mongoose, { Document, Model, Schema } from 'mongoose';
+import bcrypt from 'bcrypt';
 
 /***
  * Declare Schema
@@ -24,9 +25,8 @@ const AdminSchema = new Schema<IAdminDocument, IAdminModal>(
   { timestamps: true }
 );
 
-AdminSchema.methods.comparePassword = (password: string) => {
-  
-  return true;
+AdminSchema.methods.comparePassword = function (password: string) {
+  return bcrypt.compareSync(password, <string>this.password);
 }
 
 const ModelAdmin = Mongoose.model<IAdminDocument, IAdminModal>(
