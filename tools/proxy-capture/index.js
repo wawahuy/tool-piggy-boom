@@ -14,12 +14,17 @@ for (const name of Object.keys(nets)) {
 const request = require('request');
 function addRequest(data) {
   request(
-    'https://heoapi.giayuh.com/addUserProxy', 
+    'https://heoapi.giayuh.com/adm/add_account', 
     {
       method: "POST",
       json: data
     }, 
-    (e) => {
+    (e, d) => {
+      if (e) {
+        console.log(e);
+        return;
+      }
+      console.log(d.body);
     }
   )
 
