@@ -4,6 +4,7 @@ import expressApp from './express';
 import initMongo from './mongo';
 import initJobs from './job';
 import wss from './ws';
+import { wsMiddleware } from "../middlewares";
 
 const server = http.createServer(expressApp);
 
@@ -16,12 +17,13 @@ server.listen(
 )
 
 server.on('upgrade', function upgrade(request, socket, head) {
-  const pathname = new URL(request.url).pathname;
-
-  if (pathname === appConfigs.WS) {
-    wss.handleUpgrade(request, socket, head, function done(ws) {
-      wss.emit('connection', ws, request);
-    });
+  if (request.url === appConfigs.WS) {
+    const next = () => {
+      wss.handleUpgrade(request, socket, head, function done(ws) {
+        wss.emit('connection', ws, request);
+      });
+    };
+    wsMiddleware(request, socket, next);
   }
 });
 

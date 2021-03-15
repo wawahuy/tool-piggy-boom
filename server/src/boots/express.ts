@@ -1,12 +1,8 @@
 import express from "express";
 import cookieParser from "cookie-parser";
-import session from "express-session";
-import connectMongo from 'connect-mongo';
-import passport from "passport";
 import passportConfigs from "../configs/passport";
-import initMiddlewarePassport from "../middlewares/passport";
 import routerGlobals from "../routes";
-import dbConfigs from '../configs/db';
+import { sessionMiddleware, passportMiddleware } from "../middlewares";
 
 const app = express();
 
@@ -17,22 +13,8 @@ app.use(express.urlencoded());
 app.use(cookieParser(passportConfigs.COOKIE_SECRET));
 
 // config passport & session
-app.use(session({ 
-  secret: passportConfigs.SESSION_SECRET,
-  cookie: {
-    maxAge: passportConfigs.SESSION_TTL * 1000
-  },
-  store: connectMongo.create({
-    mongoUrl: dbConfigs.MONGO_URI,
-    collectionName: dbConfigs.SESSION_DB,
-    ttl: passportConfigs.SESSION_TTL
-  })
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-
-// init middlewares
-initMiddlewarePassport();
+app.use(sessionMiddleware);
+app.use(passportMiddleware);
 
 // init routers global
 app.use(routerGlobals);

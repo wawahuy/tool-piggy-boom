@@ -1,7 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
 import { router as bullBoardRouter } from "bull-board";
-import adminLoggedMiddleware from "../middlewares/auth_admin";
+import { adminLoggedMiddleware } from "../middlewares";
 import ppConfigs from "../configs/passport";
 import AuthController from "../modules/admin/auth/auth.controller";
 import HomeController from "../modules/admin/home/home.controller";

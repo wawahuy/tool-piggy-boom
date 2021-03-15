@@ -8,5 +8,13 @@
 </head>
 <body>
   Hello admin!
+  <br/>
+  <a href="/adm/bull">Bull</a>
 </body>
+<script>
+  const ws = new WebSocket("ws://localhost:10002/ws");
+  ws.onopen = () => {
+    console.log('oke');
+  };
+</script>
 </html>
