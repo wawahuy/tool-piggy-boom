@@ -15,12 +15,12 @@ export default class AccountGameController {
       deviceModel: req.body.data.deviceModel,
     };
 
-    if (!await Player.create(<AuthRequest>data)) {
+    let player: Player | null;
+    if (!(player = await Player.create(<AuthRequest>data))) {
       res.status(401).json({ msg: "Auth failed!" });
       return;
     }
-
-    const r = await ModelAccountGame.updateOne({ uid: req.body.uid }, data, { upsert: true }).then(e => null);
+    
     res.json({ msg: "Auth success!" });
   }
 }

@@ -37,6 +37,4 @@ initMiddlewarePassport();
 // init routers global
 app.use(routerGlobals);
 
-console.log('Test test remove on boots/express !!');
-
 export default app;

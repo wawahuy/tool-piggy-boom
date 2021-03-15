@@ -1,3 +1,4 @@
+import moment from 'moment';
 import Mongoose, { Document, Model, Schema } from 'mongoose';
 
 
@@ -11,6 +12,9 @@ export interface IAccountGameDocument extends Document {
   deviceToken: string,
   mac: string,
   deviceModel: string,
+  mtkey: string;
+  skey: string;
+  syncDate: Date;
 }
 
 export interface IAccountGameModal extends Model<IAccountGameDocument> {
@@ -25,6 +29,9 @@ const AccountGameSchema = new Schema<IAccountGameDocument, IAccountGameModal>(
     deviceToken: { type: Schema.Types.String },
     mac: { type: Schema.Types.String },
     deviceModel: { type: Schema.Types.String },
+    mtkey: { type: Schema.Types.String },
+    skey: { type: Schema.Types.String },
+    syncDate: { type: Schema.Types.Date, default: moment().toDate() },
   },
   { timestamps: true }
 );
