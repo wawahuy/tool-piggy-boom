@@ -1,9 +1,3 @@
-import { Queue, Worker } from 'bullmq';
-import { BullMQAdapter, setQueues } from 'bull-board';
-import jobConfigs from '../configs/job';
-
-
-function initJobs() {
-}
+import { initJobs } from  "../schedules/director";
 
 export default initJobs;

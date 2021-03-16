@@ -1,4 +1,4 @@
-import { Queue, QueueEvents } from "bullmq";
+import { Job, Queue, QueueEvents } from "bullmq";
 import jobsConfig from '../../configs/job';
 
 
@@ -6,13 +6,9 @@ export default class PlayerQueue {
   queue: Queue;
   queueEvent: QueueEvents;
 
-  get queueName() {
-    return jobsConfig.queuePlayName + "_" + this._id;
-  }
-
-  constructor(private _id: string) {
+  constructor() {
     const connection = jobsConfig.connection;
-    const name = this.queueName;
+    const name = jobsConfig.queuePlayName;
     this.queue = new Queue(name, { connection });
     this.queueEvent = new QueueEvents(name, { connection });
     this.queueEvent.on('completed', this.onJobComplete);
@@ -30,5 +26,9 @@ export default class PlayerQueue {
 
   onJobFailed = (jobId: string) => {
     console.log('failed', jobId);
+  }
+
+  addJobs(job: Job[]) {
+    this.queue.addBulk(job);
   }
 }
