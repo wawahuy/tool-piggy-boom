@@ -3,7 +3,7 @@ import { Job } from "../../models/Job";
 import jobsConfig from '../../configs/job';
 
 
-export default class PlayerQueue {
+export default class MainQueue {
   queue: Queue;
   queueEvent: QueueEvents;
   queueScheduler: QueueScheduler;
