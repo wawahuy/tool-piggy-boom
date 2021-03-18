@@ -1,4 +1,5 @@
 import { Job, Worker } from "bullmq";
+import { jobRunPlayerProccess, nameJobRunPlayer } from "../../schedules/jobs/run_player_job";
 import jobsConfig from '../../configs/job';
 
 
@@ -13,6 +14,9 @@ export default class PlayerWorker {
 
   onProccess = async (job: Job) => {
     switch (job.name) {
+      case nameJobRunPlayer:
+        return jobRunPlayerProccess(job);
+
       default:
         return Promise.reject(new Error("No execute!"));
     }

@@ -5,3 +5,7 @@ export interface Job {
   data?: any;
   ops?: JobsOptions;
 }
+
+export interface JobRunPlayerData {
+  uid?: string;
+}

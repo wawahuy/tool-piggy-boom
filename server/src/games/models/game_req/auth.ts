@@ -24,12 +24,12 @@ export interface AuthResponse {
   uid: string,
   name: string,
   money: string,
-  maxTili: number,
-  tili: string,
   mtkey: string,
   skey: string,
   status: EGameStatus,
   zhuanpan: {
+    maxTili: number,
+    tili: string,
     stealTarget: {
       isChanged: boolean
     } & StealTarget,
