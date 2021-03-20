@@ -66,7 +66,6 @@ export const jobFindPlayerProccess = async (job: JobBull) => {
     if (!uidTest.find(account.uid)) {
       const jobNew = createJobRunPlayer(account.uid);
       await playQueueInstance.addJob(jobNew);
-      return true;
     }
   }
 
