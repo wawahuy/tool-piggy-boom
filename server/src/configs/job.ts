@@ -12,5 +12,6 @@ export default {
   queueMainName: 'main-queue',
   queuePlayName: 'player-queue',
   queueAdGiftBoxName: 'ad-gift-box-queue',
+  workerAdGiftboxConcurrency: 20,
   connection
 }
