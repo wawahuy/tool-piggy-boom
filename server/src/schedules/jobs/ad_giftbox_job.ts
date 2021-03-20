@@ -51,6 +51,18 @@ export async function buildTestAdGiftUID() {
   return avl;
 }
 
+export async function buildTestDelayedAdGiftUID() {
+  const queue = adGiftBoxQueueInstance.queue;
+  const delay = await queue.getDelayed();
+  const avl = new AVLTree();
+
+  const mapData = mapDataJobAdGift.bind(null, avl);
+  delay.map(mapData);
+  return avl;
+}
+
+
+
 export const jobAdGiftboxProccess = async (job: JobBull) => {
   const data = <JobAdGiftboxData>job.data;
   if (!data.uid) {
@@ -67,10 +79,15 @@ export const jobAdGiftboxProccess = async (job: JobBull) => {
   const reward = await player.getAdGiftBox(type);
 
   if (!reward) {
+    const testDelayed = await buildTestDelayedAdGiftUID();
+    if (testDelayed.find(makeKeyDataJobAdGiftbox(data.uid, data.type))) {
+      return "Job reward error - no added deplay"
+    }
+
     await adGiftBoxQueueInstance.addJob(
       createJoAdGiftBox(data, type === RewardAdType.adGiftBox1 ? 60000 : 1000)
     );
-    return "Job reward error!";
+    return "Job reward error - added deplay!";
   }
 
   await ModelGiftboxReport.updateOne(
