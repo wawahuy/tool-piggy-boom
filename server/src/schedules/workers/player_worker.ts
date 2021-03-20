@@ -15,7 +15,7 @@ export default class PlayerWorker {
   onProccess = async (job: Job) => {
     switch (job.name) {
       case nameJobRunPlayer:
-        return jobRunPlayerProccess(job);
+        return await jobRunPlayerProccess(job);
 
       default:
         return Promise.reject(new Error("No execute!"));

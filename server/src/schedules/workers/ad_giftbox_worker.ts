@@ -17,7 +17,7 @@ export default class AdGiftboxWorker {
   onProccess = async (job: Job) => {
     switch (job.name) {
       case nameJobAdGiftbox:
-        return jobAdGiftboxProccess(job);
+        return await jobAdGiftboxProccess(job);
 
       default:
         return Promise.reject(new Error("No execute!"));
