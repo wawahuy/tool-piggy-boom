@@ -97,7 +97,7 @@ async function steal(weaponService: WeaponService) {
     let time = data.time;
     console.log(type, data.time, data.tili);
 
-    await bcLogService.callUserAction(dataGame.uid, tili);
+    await bcLogService.callUserActionPlayTili(dataGame.uid, tili);
 
     switch (type) {
       case EZhuanpanPlayRewardType.fire:
