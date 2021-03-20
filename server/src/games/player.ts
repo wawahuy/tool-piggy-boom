@@ -123,9 +123,9 @@ export default class Player {
 
   async getAdGiftBox(type: RewardAdType) {
     await this._rewardService.popAd(type);
-    await this._bcService.callUserActionAdGiftBox(this.uidGame, type, BCLogTypeAdGiftBox.POP);
+    // await this._bcService.callUserActionAdGiftBox(this.uidGame, type, BCLogTypeAdGiftBox.POP);
     await new Promise(res => setTimeout(res, 20000));
-    await this._bcService.callUserActionAdGiftBox(this.uidGame, type, BCLogTypeAdGiftBox.REWARD);
+    // await this._bcService.callUserActionAdGiftBox(this.uidGame, type, BCLogTypeAdGiftBox.REWARD);
     const reward = await this._rewardService.rewardAd(type);
     const boxInfo = reward?.data?.giftBoxInfo;
     if (!boxInfo) {
