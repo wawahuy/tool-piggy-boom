@@ -11,5 +11,6 @@ const connection: Bull.ConnectionOptions = {
 export default {
   queueMainName: 'main-queue',
   queuePlayName: 'player-queue',
+  queueAdGiftBoxName: 'ad-gift-box-queue',
   connection
 }

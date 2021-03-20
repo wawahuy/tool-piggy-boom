@@ -1,6 +1,6 @@
 import { AuthRequest, AuthResponse, ELoginType } from "./models/game_req/auth";
 import { GameServiceConfig } from "./models/game_req/game";
-import ModelAccountGame from "../models/schema/account_game";
+import ModelAccountGame, { IAccountGameDocument } from "../models/schema/account_game";
 import AuthService from "./services/auth_service";
 import BCLogService from "./services/bclog_service";
 import GameService from "./services/game_services";
@@ -9,33 +9,37 @@ import WeaponService from "./services/weapon_service";
 import { Firetarget } from "./models/game/fire";
 import _ from "lodash";
 import { EFireAttackType, FireRequest } from "./models/game_req/weapon";
+import RewardService from "./services/reward_service";
+import { RewardAdType } from "./models/game_req/reward";
+import { BCLogTypeAdGiftBox } from "./models/game_req/bclog";
 
 export default class Player {
   _gameService: GameService;
   _bcService: BCLogService;
   _weaponService: WeaponService;
+  _rewardService: RewardService;
 
-  get uidGame() {
-    return this._authData.uid;
+  get noNewAuth() {
+    return !this._authData;
   }
 
-  get isFullTili() {
-    return Number(this._authData.zhuanpan.tili) == this._authData.zhuanpan.maxTili;
+  get uidGame() {
+    return this._authAccount.uid;
   }
 
   private constructor(
-    private _authData: AuthResponse,
-    private _authRequest: AuthRequest
+    private _authAccount: IAccountGameDocument, 
+    private _authData?: AuthResponse,
   ) {
-    console.log(this._authData);
     const gameData: GameServiceConfig = {
       uid: this.uidGame,
-      skey: this._authData.skey,
-      mtkey: this._authData.mtkey,
-      deviceToken: this._authData.deviceToken,
+      skey: this._authAccount.skey,
+      mtkey: this._authAccount.mtkey,
+      deviceToken: this._authAccount.deviceToken,
     };
     this._gameService = new GameService(gameData);
     this._weaponService = new WeaponService(this._gameService);
+    this._rewardService = new RewardService(this._gameService);
     this._bcService = new BCLogService();
   }
 
@@ -45,24 +49,29 @@ export default class Player {
     if (!authResponse) {
       return null;
     }
-    const instance = new Player(authResponse, auth);
+    const account = <IAccountGameDocument>{
+      access_token: auth.access_token,
+      deviceToken: auth.deviceToken,
+      mac: auth.mac,
+      deviceModel: auth.deviceModel,
+      uid: authResponse.uid,
+      mtkey: authResponse.mtkey,
+      skey: authResponse.skey,
+      loginType: ELoginType.Login
+    }
+    const instance = new Player(account, authResponse);
     await instance.insertOrUpdateAccount();
     return instance;
   }
 
-  async insertOrUpdateAccount() {
-    const data = {
-      uid: this.uidGame,
-      mtkey: this._authData.mtkey,
-      skey: this._authData.skey,
-      loginType: this._authRequest.loginType,
-      access_token: this._authRequest.access_token,
-      deviceToken: this._authRequest.deviceToken,
-      mac: this._authRequest.mac,
-      deviceModel: this._authRequest.deviceModel,
-    };
+  static getAuthOld(account: IAccountGameDocument) {
+    const instance = new Player(account);
+    return instance;
+  }
+
+  private async insertOrUpdateAccount() {
     try {
-      await ModelAccountGame.updateOne({ uid: this.uidGame }, data, {
+      await ModelAccountGame.updateOne({ uid: this.uidGame }, this._authAccount, {
         upsert: true,
       });
     } catch (e) {
@@ -70,7 +79,7 @@ export default class Player {
     }
   }
 
-  async updateSyncDate() {
+  private async updateSyncDate() {
     const data = {
       syncDate: moment().toDate(),
     };
@@ -110,5 +119,23 @@ export default class Player {
     }
     const req = await this._weaponService.callFire(d);
     return true;
+  }
+
+  async getAdGiftBox(type: RewardAdType) {
+    await this._rewardService.popAd(type);
+    await this._bcService.callUserActionAdGiftBox(this.uidGame, type, BCLogTypeAdGiftBox.POP);
+    await new Promise(res => setTimeout(res, 1000));
+    await this._bcService.callUserActionAdGiftBox(this.uidGame, type, BCLogTypeAdGiftBox.REWARD);
+    const reward = await this._rewardService.rewardAd(type);
+    const boxInfo = reward?.data?.giftBoxInfo;
+    if (!boxInfo) {
+      return null;
+    }
+
+    const wattingNext = boxInfo.find((info: any) => info.giftBoxID === type);
+    return {
+      reward: reward?.data?.reward?.[0]?.type,
+      delay: (wattingNext?.giftBoxCDTime || 0) * 1000 + 100
+    };
   }
 }

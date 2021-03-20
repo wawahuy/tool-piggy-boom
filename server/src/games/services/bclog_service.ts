@@ -7,6 +7,8 @@ import {
 } from "../models/game_req/game";
 import GameApiConfig from "../../configs/game";
 import moment from "moment";
+import { BCLogTypeAdGiftBox } from "games/models/game_req/bclog";
+import { RewardAdType } from "games/models/game_req/reward";
 
 class BCLogService {
   _client: AxiosInstance;
@@ -43,7 +45,7 @@ class BCLogService {
     return config;
   }
 
-  async callUserAction(uid: string, tili: number) {
+  async callUserActionPlayTili(uid: string, tili: number) {
     const action = "t_user_action";
     const date = moment().format("YYYYMMDD");
     const second = Math.round(new Date().getTime() / 1000);
@@ -54,6 +56,21 @@ class BCLogService {
     };
     return await this.req.post('', data).catch(e => {
       console.log('bcLog callUserAction:', e);
+      return null;
+    })
+  }
+
+  async callUserActionAdGiftBox(uid: string, type: RewardAdType, actionType: BCLogTypeAdGiftBox) {
+    const action = "t_client_showad_new";
+    const date = moment().format("YYYYMMDD");
+    const second = Math.round(new Date().getTime() / 1000);
+    const info = `${action}|${date}|${second}|planetpigth|android|android|${GameApiConfig.appVersion}|${GameApiConfig.deviceInfo}||0.0.0.0|1|vn|${uid}|${type}|${actionType}||0|`;
+    const data = {
+      type: action,
+      info: Buffer.from(info).toString("base64"),
+    };
+    return await this.req.post('', data).catch(e => {
+      console.log('bcLog callUserAdGiftBox2:', e);
       return null;
     })
   }

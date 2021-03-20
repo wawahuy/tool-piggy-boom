@@ -11,9 +11,7 @@ import { FilterQuery } from "mongoose";
 
 export const nameJobFindPlayer = "FIND_PLAYER_JOB";
 
-export const timeRepeatFindJob = 5 * 60 * 1000;
-
-export const timeRangeRunJob = 60 * 60 * 1000;
+export const timeRepeatFindJob = 30 * 1000;
 
 export const jobFindPlayer: Job = {
   name: nameJobFindPlayer,
@@ -27,7 +25,7 @@ export const jobFindPlayer: Job = {
   },
 };
 
-async function buildTestUID() {
+async function buildTestRunPlayerUID() {
   const queue = playQueueInstance.queue;
   const watting = await queue.getWaiting();
   const active = await queue.getActive();
@@ -49,20 +47,20 @@ async function buildTestUID() {
 }
 
 export const jobFindPlayerProccess = async (job: JobBull) => {
-  const date = moment().subtract(timeRangeRunJob, "milliseconds").toDate();
-  const match: FilterQuery<IAccountGameDocument> = {
-    $or: [
-      { syncDate: null },
-      {
-        syncDate: {
-          $lte: date,
-        },
-      },
-    ],
-  };
+  // const date = moment().subtract(timeRangeAuthJob, "milliseconds").toDate();
+  // const match: FilterQuery<IAccountGameDocument> = {
+  //   $or: [
+  //     { syncDate: null },
+  //     {
+  //       syncDate: {
+  //         $lte: date,
+  //       },
+  //     },
+  //   ],
+  // };
 
-  const accounts = await ModelAccountGame.find(match);
-  const uidTest = await buildTestUID();
+  const accounts = await ModelAccountGame.find({});
+  const uidTest = await buildTestRunPlayerUID();
 
   const results = await Promise.all(
     accounts.map(async (account) => {

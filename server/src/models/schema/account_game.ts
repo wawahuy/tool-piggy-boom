@@ -14,7 +14,7 @@ export interface IAccountGameDocument extends Document {
   deviceModel: string,
   mtkey: string;
   skey: string;
-  syncDate: Date | null;
+  syncDate?: Date | null;
 }
 
 export interface IAccountGameModal extends Model<IAccountGameDocument> {
