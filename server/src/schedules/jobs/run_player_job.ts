@@ -32,25 +32,27 @@ export const jobRunPlayerProccess = async (job: JobBull) => {
   }
 
   // check giftbox rewards
-  const uidAdGiftTest = await buildTestAdGiftUID();
+  const uidAdGiftTest1 = await buildTestAdGiftUID();
   if (
-    !uidAdGiftTest.find(
+    !uidAdGiftTest1.find(
       makeKeyDataJobAdGiftbox(account?.uid, RewardAdType.adGiftBox1)
     )
   ) {
-    adGiftBoxQueueInstance.addJob(
+    await adGiftBoxQueueInstance.addJob(
       createJoAdGiftBox({
         uid: account.uid,
         type: RewardAdType.adGiftBox1,
       })
     );
   }
+
+  const uidAdGiftTest2 = await buildTestAdGiftUID();
   if (
-    !uidAdGiftTest.find(
+    !uidAdGiftTest2.find(
       makeKeyDataJobAdGiftbox(account?.uid, RewardAdType.adGiftBox2)
     )
   ) {
-    adGiftBoxQueueInstance.addJob(
+    await adGiftBoxQueueInstance.addJob(
       createJoAdGiftBox({
         uid: account.uid,
         type: RewardAdType.adGiftBox2,
