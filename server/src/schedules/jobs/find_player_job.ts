@@ -60,17 +60,15 @@ export const jobFindPlayerProccess = async (job: JobBull) => {
   // };
 
   const accounts = await ModelAccountGame.find({});
-  const uidTest = await buildTestRunPlayerUID();
 
-  const results = await Promise.all(
-    accounts.map(async (account) => {
-      if (!uidTest.find(account.uid)) {
-        const jobNew = createJobRunPlayer(account.uid);
-        await playQueueInstance.addJob(jobNew);
-        return true;
-      }
-    })
-  );
+  for(let account of accounts) {
+    const uidTest = await buildTestRunPlayerUID();
+    if (!uidTest.find(account.uid)) {
+      const jobNew = createJobRunPlayer(account.uid);
+      await playQueueInstance.addJob(jobNew);
+      return true;
+    }
+  }
 
-  return `${results.filter((r) => r).length} player added!`;
+  return `Good jobs`;
 };
