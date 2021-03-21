@@ -7,7 +7,6 @@ import { createJobRunPlayer, nameJobRunPlayer } from "./run_player_job";
 import ModelAccountGame from "../../models/schema/account_game";
 import appConfigs from '../../configs/app';
 import ModelIPProxyConfig from "../../models/schema/ip_proxy_config";
-import { hasJobRunProxy, jobRunProxy } from "./run_proxy_job";
 
 export const nameJobFindPlayer = "FIND_PLAYER_JOB";
 
@@ -54,10 +53,6 @@ export const jobFindPlayerProccess = async (job: JobBull) => {
       const jobNew = createJobRunPlayer(account.uid);
       await playQueueInstance.addJob(jobNew);
     }
-  }
-
-  if (await ModelIPProxyConfig.canSync() && !await hasJobRunProxy()) {
-    await mainQueueInstance.addJob(jobRunProxy);
   }
 
   return `Good jobs`;
