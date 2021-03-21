@@ -1,4 +1,4 @@
-FROM node:12.18-alpine
+FROM node:15.12.0-alpine3.13
 
 ENV PORT=10002
 

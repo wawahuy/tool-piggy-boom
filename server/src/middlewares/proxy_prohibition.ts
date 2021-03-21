@@ -6,14 +6,10 @@ export const proxyProhibitionMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  // req["ipReal"] =
-  //   req.headers["cf-connecting-ip"] ||
-  //   req.headers["x-forwarded-for"] ||
-  //   req.connection.remoteAddress;
-
-  if (appConfigs.IS_DEVELOPMENT) {
-    return next();
-  }
+  req.ipReal =
+    req.headers["cf-connecting-ip"] ||
+    req.headers["x-forwarded-for"] ||
+    req.connection.remoteAddress;
 
   next();
 };
