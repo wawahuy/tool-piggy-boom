@@ -7,11 +7,11 @@ import { createJobRunPlayer, nameJobRunPlayer } from "./run_player_job";
 import ModelAccountGame, {
   IAccountGameDocument,
 } from "../../models/schema/account_game";
-import { FilterQuery } from "mongoose";
+import appConfigs from '../../configs/app';
 
 export const nameJobFindPlayer = "FIND_PLAYER_JOB";
 
-export const timeRepeatFindJob = 1 * 1000;
+export const timeRepeatFindJob = appConfigs.IS_DEVELOPMENT ? 1000 : 30 * 1000;
 
 export const jobFindPlayer: Job = {
   name: nameJobFindPlayer,
