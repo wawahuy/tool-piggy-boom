@@ -1,4 +1,12 @@
 const { networkInterfaces } = require('os');
+const fs = require('fs');
+const path = require('path');
+const AVL = require('avl');
+
+const fileAllow = path.join(__dirname, 'allow.json');
+const listAllowProxy = new AVL();
+const isSaveListAllowProxy = false;
+loadList();
 
 /// show lan
 const nets = networkInterfaces();
@@ -8,6 +16,25 @@ for (const name of Object.keys(nets)) {
             console.log(name, net.address);
         }
     }
+}
+
+// get & save list
+
+function loadList() {
+  const content = fs.readFileSync(fileAllow);
+  const data = JSON.parse(content.toString('utf-8'));
+  data.map(domain => {
+    listAllowProxy.insert(domain);
+  })
+}
+
+function saveDomain(domain) {
+  if (listAllowProxy.find(domain)) {
+    return;
+  }
+  listAllowProxy.insert(domain);
+  console.log(domain);
+  fs.writeFileSync(fileAllow, JSON.stringify(listAllowProxy.keys()));
 }
 
 // call add data
@@ -54,6 +81,16 @@ const zlib = require("zlib");
 const server = http.createServer(function (req, res) {
   const urlObj = url.parse(req.url);
   const target = urlObj.protocol + "//" + urlObj.host;
+
+  if (isSaveListAllowProxy) {
+    saveDomain(urlObj.host);
+  } else {
+    if (!listAllowProxy.find(urlObj.host)) {
+      // console.log('no', urlObj.host);
+      res.destroy();
+      return;
+    }
+  }
 
   const proxy = httpProxy.createProxyServer({});
   proxy.on("error", function (err, req, res) {
@@ -113,6 +150,17 @@ server.addListener('connect', function (req, socket, bodyhead) {
   const hostPort = getHostPortFromString(req.url, 443);
   const hostDomain = hostPort[0];
   const port = parseInt(hostPort[1]);
+
+  if (isSaveListAllowProxy) {
+    saveDomain(hostDomain);
+  } else {
+    if (!listAllowProxy.find(hostDomain)) {
+      // console.log('no', hostDomain);
+      socket.destroy();
+      return;
+    }
+  }
+
 
   const proxySocket = new net.Socket();
   proxySocket.connect(port, hostDomain, function () {
