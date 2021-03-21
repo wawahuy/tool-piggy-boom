@@ -11,7 +11,7 @@ import { FilterQuery } from "mongoose";
 
 export const nameJobFindPlayer = "FIND_PLAYER_JOB";
 
-export const timeRepeatFindJob = 30 * 1000;
+export const timeRepeatFindJob = 1 * 1000;
 
 export const jobFindPlayer: Job = {
   name: nameJobFindPlayer,

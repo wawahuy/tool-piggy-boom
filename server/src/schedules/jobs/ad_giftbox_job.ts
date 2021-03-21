@@ -39,9 +39,9 @@ export function mapDataJobAdGift(avl: AVLTree<unknown, unknown>, job: JobBull) {
 
 export async function buildTestAdGiftUID() {
   const queue = adGiftBoxQueueInstance.queue;
-  const watting = await queue.getWaiting();
-  const active = await queue.getActive();
-  const delay = await queue.getDelayed();
+  const watting = await queue.getWaiting(0, await queue.getWaitingCount());
+  const active = await queue.getActive(0, await queue.getActiveCount());
+  const delay = await queue.getDelayed(0, await queue.getDelayedCount());
   const avl = new AVLTree();
 
   const mapData = mapDataJobAdGift.bind(null, avl);
@@ -53,7 +53,7 @@ export async function buildTestAdGiftUID() {
 
 export async function buildTestDelayedAdGiftUID() {
   const queue = adGiftBoxQueueInstance.queue;
-  const delay = await queue.getDelayed();
+  const delay = await queue.getDelayed(0, await queue.getDelayedCount());
   const avl = new AVLTree();
 
   const mapData = mapDataJobAdGift.bind(null, avl);
