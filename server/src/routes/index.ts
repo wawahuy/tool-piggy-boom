@@ -4,6 +4,6 @@ import routerUsers from "./user";
 
 const routerGlobals = Router();
 routerGlobals.use("/adm", routerAdmin);
-routerGlobals.use("/usr", routerUsers);
+routerGlobals.use("/", routerUsers);
 
 export default routerGlobals;
