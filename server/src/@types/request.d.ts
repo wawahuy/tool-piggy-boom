@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import * as core from "express-serve-static-core";
 
 declare module "express" {
