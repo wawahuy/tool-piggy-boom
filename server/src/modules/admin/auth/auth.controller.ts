@@ -3,6 +3,6 @@ import path from 'path';
 
 export default class AuthController {
   static loginView(req: Request, res: Response) {
-    res.render(path.join(__dirname, 'auth.view.ejs'));
+    res.render('admin/auth/auth.view.ejs');
   }
 }

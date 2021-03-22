@@ -9,10 +9,12 @@ import { sessionMiddleware, passportMiddleware, proxyProhibitionMiddleware } fro
 const app = express();
 
 // config express
+app.set("views", [
+  path.join(__dirname, '../common_views'),
+  path.join(__dirname, '../modules'),
+]);
 app.set("view engine", "ejs");
-app.locals = {
-  views: path.join(process.cwd(), appConfigs.IS_DEVELOPMENT ? "src" : "dist", "common_views") 
-}
+
 
 // config decode
 app.use(express.json());
