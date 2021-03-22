@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "env-cmd -f ./env/dev.env nodemon",
     "prod": "env-cmd -f ./env/prod.env node ./dist/index.js",
+    "devprod": "env-cmd -f ./env/dev.env node ./dist/index.js",
     "worker": "echo 'need update!'",
     "build": "rimraf ./dist && tsc",
     "postbuild": "copyfiles -u 1 src/**/*.ejs dist"

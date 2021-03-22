@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 import cookieParser from "cookie-parser";
 import passportConfigs from "../configs/passport";
 import routerGlobals from "../routes";
@@ -8,6 +9,9 @@ const app = express();
 
 // config express
 app.set("view engine", "ejs");
+app.locals = {
+  views: path.join(__dirname, "../views") 
+}
 
 // config decode
 app.use(express.json());
