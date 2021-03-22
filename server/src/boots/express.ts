@@ -11,7 +11,7 @@ const app = express();
 // config express
 app.set("view engine", "ejs");
 app.locals = {
-  views: path.join(process.cwd(), appConfigs.IS_DEVELOPMENT ? "src" : "dist", "views") 
+  views: path.join(process.cwd(), appConfigs.IS_DEVELOPMENT ? "src" : "dist", "common_views") 
 }
 
 // config decode
