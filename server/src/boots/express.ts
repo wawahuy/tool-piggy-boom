@@ -3,6 +3,7 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import passportConfigs from "../configs/passport";
 import routerGlobals from "../routes";
+import appConfigs from "../configs/app";
 import { sessionMiddleware, passportMiddleware, proxyProhibitionMiddleware } from "../middlewares";
 
 const app = express();
@@ -10,7 +11,7 @@ const app = express();
 // config express
 app.set("view engine", "ejs");
 app.locals = {
-  views: path.join(__dirname, "../views") 
+  views: path.join(process.cwd(), appConfigs.IS_DEVELOPMENT ? "src" : "dist", "views") 
 }
 
 // config decode
