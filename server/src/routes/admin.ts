@@ -6,6 +6,7 @@ import ppConfigs from "../configs/passport";
 import AuthController from "../modules/admin/auth/auth.controller";
 import HomeController from "../modules/admin/home/home.controller";
 import AccountController from "../modules/admin/account/account.controller";
+import LogoutController from "../modules/admin/logout/logout.controller";
 
 // zone non-auth
 const routerAdmin = Router();
@@ -22,6 +23,7 @@ routerAdmin.use(
 // zone auth
 const routerAuth = Router();
 routerAuth.get("/", HomeController.homeView);
+routerAuth.get("/logout", LogoutController.logout);
 routerAuth.use("/bull", bullBoardRouter);
 
 // apply router

@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <%- include('../../../views/header'); %>
+  <style>
+    .header {
+      text-align: center;
+      padding: 20px 0;
+    }
+  </style>
 </head>
 <body>
-  Hello admin!
-  <br/>
-  <a href="/adm/bull">Bull</a>
+  <div class="container-fluid">
+    <h1 class="header">
+      Heo Đến Rồi
+    </h1>
+    <br/>
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link active" href="/adm//bull">Jobs manager</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/adm/logout">Logout</a>
+      </li>
+    </ul>
+  </div>
+  <%- include('../../../views/footer'); %>
 </body>
-<script>
-  const ws = new WebSocket("ws://localhost:10002/ws");
-  ws.onopen = () => {
-    console.log('oke');
-  };
-</script>
 </html>
