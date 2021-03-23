@@ -1,5 +1,5 @@
 import combineMiddleware from '../helpers/combine_middleware';
-import { sessionMiddleware, passportMiddleware } from "../middlewares";
+import { sessionMiddleware, passportAdminMiddleware } from "../middlewares";
 import express, { Request, Response, NextFunction } from 'express';
 import passportConfigs from "../configs/passport";
 import cookieParser from "cookie-parser";
@@ -16,6 +16,6 @@ export const wsMiddleware = combineMiddleware(
   express.urlencoded(),
   cookieParser(passportConfigs.COOKIE_SECRET),
   sessionMiddleware,
-  passportMiddleware,
+  passportAdminMiddleware,
   authMiddleware
 );

@@ -1,4 +1,5 @@
-import { passportMiddleware } from "./passport";
+import { passportAdminMiddleware } from "./passport_admin";
+import { passportUserMiddleware } from "./passport_user";
 import { sessionMiddleware } from "./session";
 import { adminLoggedMiddleware } from "./auth_admin";
 import { userLoggedMiddleware } from "./auth_user";
@@ -7,7 +8,8 @@ import { proxyProhibitionMiddleware } from "./proxy_prohibition";
 
 export {
   sessionMiddleware,
-  passportMiddleware,
+  passportAdminMiddleware,
+  passportUserMiddleware,
   wsMiddleware,
   adminLoggedMiddleware,
   userLoggedMiddleware,

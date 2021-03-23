@@ -1,11 +1,16 @@
 import { Request, Response, Router } from 'express';
-import { proxyProhibitionMiddleware } from '../middlewares';
+import { passportUserMiddleware, proxyProhibitionMiddleware, userLoggedMiddleware } from '../middlewares';
 
-const routerUsers = Router(); 
+const routerUsers = Router();
 routerUsers.use(proxyProhibitionMiddleware);
+routerUsers.use(passportUserMiddleware);
 
-routerUsers.get("/", (req: Request, res: Response) => {
-  res.json({ ip: req.ipReal }).end();
-});
+// zone non-auth
+
+// zone auth
+const routerAuth = Router();
+
+// apply router
+routerUsers.use(userLoggedMiddleware, routerAuth);
 
 export default routerUsers;
