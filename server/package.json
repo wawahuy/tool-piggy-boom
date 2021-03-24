@@ -9,7 +9,9 @@
     "devprod": "env-cmd -f ./env/dev.env node ./dist/index.js",
     "worker": "echo 'need update!'",
     "build": "rimraf ./dist && tsc",
-    "postbuild": "copyfiles -u 1 \"src/**/*.ejs\" dist -V"
+    "postbuild": "npm run copy:ejs && npm run copy:assets",
+    "copy:assets": "copyfiles -u 1 \"src/assets/**\" dist -V",
+    "copy:ejs": "copyfiles -u 1 \"src/**/*.ejs\" dist -V"
   },
   "keywords": [],
   "author": "",

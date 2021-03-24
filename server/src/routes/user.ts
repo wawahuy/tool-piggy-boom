@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+import HomeController from '../modules/user/home/home.controller';
 import { passportUserMiddleware, proxyProhibitionMiddleware, userLoggedMiddleware } from '../middlewares';
 
 const routerUsers = Router();
@@ -6,6 +7,7 @@ routerUsers.use(proxyProhibitionMiddleware);
 routerUsers.use(passportUserMiddleware);
 
 // zone non-auth
+routerUsers.get('/', HomeController.homeView);
 
 // zone auth
 const routerAuth = Router();

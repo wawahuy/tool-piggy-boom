@@ -14,7 +14,6 @@ app.set("views", [
 ]);
 app.set("view engine", "ejs");
 
-
 // config decode
 app.use(express.json());
 app.use(express.urlencoded());
