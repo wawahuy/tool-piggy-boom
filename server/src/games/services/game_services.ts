@@ -3,6 +3,7 @@ import querystring from "querystring";
 import * as _ from "lodash";
 import { GameServiceConfig, GameServiceResponse } from "../models/game_req/game";
 import GameApiConfig from "../../configs/game";
+import { logger } from "../../helpers/logger";
 
 class GameService {
   _client: AxiosInstance;
@@ -63,7 +64,9 @@ class GameService {
         return dataObject._d;
       }
     } catch (e) {
-      console.log(e);
+      if (data) {
+        logger.warning(e?.stack?.toString());
+      }
     }
     return null;
   }

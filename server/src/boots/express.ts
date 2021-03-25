@@ -4,15 +4,17 @@ import cookieParser from "cookie-parser";
 import passportConfigs from "../configs/passport";
 import routerGlobals from "../routes";
 import { sessionMiddleware } from "../middlewares";
+import ejsHelper from "../helpers/ejs";
 
 const app = express();
 
 // config express
 app.set("views", [
-  path.join(__dirname, '../common_views'),
-  path.join(__dirname, '../modules'),
+  path.join(__dirname, "../common_views"),
+  path.join(__dirname, "../modules"),
 ]);
 app.set("view engine", "ejs");
+app.locals = { ...app.locals, _: ejsHelper };
 
 // config decode
 app.use(express.json());

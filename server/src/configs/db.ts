@@ -4,7 +4,8 @@ const configs = {
   REDIS_PORT: process.env.REDIS_PORT,
   REDIS_PWD : process.env.REDIS_PWD,
 
-  SESSION_DB: 'sessions'
+  SESSION_DB: 'sessions',
+  LOG_DB: 'logs'
 }
 
 export default configs;

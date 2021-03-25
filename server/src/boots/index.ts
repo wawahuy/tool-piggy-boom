@@ -5,16 +5,17 @@ import initMongo from './mongo';
 import initJobs from './job';
 import wss from './ws';
 import { wsMiddleware } from "../middlewares";
+import { logger } from '../helpers/logger';
 
 const server = http.createServer(expressApp);
 
-server.listen(
-  appConfigs.APP_PORT,
-  "0.0.0.0",
-  () => {
-    console.log("Express listening...", appConfigs.APP_PORT)
-  }
-)
+server.on('error', (e: Error) => {
+  logger.error(e.stack?.toString());
+});
+
+server.on('listening', () => {
+  logger.info("Express listenning - port: " + appConfigs.APP_PORT)
+});
 
 server.on('upgrade', function upgrade(request, socket, head) {
   if (request.url === appConfigs.WS) {
@@ -26,6 +27,8 @@ server.on('upgrade', function upgrade(request, socket, head) {
     wsMiddleware(request, socket, next);
   }
 });
+
+server.listen(appConfigs.APP_PORT, "0.0.0.0");
 
 initMongo();
 

@@ -6,6 +6,7 @@ import GameApiConfig from "../../configs/game";
 import querystring from "querystring";
 import * as _ from "lodash";
 import { AuthRequest, AuthResponse } from "games/models/game_req/auth";
+import { logger } from "../../helpers/logger";
 
 export default class AuthService {
   _client: AxiosInstance;
@@ -71,6 +72,9 @@ export default class AuthService {
     return await this.req
       .post("gameNew/login/", data)
       .then((r) => r.data)
-      .catch((e) => null);
+      .catch((e: Error) => {
+        logger.warn(e?.stack?.toString());
+        return null;
+      });
   }
 }

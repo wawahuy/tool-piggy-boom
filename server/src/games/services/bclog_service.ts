@@ -9,6 +9,7 @@ import GameApiConfig from "../../configs/game";
 import moment from "moment";
 import { BCLogTypeAdGiftBox } from "games/models/game_req/bclog";
 import { RewardAdType } from "games/models/game_req/reward";
+import { logger } from "../../helpers/logger";
 
 class BCLogService {
   _client: AxiosInstance;
@@ -54,8 +55,8 @@ class BCLogService {
       type: action,
       info: Buffer.from(info).toString("base64"),
     };
-    return await this.req.post('', data).catch(e => {
-      console.log('bcLog callUserAction:', e);
+    return await this.req.post('', data).catch((e: Error) => {
+      logger.warning(e?.stack?.toString());
       return null;
     })
   }
@@ -69,8 +70,8 @@ class BCLogService {
       type: action,
       info: Buffer.from(info).toString("base64"),
     };
-    return await this.req.post('', data).catch(e => {
-      console.log('bcLog callUserAdGiftBox2:', e);
+    return await this.req.post('', data).catch((e: Error) => {
+      logger.warning(e?.stack?.toString());
       return null;
     })
   }

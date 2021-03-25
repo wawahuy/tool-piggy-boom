@@ -1,9 +1,5 @@
 import { RewardAdType } from "games/models/game_req/reward";
-import {
-  FireRequest,
-  FireResponse,
-  StealResponse,
-} from "../models/game_req/weapon";
+import { logger } from "../../helpers/logger";
 import GameService from "./game_services";
 
 export default class RewardService {
@@ -15,7 +11,10 @@ export default class RewardService {
       .then((res) => {
         return res?.data;
       })
-      .catch((error) => null);
+      .catch((error: Error) => {
+        logger.warn(error?.stack?.toString());
+        return null;
+      });
   }
 
   async rewardAd(name: RewardAdType, param?: Object) {
@@ -24,6 +23,9 @@ export default class RewardService {
       .then((res) => {
         return res?.data;
       })
-      .catch((error) => null);
+      .catch((error: Error) => {
+        logger.warn(error?.stack?.toString());
+        return null;
+      });
   }
 }

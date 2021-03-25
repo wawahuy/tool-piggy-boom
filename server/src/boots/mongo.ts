@@ -1,22 +1,22 @@
 import mongoose from 'mongoose';
-import appConfigs from '../configs/app';
 import dbConfigs from '../configs/db';
+import { logger } from '../helpers/logger';
 
 export default function initMongo() {
   const uri = dbConfigs.MONGO_URI;
   
   if (!uri) {
-    console.log('MongoDB - uri null!');
+    logger.error('mongo - uri null');
     return;
   }
 
   mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
 
   mongoose.connection.once('open', () => {
-    console.log('MongoDB connected!');
+    logger.info('MongoDB connected!');
   });
 
-  mongoose.connection.on('error', (error) => {
-    console.log('MongoDB error!', error);
+  mongoose.connection.on('error', (error: Error) => {
+    logger.error(error?.stack?.toString());
   });
 }
