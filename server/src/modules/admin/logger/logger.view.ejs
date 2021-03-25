@@ -12,11 +12,11 @@
       <div class="col-xl-10 group-detail">
         <div class="detail mr-4">
           <span class="title">News lasted</span>
-          <span class="value">21/23/2020 01:02:00</span>
+          <span class="value"><%= list && list.length ? list[0].timestamp : '--'; %></span>
         </div>
         <div class="detail mr-4">
           <span class="title">Total</span>
-          <span class="value">12</span>
+          <span class="value"><%= list ? list.length : '0'; %></span>
         </div>
       </div>
     </div>
@@ -43,23 +43,28 @@
           <button type="submit" class="btn btn-primary mb-3">Filter</button>
         </div>
       </div>
+
       <div class="col-xl-10 main">
         <div class="card">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-              <div class="mb-0 name-log">
-                <span class="badge badge-info mr-2">Info</span>
-                A second item
-              </div>
-              <div class="collapse mt-2" id="collapseExample">
-                <div class="card card-body">
-                  Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+            <% list.forEach(function(item, i){ %>
+              <li class="list-group-item" data-toggle="collapse" data-target="#collapseExample<%= i; %>" aria-expanded="false" aria-controls="collapseExample">
+                <div class="mb-0 name-log">
+                  <span class="badge badge-<%=item.type %> mr-2"><%= item.level %></span>
+                  <span class="badge badge-light mr-2"><%= item.timestamp %> </span> 
+                  <%= item.name %> 
                 </div>
-              </div>
-            </li>
+                <div class="collapse mt-2" id="collapseExample<%= i; %>">
+                  <div class="card card-body">
+                    <pre><%= item.message %></pre>
+                  </div>
+                </div>
+              </li>
+            <% }); %>
           </ul>
         </div>
       </div>
+
     </div>
   </div>
   <%- include('footer'); %>

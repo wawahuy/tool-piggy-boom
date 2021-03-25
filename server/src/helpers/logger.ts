@@ -28,5 +28,8 @@ export const transportMongo = new winston.transports.MongoDB({
 });
 
 export const logger = winston.createLogger({
-  transports: [transportConsole, ...(appConfigs ? [transportMongo] : [])],
+  transports: [
+    transportConsole,
+    ...(!appConfigs.IS_DEVELOPMENT ? [transportMongo] : []),
+  ],
 });

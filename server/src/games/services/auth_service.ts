@@ -63,7 +63,7 @@ export default class AuthService {
         return dataObject._d;
       }
     } catch (e) {
-      console.log(e);
+      logger.warn(e?.stack?.toString());
     }
     return null;
   }
