@@ -1,20 +1,22 @@
+import urljoin from 'url-join';
+
 const pack = require('../../package.json');
 const version = pack.version;
 
-const image = (path: string) => {
-  return assets(`images/${path}`);
+const image = (p: string) => {
+  return assets('images', p);
 }
 
-const style = (path: string) => {
-  return assets(`styles/${path}`);
+const style = (p: string) => {
+  return assets('styles', p);
 }
 
-const script = (path: string) => {
-  return assets(`scripts/${path}`);
+const script = (p: string) => {
+  return assets('scripts', p);
 }
 
-const assets = (path: string) => {
-  return `/assets/${path}?v=${version}`;
+const assets = (...p: string[]) => {
+  return  urljoin("/", "assets", ...p, `?v=${version}`)
 }
 
 const modules = {

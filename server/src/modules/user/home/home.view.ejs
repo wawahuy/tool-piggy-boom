@@ -5,7 +5,7 @@
   <style>
     .header {
       height: 100vh;
-      background-image: url(/assets/images/login_bg.png);
+      background-image: url('<%- _.image("login_bg.png") %>');
       background-repeat: no-repeat;
       background-size: cover;
     }
@@ -16,8 +16,6 @@
   <div class="container-fluid">
     <div class="header">
     </div>
-
-    Hello world
  </div>
   
   <%- include('footer'); %>

@@ -6,7 +6,7 @@ import ppConfigs from "../configs/passport";
 import AuthController from "../modules/admin/auth/auth.controller";
 import HomeController from "../modules/admin/home/home.controller";
 import AccountController from "../modules/admin/account/account.controller";
-import LogoutController from "../modules/admin/logout/logout.controller";
+import LoggerController from "../modules/admin/logger/logger.controller";
 
 const routerAdmin = Router();
 routerAdmin.use(passportAdminMiddleware);
@@ -25,8 +25,9 @@ routerAdmin.use(
 // zone auth
 const routerAuth = Router();
 routerAuth.get("/", HomeController.homeView);
-routerAuth.get("/logout", LogoutController.logout);
+routerAuth.get("/logout", AuthController.logout);
 routerAuth.use("/bull", bullBoardRouter);
+routerAuth.use("/logger", LoggerController.loggerView);
 
 // apply router
 routerAdmin.use(adminLoggedMiddleware, routerAuth);
