@@ -8,7 +8,7 @@ import { LoggerQuery, pageSize } from "./model";
 
 export default class LoggerController {
   static async loggerView(
-    req: Request<core.ParamsDictionary, any, any, LoggerQuery>,
+    req: Request<core.ParamsDictionary, any, any, any>,
     res: Response
   ) {
     let {
@@ -16,7 +16,7 @@ export default class LoggerController {
       date_to = moment().utcOffset(appConfigs.UTC_OFFSET).format("YYYY/MM/DD"),
       page = 1,
       limit = 100,
-    } = req.query;
+    } = <LoggerQuery>req.query;
 
     // convert user time to utc0 time
     let timestamp: Object = {

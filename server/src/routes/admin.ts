@@ -8,6 +8,7 @@ import HomeController from "../modules/admin/home/home.controller";
 import AccountController from "../modules/admin/account/account.controller";
 import LoggerController from "../modules/admin/logger/logger.controller";
 import LoggerValidator from "../modules/admin/logger/logger.validator";
+import AuthValidator from "../modules/admin/auth/auth.validator";
 
 const routerAdmin = Router();
 routerAdmin.use(passportAdminMiddleware);
@@ -17,6 +18,7 @@ routerAdmin.post("/add_account", AccountController.addAccountGame);
 routerAdmin.get("/login", AuthController.loginView);
 routerAdmin.use(
   "/login",
+  AuthValidator.login,
   passportAdmin.authenticate(ppConfigs.AUTH_SESSION, {
     successRedirect: "/adm/",
     failureRedirect: "/adm/login",
