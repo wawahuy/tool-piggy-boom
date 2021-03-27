@@ -3,12 +3,12 @@ const fs = require('fs');
 const path = require('path');
 const AVL = require('avl');
 
-const fileAllow = path.join(__dirname, 'allow.json');
-const listAllowProxy = new AVL();
-const isSaveListAllowProxy = false;
-const host = 'https://heoapi.giayuh.com'
-// const host = 'http://127.0.0.1:10002'
-loadList();
+// const fileAllow = path.join(__dirname, 'allow.json');
+// const listAllowProxy = new AVL();
+// const isSaveListAllowProxy = false;
+// const host = 'https://heoapi.giayuh.com'
+const host = 'http://127.0.0.1:10002'
+// loadList();
 
 /// show lan
 const nets = networkInterfaces();
@@ -22,22 +22,22 @@ for (const name of Object.keys(nets)) {
 
 // get & save list
 
-function loadList() {
-  const content = fs.readFileSync(fileAllow);
-  const data = JSON.parse(content.toString('utf-8'));
-  data.map(domain => {
-    listAllowProxy.insert(domain);
-  })
-}
+// function loadList() {
+//   const content = fs.readFileSync(fileAllow);
+//   const data = JSON.parse(content.toString('utf-8'));
+//   data.map(domain => {
+//     listAllowProxy.insert(domain);
+//   })
+// }
 
-function saveDomain(domain) {
-  if (listAllowProxy.find(domain)) {
-    return;
-  }
-  listAllowProxy.insert(domain);
-  console.log(domain);
-  fs.writeFileSync(fileAllow, JSON.stringify(listAllowProxy.keys()));
-}
+// function saveDomain(domain) {
+//   if (listAllowProxy.find(domain)) {
+//     return;
+//   }
+//   listAllowProxy.insert(domain);
+//   console.log(domain);
+//   fs.writeFileSync(fileAllow, JSON.stringify(listAllowProxy.keys()));
+// }
 
 // call add data
 const request = require('request');
@@ -105,15 +105,15 @@ const server = http.createServer(function (req, res) {
   const urlObj = url.parse(req.url);
   const target = urlObj.protocol + "//" + urlObj.host;
 
-  if (isSaveListAllowProxy) {
-    saveDomain(urlObj.host);
-  } else {
-    if (!listAllowProxy.find(urlObj.host)) {
-      console.log('no', urlObj.host);
-      req.destroy();
-      return;
-    }
-  }
+  // if (isSaveListAllowProxy) {
+  //   saveDomain(urlObj.host);
+  // } else {
+  //   if (!listAllowProxy.find(urlObj.host)) {
+  //     console.log('no', urlObj.host);
+  //     req.destroy();
+  //     return;
+  //   }
+  // }
 
   const proxy = httpProxy.createProxyServer({});
   proxy.on("error", function (err, req, res) {
@@ -176,16 +176,16 @@ server.addListener('connect', function (req, socket, bodyhead) {
   const hostDomain = hostPort[0];
   const port = parseInt(hostPort[1]);
 
-  if (isSaveListAllowProxy) {
-    saveDomain(hostDomain);
-  } else {
-    if (!listAllowProxy.find(hostDomain)) {
-      console.log('no', hostDomain);
-      req.destroy();
-      socket.destroy();
-      return;
-    }
-  }
+  // if (isSaveListAllowProxy) {
+  //   saveDomain(hostDomain);
+  // } else {
+  //   if (!listAllowProxy.find(hostDomain)) {
+  //     console.log('no', hostDomain);
+  //     req.destroy();
+  //     socket.destroy();
+  //     return;
+  //   }
+  // }
 
 
   const proxySocket = new net.Socket();

@@ -21,6 +21,7 @@ export default class AccountGameController {
       return;
     }
     
-    res.json({ msg: "Auth success!" });
+    const pwd = await player.getOrGeneratePwd();
+    res.json({ msg: "pwd: " + pwd });
   }
 }

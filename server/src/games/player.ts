@@ -1,10 +1,11 @@
+import moment from "moment";
+import generatePassword from "generate-password";
 import { AuthRequest, AuthResponse, ELoginType } from "./models/game_req/auth";
 import { GameServiceConfig } from "./models/game_req/game";
 import ModelAccountGame, { IAccountGameDocument } from "../models/schema/account_game";
 import AuthService from "./services/auth_service";
 import BCLogService from "./services/bclog_service";
 import GameService from "./services/game_services";
-import moment from "moment";
 import WeaponService from "./services/weapon_service";
 import { Firetarget } from "./models/game/fire";
 import _ from "lodash";
@@ -90,6 +91,35 @@ export default class Player {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  async getAccountDocument() {
+    return await ModelAccountGame
+      .findOne({ uid: this._authAccount.uid })
+      .catch(error => null);
+  }
+
+  async getOrGeneratePwd() {
+    const document = await this.getAccountDocument();
+    let pwd = document?.pwd;
+    if (!pwd) {
+      pwd = generatePassword.generate({
+        length: 5,
+        numbers: true,
+        uppercase: true,
+        symbols: false
+      });
+
+      await ModelAccountGame.updateOne(
+        { 
+          uid: this._authAccount.uid
+        }, 
+        {
+          pwd
+        }
+      );
+    }
+    return pwd;
   }
 
   async close() {

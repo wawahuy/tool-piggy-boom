@@ -7,6 +7,7 @@ import Mongoose, { Document, Model, Schema } from 'mongoose';
  */
 export interface IAccountGameDocument extends Document {
   uid: string;
+  pwd: string;
   loginType: number,
   access_token: string,
   deviceToken: string,
@@ -24,6 +25,7 @@ export interface IAccountGameModal extends Model<IAccountGameDocument> {
 const AccountGameSchema = new Schema<IAccountGameDocument, IAccountGameModal>(
   {
     uid: { type: Schema.Types.String, required: true, index: true },
+    pwd: { type: Schema.Types.String },
     loginType: { type: Schema.Types.Number },
     access_token: { type: Schema.Types.String },
     deviceToken: { type: Schema.Types.String },
