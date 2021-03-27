@@ -18,10 +18,12 @@ export default class LoggerController {
       limit = 100,
     } = <LoggerQuery>req.query;
 
+
     // convert user time to utc0 time
     let timestamp: Object = {
       $lte: moment(date_to, "YYYY/MM/DD")
         .utcOffset(appConfigs.UTC_OFFSET)
+        .add(24 * 60 * 60 - 1, 'seconds')
         .toDate(),
     };
 

