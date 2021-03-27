@@ -171,6 +171,13 @@ const getHostPortFromString = function (hostString, defaultPort) {
   return ( [host, port] );
 };
 
+server.on('upgrade', (req, socket, head) => {
+  const urlObj = url.parse(req.url);
+  const target = urlObj.protocol + "//" + urlObj.host;
+  const proxy = httpProxy.createProxyServer({});
+  proxy.ws(req, socket, head, { target: target });
+});
+
 server.addListener('connect', function (req, socket, bodyhead) {
   const hostPort = getHostPortFromString(req.url, 443);
   const hostDomain = hostPort[0];
