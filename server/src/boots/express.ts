@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
+import flash from "express-flash";
 import passportConfigs from "../configs/passport";
 import routerGlobals from "../routes";
 import { sessionMiddleware } from "../middlewares";
@@ -23,6 +24,7 @@ app.use(cookieParser(passportConfigs.COOKIE_SECRET));
 
 // config session
 app.use(sessionMiddleware);
+app.use(flash());
 
 // init routers global
 app.use(routerGlobals);

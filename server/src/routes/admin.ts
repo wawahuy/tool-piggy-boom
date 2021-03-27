@@ -7,6 +7,7 @@ import AuthController from "../modules/admin/auth/auth.controller";
 import HomeController from "../modules/admin/home/home.controller";
 import AccountController from "../modules/admin/account/account.controller";
 import LoggerController from "../modules/admin/logger/logger.controller";
+import LoggerValidator from "../modules/admin/logger/logger.validator";
 
 const routerAdmin = Router();
 routerAdmin.use(passportAdminMiddleware);
@@ -27,7 +28,7 @@ const routerAuth = Router();
 routerAuth.get("/", HomeController.homeView);
 routerAuth.get("/logout", AuthController.logout);
 routerAuth.use("/bull", bullBoardRouter);
-routerAuth.use("/logger", LoggerController.loggerView);
+routerAuth.use("/logger", LoggerValidator.loggerView, LoggerController.loggerView);
 
 // apply router
 routerAdmin.use(adminLoggedMiddleware, routerAuth);
