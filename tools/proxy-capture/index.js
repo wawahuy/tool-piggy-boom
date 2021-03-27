@@ -6,8 +6,8 @@ const AVL = require('avl');
 // const fileAllow = path.join(__dirname, 'allow.json');
 // const listAllowProxy = new AVL();
 // const isSaveListAllowProxy = false;
-// const host = 'https://heoapi.giayuh.com'
-const host = 'http://127.0.0.1:10002'
+const host = 'https://heoapi.giayuh.com'
+// const host = 'http://127.0.0.1:10002'
 // loadList();
 
 /// show lan
