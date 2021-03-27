@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import moment from "moment";
 import { getClassLogLevel, LogItem } from "../../../models/log";
 import ModelLog, { ILogDocument } from "../../../models/schema/log";
+import appConfigs from "../../../configs/app"; 
 
 export default class LoggerController {
   static async loggerView(req: Request, res: Response) {
@@ -27,7 +28,7 @@ export default class LoggerController {
         message: message,
         level: r.level,
         type: getClassLogLevel(r.level),
-        timestamp: moment(r.timestamp).format("YYYY/MM/DD hh:mm:ss"),
+        timestamp: moment(r.timestamp).utcOffset(appConfigs.UTC_OFFSET).format("YYYY/MM/DD hh:mm:ss"),
       } as LogItem;
     });
   }
