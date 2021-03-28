@@ -60,8 +60,12 @@ export default class ProxyHTTPHandler {
   private async captureRequestData() {
     return new Promise((resolve, reject) => {
       const reqData: Buffer[] = [];
-      this.req.on("error", reject);
-      this.req.on("data", reqData.push);
+      this.req.on("error", (e) => {
+        reject(e);
+      });
+      this.req.on("data", (chunk) => {
+        reqData.push(chunk);
+      });
       this.req.on("end", () => {
         this.reqData = Buffer.concat(reqData);
         resolve(this.reqData);
@@ -102,7 +106,7 @@ export default class ProxyHTTPHandler {
     let resData: Buffer | string | null = this.resData;
     if (this.isHostGame && resData) {
       const inject = new InjectHTTP(
-        this.reqData || "",
+        this.reqData,
         resData,
         this.urlReq?.pathname || ""
       );
