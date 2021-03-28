@@ -21,7 +21,7 @@ export const adGiftboxWorkerInstance = new AdGiftboxWorker();
 export const initJobs = async () => {
   // add repeat job
   await mainQueueInstance.removeAllJobRepeat();
-  await mainQueueInstance.addJob(jobFindPlayer);
+  // await mainQueueInstance.addJob(jobFindPlayer);
 
   setQueues([
     new BullMQAdapter(mainQueueInstance.queue),

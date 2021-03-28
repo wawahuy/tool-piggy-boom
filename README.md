@@ -2,7 +2,7 @@
 
 ## Deploy project server
 - Start nginx với subdomain /server/nginx.conf
-- Thực hiện call shell '/server/deploy.sh' tại user root
+- Thực hiện call shell '/server/deploy.sh' tại user trùng với config docker
 - Chú ý:
   + Thay thế user & group id trong docker compose
   + 

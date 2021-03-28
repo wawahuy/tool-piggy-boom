@@ -1,21 +1,14 @@
 import combineMiddleware from '../helpers/combine_middleware';
-import { sessionMiddleware, passportAdminMiddleware } from "../middlewares";
+import { sessionMiddleware, passportAdminMiddleware, adminLoggedMiddleware } from ".";
 import express, { Request, Response, NextFunction } from 'express';
 import passportConfigs from "../configs/passport";
 import cookieParser from "cookie-parser";
 
-const authMiddleware = (req: Request, socket: Response, next: NextFunction) => {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  socket.destroy();
-}
-
-export const wsMiddleware = combineMiddleware(
+export const wsAdminMiddleware = combineMiddleware(
   express.json(),
   express.urlencoded(),
   cookieParser(passportConfigs.COOKIE_SECRET),
   sessionMiddleware,
   passportAdminMiddleware,
-  authMiddleware
+  adminLoggedMiddleware
 );

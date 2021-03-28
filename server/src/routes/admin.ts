@@ -1,20 +1,19 @@
 import { Router } from "express";
 import { passportAdmin } from "../middlewares/passport_admin";
 import { router as bullBoardRouter } from "bull-board";
-import { adminLoggedMiddleware, passportAdminMiddleware } from "../middlewares";
+import { adminLoggedMiddleware, passportAdminMiddleware, zoneSessionMiddleware } from "../middlewares";
 import ppConfigs from "../configs/passport";
 import AuthController from "../modules/admin/auth/auth.controller";
 import HomeController from "../modules/admin/home/home.controller";
-import AccountController from "../modules/admin/account/account.controller";
 import LoggerController from "../modules/admin/logger/logger.controller";
 import LoggerValidator from "../modules/admin/logger/logger.validator";
 import AuthValidator from "../modules/admin/auth/auth.validator";
 
 const routerAdmin = Router();
+routerAdmin.use(zoneSessionMiddleware);
 routerAdmin.use(passportAdminMiddleware);
 
 // zone non-auth
-routerAdmin.post("/add_account", AccountController.addAccountGame);
 routerAdmin.get("/login", AuthController.loginView);
 routerAdmin.use(
   "/login",

@@ -1,8 +1,9 @@
 import { Request, Response, Router } from 'express';
 import HomeController from '../modules/user/home/home.controller';
-import { passportUserMiddleware, proxyProhibitionMiddleware, userLoggedMiddleware } from '../middlewares';
+import { passportUserMiddleware, proxyProhibitionMiddleware, userLoggedMiddleware, zoneSessionMiddleware } from '../middlewares';
 
 const routerUsers = Router();
+routerUsers.use(zoneSessionMiddleware);
 routerUsers.use(proxyProhibitionMiddleware);
 routerUsers.use(passportUserMiddleware);
 

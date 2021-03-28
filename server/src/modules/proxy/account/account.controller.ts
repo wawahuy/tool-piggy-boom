@@ -1,5 +1,3 @@
-import ModelAccountGame from '../../../models/schema/account_game';
-
 import { Request, Response } from 'express';
 import Player from '../../../games/player';
 import { AuthRequest } from '../../../games/models/game_req/auth';

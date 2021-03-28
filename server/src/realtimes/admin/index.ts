@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
-const wss = new WebSocket.Server({ noServer: true });
+const wsAdmin = new WebSocket.Server({ noServer: true });
 
-wss.on('connection', async (socket) => {
+wsAdmin.on('connection', async (socket) => {
   socket.on('message', async (dataChunk) => {
   });
 
@@ -12,4 +12,4 @@ wss.on('connection', async (socket) => {
   })
 });
 
-export default wss;
+export default wsAdmin;

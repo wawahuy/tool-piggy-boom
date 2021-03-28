@@ -44,7 +44,7 @@ const request = require('request');
 async function addRequest(data) {
   return new Promise(resolve => {
     request(
-      host + '/adm/add_account', 
+      host + '/pro/add_account', 
       {
         method: "POST",
         json: data

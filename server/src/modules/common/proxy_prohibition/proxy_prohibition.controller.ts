@@ -7,6 +7,6 @@ export default class ProxyProhibitionController {
       return res.redirect("/");
     }
 
-    res.render('proxy_prohibition/home/proxy_prohibition.view.ejs');
+    res.render('common/proxy_prohibition/proxy_prohibition.view.ejs');
   }
 }
