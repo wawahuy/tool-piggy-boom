@@ -1,9 +1,0 @@
-version: "3.7"
-services:
-  app:
-    image: zayuh/proxy_capture:lasted
-    user: "1000:983"
-    ports:
-      - "10001:10001"
-    restart: always
-    build: .
