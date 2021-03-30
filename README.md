@@ -1,4 +1,6 @@
 # tool-piggy-boom
+- Chỉnh cấu hình trong thư muc env
+- Chạy dev: npm run dev (trên project proxy & server)
 
 ## Deploy project server
 - Start nginx với subdomain /server/nginx.conf
@@ -12,7 +14,12 @@
   + 10004 (mongodb)
   + 
 
-## Deploy project tools - proxy capture
+## Deploy proxy server
 - Deploy tương tự project server (không cần cấu hình nginx)
+- Thực hiện call shell '/server/deploy.sh' tại user trùng với config docker
 - Map ports:
   + 10001 (proxy-capture)
+
+## Project proxy app
+- Fork proxy core jnd tại repo: https://github.com/raise-isayan/TunProxy
+- Build: react native
