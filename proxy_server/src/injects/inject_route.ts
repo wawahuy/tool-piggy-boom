@@ -3,6 +3,7 @@ import InjectLogin from "./routes/inject_login";
 import InjectMagicDetail from "./routes/inject_magic_detail";
 import InjectMagicShootAuto from "./routes/inject_magic_shoot_auto";
 import InjectMagicShoot from "./routes/inject_magic_shoot";
+import InjectMagicBottle from "./routes/inject_magic_botttle";
 
 export type ClazzInjectAbstract = new (
   requestData?: Buffer | null,
@@ -15,10 +16,15 @@ export default class InjectRoute {
 
   private constructor() {
     this.route("/planetpigth/m/gameNew/login/", InjectLogin);
-    this.route("/planetpigth/m/magicTree/shot/", InjectMagicShoot);
-    // remove comment shoot auto
-    // this.route("/planetpigth/m/magicTree/shot/", InjectMagicShootAuto);
-    // this.route("/planetpigth/m/action/detail/", InjectMagicDetail);
+
+    const shootCancel = false;
+    if (shootCancel) {
+      this.route("/planetpigth/m/magicTree/shot/", InjectMagicShoot);
+    } else {
+      this.route("/planetpigth/m/magicTree/shot/", InjectMagicShootAuto);
+      this.route("/planetpigth/m/action/detail/", InjectMagicDetail);
+      this.route("/planetpigth/m/magicTree/useMagicBottle/", InjectMagicBottle);
+    }
   }
 
   static getInstance() {

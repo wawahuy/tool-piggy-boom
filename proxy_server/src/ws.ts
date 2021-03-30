@@ -28,7 +28,6 @@ export default class ProxyWSHandler {
     socket: net.Socket,
     upgradeHead: Buffer
   ) {
-    console.log('up');
     return new ProxyWSHandler(request, socket, upgradeHead);
   }
 

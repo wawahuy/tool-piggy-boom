@@ -3,32 +3,17 @@ import InjectAbstract from "../inject_abstract";
 import StoreDirector from '../../store/store_director';
 import { StoreName } from '../../models/store';
 
-export default class InjectMagicShootAuto extends InjectAbstract {
+export default class InjectMagicBottle extends InjectAbstract {
   async handlerRequest(): Promise<string | Buffer | null> {
-    if (!this.requestData) {
-      return this.requestData;
-    }
-
-    const oReq = querystring.parse(this.requestData.toString('utf-8'));
-    const uid = oReq._uid?.toString();
-    
-    if (oReq?.boxId == '-1' && uid) {
-      const store = StoreDirector.getInstance().get(uid);
-      const box = <number[]>store.get(StoreName.MagicTree);
-      const index = box?.findIndex(n => n == 1);
-
-      if (index) {
-        oReq.boxId = (index + 1).toString();
-      } else {
-        delete oReq.boxId;
-      }
-      return Buffer.from(querystring.stringify(oReq), 'utf-8');
-    }
-
     return this.requestData;
   }
 
   async handlerResponse(): Promise<string | Buffer | null> {
+    this.handleSaveBox();
+    return this.responseData;
+  }
+
+  handleSaveBox() {
     if (!this.responseData || !this.requestData) {
       return this.responseData;
     }
@@ -40,15 +25,12 @@ export default class InjectMagicShootAuto extends InjectAbstract {
 
     // magic tree data    
     const uid = objReq._uid?.toString();
-    const box = objRes._d.data.targetBox;
+    const box = objRes._d.data.box;
 
     // save session
     if (uid) {
       const store = StoreDirector.getInstance().get(uid);
       store.set(StoreName.MagicTree, box);
     }
-
-    return this.responseData;
   }
-  
 }
