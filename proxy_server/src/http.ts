@@ -41,7 +41,11 @@ export default class ProxyHTTPHandler {
     }
 
     if (this.req.headers['upgrade'] !== 'websocket') {
-      await this.captureRequestData();
+      const success = await this.captureRequestData();
+      if (!success) {
+        this.res.destroy();
+        return;        
+      }
     }
 
     try {
@@ -71,9 +75,14 @@ export default class ProxyHTTPHandler {
     // inject data
     this.inject.setRequestData(reqData);
     const reqDataInject = await this.inject.getRequestInject();
+    if (this.inject.cancelRequest) {
+      return false;
+    }
 
     // inject header
-    this.req.headers['content-length'] = reqDataInject?.length.toString();
+    if (this.req.headers['content-length']) {
+      this.req.headers['content-length'] = reqDataInject?.length.toString();
+    }
 
     // create readable stream
     const readable = new Readable();
@@ -90,6 +99,8 @@ export default class ProxyHTTPHandler {
       readable.pipe(destination, options);
       return destination;
     };
+
+    return true;
   }
 
   private captureResponseData(

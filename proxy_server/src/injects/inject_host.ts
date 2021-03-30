@@ -7,6 +7,10 @@ export default class InjectHost {
   private responseData!: Buffer | null;
   private inject!: InjectAbstract | null;
 
+  get cancelRequest() {
+    return this.inject?.cancelRequest;
+  }
+
   private get urlRequest() {
     if (!this.request.url) {
       return null;

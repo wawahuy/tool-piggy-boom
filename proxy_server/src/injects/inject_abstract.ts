@@ -1,4 +1,6 @@
 export default abstract class InjectAbstract {
+  cancelRequest: boolean = false;
+
   constructor(
     protected requestData: Buffer | null = null,
     protected responseData: Buffer | null = null

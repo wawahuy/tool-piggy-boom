@@ -1,6 +1,7 @@
 import InjectAbstract from "./inject_abstract";
 import InjectLogin from "./routes/inject_login";
 import InjectMagicDetail from "./routes/inject_magic_detail";
+import InjectMagicShootAuto from "./routes/inject_magic_shoot_auto";
 import InjectMagicShoot from "./routes/inject_magic_shoot";
 
 export type ClazzInjectAbstract = new (
@@ -15,7 +16,9 @@ export default class InjectRoute {
   private constructor() {
     this.route("/planetpigth/m/gameNew/login/", InjectLogin);
     this.route("/planetpigth/m/magicTree/shot/", InjectMagicShoot);
-    this.route("/planetpigth/m/action/detail/", InjectMagicDetail);
+    // remove comment shoot auto
+    // this.route("/planetpigth/m/magicTree/shot/", InjectMagicShootAuto);
+    // this.route("/planetpigth/m/action/detail/", InjectMagicDetail);
   }
 
   static getInstance() {
