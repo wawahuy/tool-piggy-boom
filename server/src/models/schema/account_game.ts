@@ -16,6 +16,7 @@ export interface IAccountGameDocument extends Document {
   mtkey: string;
   skey: string;
   syncDate?: Date | null;
+  expiredDate?: Date | null;
 }
 
 export interface IAccountGameModal extends Model<IAccountGameDocument> {
@@ -33,7 +34,8 @@ const AccountGameSchema = new Schema<IAccountGameDocument, IAccountGameModal>(
     deviceModel: { type: Schema.Types.String },
     mtkey: { type: Schema.Types.String },
     skey: { type: Schema.Types.String },
-    syncDate: { type: Schema.Types.Date, default: moment().toDate(), index: true },
+    syncDate: { type: Schema.Types.Date, index: true },
+    expiredDate: { type: Schema.Types.Date, index: true },
   },
   { timestamps: true }
 );

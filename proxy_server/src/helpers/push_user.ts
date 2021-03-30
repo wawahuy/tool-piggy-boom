@@ -1,9 +1,10 @@
 import request from 'request';
 import querystring from 'querystring';
 import { appConfigs } from '../configs/app';
+import { PushUserResponse } from '../models/user';
 
 
-async function addRequest(data: unknown) {
+async function addRequest(data: unknown): Promise<PushUserResponse> {
   return new Promise((resolve, reject) => {
     request(
       appConfigs.HOST_MGMT + '/pro/add_account', 
@@ -22,8 +23,8 @@ async function addRequest(data: unknown) {
   });
 }
 
-export default async function addUser(reqData: string, resData: string) {
-  const oReq= querystring.parse(reqData);
+export default async function pushUser(reqData: string, resData: string) {
+  const oReq = querystring.parse(reqData);
   const oRes = JSON.parse(resData);
   console.log('capture uid: ', oRes._d.uid);
 

@@ -20,8 +20,8 @@ export default class Player {
   _weaponService: WeaponService;
   _rewardService: RewardService;
 
-  get noNewAuth() {
-    return !this._authData;
+  get authDataResponse() {
+    return this._authData;
   }
 
   get uidGame() {
@@ -120,6 +120,16 @@ export default class Player {
       );
     }
     return pwd;
+  }
+
+  async stillExpiredDate() {
+    const account = await this.getAccountDocument();
+    const expiredDate = account?.expiredDate;
+    if (expiredDate) {
+      const df = moment(new Date()).diff(expiredDate, 'seconds');
+      return df < 24 * 60 * 60;
+    }
+    return false;
   }
 
   async close() {

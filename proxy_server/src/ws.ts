@@ -2,8 +2,6 @@ import http from "http";
 import net from "net";
 import { URL } from "url";
 import httpProxy from "http-proxy";
-import { getHostPortFromString } from "./helpers/get_host_port";
-import { ungzip } from "node-gzip";
 
 export default class ProxyWSHandler {
   private proxy!: httpProxy;
@@ -30,6 +28,7 @@ export default class ProxyWSHandler {
     socket: net.Socket,
     upgradeHead: Buffer
   ) {
+    console.log('up');
     return new ProxyWSHandler(request, socket, upgradeHead);
   }
 

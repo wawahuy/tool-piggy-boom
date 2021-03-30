@@ -2,13 +2,13 @@ import http from "http";
 import { URL } from "url";
 import httpProxy from "http-proxy";
 import { ungzip } from "node-gzip";
+import { Readable, PassThrough } from "stream";
 import { appConfigs } from "./configs/app";
-import InjectHTTP from "./injectHttp";
+import InjectHost from "./injects/inject_host";
 
 export default class ProxyHTTPHandler {
   private proxy!: httpProxy;
-  private reqData!: Buffer | null;
-  private resData!: Buffer | null;
+  private inject: InjectHost;
 
   private get urlReq() {
     if (!this.req.url) {
@@ -27,6 +27,7 @@ export default class ProxyHTTPHandler {
     private req: http.IncomingMessage,
     private res: http.ServerResponse
   ) {
+    this.inject = new InjectHost(req);
     this.handler();
   }
 
@@ -34,18 +35,21 @@ export default class ProxyHTTPHandler {
     return new ProxyHTTPHandler(req, res);
   }
 
-  private handler() {
+  private async handler() {
     if (!this.req.url) {
       return;
     }
+
+    if (this.req.headers['upgrade'] !== 'websocket') {
+      await this.captureRequestData();
+    }
+
     try {
       let url = this.urlReq;
       if (!url) {
         return;
       }
       const target = url.protocol + "//" + url.host;
-
-      this.captureRequestData();
       this.proxy = httpProxy.createProxyServer({});
       this.proxy.on("proxyRes", this.captureResponseData.bind(this));
       this.proxy.on("error", function (err, req, res) {
@@ -58,19 +62,34 @@ export default class ProxyHTTPHandler {
   }
 
   private async captureRequestData() {
-    return new Promise((resolve, reject) => {
-      const reqData: Buffer[] = [];
-      this.req.on("error", (e) => {
-        reject(e);
-      });
-      this.req.on("data", (chunk) => {
-        reqData.push(chunk);
-      });
-      this.req.on("end", () => {
-        this.reqData = Buffer.concat(reqData);
-        resolve(this.reqData);
-      });
-    });
+    const reqDatas: Buffer[] = [];
+    for await (let chunk of this.req) {
+      reqDatas.push(chunk);
+    }
+    const reqData = Buffer.concat(reqDatas);
+
+    // inject data
+    this.inject.setRequestData(reqData);
+    const reqDataInject = await this.inject.getRequestInject();
+
+    // inject header
+    this.req.headers['content-length'] = reqDataInject?.length.toString();
+
+    // create readable stream
+    const readable = new Readable();
+    readable._read = (size: number) => {
+      readable.push(reqDataInject);
+      readable.push(null);
+    };
+
+    // inject method
+    this.req.pipe = <T extends NodeJS.WritableStream>(
+      destination: T,
+      options?: { end?: boolean }
+    ): T => {
+      readable.pipe(destination, options);
+      return destination;
+    };
   }
 
   private captureResponseData(
@@ -81,7 +100,6 @@ export default class ProxyHTTPHandler {
     if (!this.proxy) {
       return;
     }
-
     const resDatas: Buffer[] = [];
 
     proxyRes.on("data", (chunk) => {
@@ -91,10 +109,10 @@ export default class ProxyHTTPHandler {
     proxyRes.on("end", async () => {
       const resData = Buffer.concat(resDatas);
       const isCompressed = proxyRes.headers["content-encoding"] === "gzip";
-      this.resData = isCompressed
+      const resDataDecompressed = isCompressed
         ? await ungzip(resData).catch((e) => null)
         : resData;
-      await this.handleResponse(res);
+      await this.handleResponse(res, resDataDecompressed);
     });
 
     proxyRes.on("error", (e) => {
@@ -102,15 +120,11 @@ export default class ProxyHTTPHandler {
     });
   }
 
-  private async handleResponse(resTarget: http.ServerResponse) {
-    let resData: Buffer | string | null = this.resData;
+  private async handleResponse(resTarget: http.ServerResponse, data: Buffer | null) {
+    let resData: Buffer | string | null = data;
     if (this.isHostGame && resData) {
-      const inject = new InjectHTTP(
-        this.reqData,
-        resData,
-        this.urlReq?.pathname || ""
-      );
-      resData = await inject.getDataInject();
+      this.inject.setResponseData(resData);
+      resData = await this.inject.getResponseInject();
     }
     resTarget.end(resData);
   }
