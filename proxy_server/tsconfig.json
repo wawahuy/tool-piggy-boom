@@ -14,7 +14,6 @@
       "sourceMap": true,
       "allowJs": true,
       "outDir": "./dist",
-      "baseUrl": "./src",
       "rootDir": "./src",
       "resolveJsonModule": true,
       "preserveSymlinks": true,

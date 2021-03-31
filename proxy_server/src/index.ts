@@ -1,12 +1,11 @@
-import showNets from './helpers/show_net';
 import http from 'http';
 import { appConfigs } from './configs/app';
 import ProxyHTTPHandler from './http';
 import ProxyHTTPSHandler from './https';
 import ProxyWSHandler from './ws';
+import WsClient from './wsclient';
 
-// show detail network's
-showNets();
+WsClient.getInstance();
 
 // create server
 const server = http.createServer(ProxyHTTPHandler.create);

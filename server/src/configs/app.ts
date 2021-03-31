@@ -2,6 +2,8 @@ const configs = {
   APP_PORT: (process.env.PORT || -1) as number,
   WS_USER: '/ws',
   WS_ADMIN: '/ws_admin',
+  WS_PROXY: '/ws_proxy',
+  SOCKET_PROXY_TOKEN: process.env.SOCKET_PROXY_TOKEN,
   SOCKET_JWT_SECRET: process.env.SOCKET_JWT_SECRET,
   SOCKET: process.env.SOCKET,
   ENDPOINT: process.env.ENDPOINT,

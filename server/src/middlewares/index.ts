@@ -4,6 +4,7 @@ import { sessionMiddleware } from "./session";
 import { adminLoggedMiddleware } from "./auth_admin";
 import { userLoggedMiddleware } from "./auth_user";
 import { wsAdminMiddleware } from "./ws_admin";
+import { wsProxyMiddleware } from "./ws_proxy";
 import { proxyProhibitionMiddleware } from "./proxy_prohibition";
 import { zoneSessionMiddleware } from "./zone_session";
 
@@ -13,6 +14,7 @@ export {
   passportAdminMiddleware,
   passportUserMiddleware,
   wsAdminMiddleware,
+  wsProxyMiddleware,
   adminLoggedMiddleware,
   userLoggedMiddleware,
   proxyProhibitionMiddleware

@@ -3,7 +3,9 @@ import net from "net";
 import WebSocket from "ws";
 import appConfigs from "../configs/app";
 import wsAdmin from "./admin";
-import { wsAdminMiddleware } from "../middlewares";
+import { wsAdminMiddleware, wsProxyMiddleware } from "../middlewares";
+import wsProxy from "./proxy";
+import Url from "url";
 
 export default function transportWebsocket(
   request: http.IncomingMessage,
@@ -18,8 +20,19 @@ export default function transportWebsocket(
     };
   }
 
-  switch (request.url) {
+  if (!request.url) {
+    socket.destroy();
+    return;
+  }
+
+  const url = Url.parse(request.url);
+  switch (url.pathname) {
     case appConfigs.WS_ADMIN:
       return wsAdminMiddleware(request, <any>socket, nextWebsocket(wsAdmin));
+
+    case appConfigs.WS_PROXY:
+      return wsProxyMiddleware(request, <any>socket, nextWebsocket(wsProxy));
   }
+
+  socket.destroy();
 }
