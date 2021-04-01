@@ -8,9 +8,6 @@ import WsClient from './wsclient';
 
 WsClient.getInstance();
 
-// test
-getIp().then(r => console.log(r)).catch(e => null);
-
 // create server
 const server = http.createServer(ProxyHTTPHandler.create);
 server.on('upgrade', ProxyWSHandler.create);
