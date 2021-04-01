@@ -20,19 +20,25 @@ export enum ETypeData {
   WS = "ws",
 }
 
-export type TypeData = {
+export type DataCount = {
   [key in ETypeData]: NetworkCounter;
 };
 
-export const defaultData: TypeData = {
+export const defaultData: DataCount = {
   [ETypeData.HTTP]: _.cloneDeep(defaultNetworkCounter),
   [ETypeData.HTTPS]: _.cloneDeep(defaultNetworkCounter),
   [ETypeData.WS]: _.cloneDeep(defaultNetworkCounter),
 };
 
 
-export interface IDataAll {
-  total: TypeData;
-  second: TypeData;
-  minute: TypeData;
+export interface NetworkCountData {
+  total: DataCount;
+  second: DataCount;
+  minute: DataCount;
+}
+
+export interface DataCountFrame {
+  type: ETypeData;
+  count: number;
+  bandwidth: number;
 }

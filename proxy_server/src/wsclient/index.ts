@@ -1,7 +1,9 @@
 import Websocket from "ws";
 import { appConfigs } from "../configs/app";
 import getIp from "../helpers/get_ip";
+import { DataCountFrame, DataCount } from "../models/network_count_director";
 import { ESocketCommand } from "../models/socket";
+import { NetworkCountDirector } from "./network_count_director";
 import TransportData from "./transport_data";
 
 enum EStatusSocket {
@@ -43,7 +45,7 @@ export default class SocketClient {
     this.ws.onerror = this.onError.bind(this);
   }
 
-  onOpen() {
+  private onOpen() {
     console.log("wsclient connected!");
     this.status = EStatusSocket.Connected;
     this.transportData = new TransportData(this.ws);
@@ -51,26 +53,28 @@ export default class SocketClient {
     this.setPingPong();
   }
 
-  onError(e: Websocket.ErrorEvent) {}
+  private onError(e: Websocket.ErrorEvent) {}
 
-  onClose() {
+  private onClose() {
     console.log("wsclient close!");
     this.clearPingPong();
+    this.removeListenNetData();
     this.status = EStatusSocket.Close;
     setTimeout(() => this.connect(), 1000);
   }
 
   private async establish() {
     const ip = await getIp();
+    this.listenNetData();
     this.transportData.send({
-      command: ESocketCommand.ESTABLISH,
-      data: ip
+      c: ESocketCommand.ESTABLISH,
+      d: ip
     });
   }
 
   private ping() {
     this.transportData.send({
-      command: ESocketCommand.PING,
+      c: ESocketCommand.PING,
     });
   }
 
@@ -84,5 +88,35 @@ export default class SocketClient {
       clearInterval(this.pingPong);
       this.pingPong = null;
     }
+  }
+
+  private listenNetData() {
+    const networkCount = NetworkCountDirector.getInstance();
+    networkCount.on('request', this.onNetRequestCount);
+    networkCount.on('response', this.onNetRequestCount);
+    networkCount.on('second', this.onNetSecondCount);
+    networkCount.on('minute', this.onNetSecondCount);
+  }
+
+  private removeListenNetData() {
+    const networkCount = NetworkCountDirector.getInstance();
+    networkCount.off('request', this.onNetRequestCount);
+    networkCount.off('response', this.onNetRequestCount);
+    networkCount.off('second', this.onNetSecondCount);
+    networkCount.off('minute', this.onNetSecondCount);
+  }
+
+  onNetRequestCount = (data: DataCountFrame) => {
+    console.log('request', data);
+  }
+
+  onNetResponseCount = (data: DataCountFrame) => {
+    console.log('response', data);
+  }
+  
+  onNetSecondCount = (data: DataCount) => {
+  }
+
+  onNetMinuteCount = (data: DataCount) => {
   }
 }

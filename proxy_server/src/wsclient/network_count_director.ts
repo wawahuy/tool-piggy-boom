@@ -1,18 +1,17 @@
 import * as _ from "lodash";
 import EventEmitter from "events";
-import { defaultData, defaultNetworkCounter, ETypeData, IDataAll, NetworkCounter, TypeData } from "../models/data_director";
+import { defaultData, defaultNetworkCounter, ETypeData, NetworkCountData, NetworkCounter, DataCount } from "../models/network_count_director";
 
-
-export class DataDirector extends EventEmitter {
-  private static _instance = new DataDirector();
+export class NetworkCountDirector extends EventEmitter {
+  private static _instance = new NetworkCountDirector();
 
   static getInstance() {
-    return DataDirector._instance;
+    return NetworkCountDirector._instance;
   }
 
-  private datas: TypeData = _.cloneDeep(defaultData);
-  private dataPerSecond: TypeData = _.cloneDeep(defaultData);
-  private dataPerMinute: TypeData = _.cloneDeep(defaultData);
+  private datas: DataCount = _.cloneDeep(defaultData);
+  private dataPerSecond: DataCount = _.cloneDeep(defaultData);
+  private dataPerMinute: DataCount = _.cloneDeep(defaultData);
   private intervalSecond: NodeJS.Timeout;
   private intervalMinute: NodeJS.Timeout;
 
@@ -27,7 +26,7 @@ export class DataDirector extends EventEmitter {
     clearInterval(this.intervalMinute);
   }
 
-  getAll(): IDataAll {
+  getAll(): NetworkCountData {
     return {
       total: this.datas,
       second: this.dataPerSecond,
@@ -46,6 +45,12 @@ export class DataDirector extends EventEmitter {
     dataSecond.bandwidthRequest += bandwidth;
     dataMinute.countRequest++;
     dataMinute.bandwidthRequest += bandwidth;
+
+    this.emit('request', {
+      type,
+      count: data.countRequest,
+      bandwidth: data.bandwidthRequest 
+    });
   }
 
   response(type: ETypeData, bandwidth: number = 0) {
@@ -59,6 +64,12 @@ export class DataDirector extends EventEmitter {
     dataSecond.bandwidthResponse += bandwidth;
     dataMinute.countResponse++;
     dataMinute.bandwidthResponse += bandwidth;
+
+    this.emit('response', {
+      type,
+      count: data.countResponse,
+      bandwidth: data.bandwidthResponse 
+    });
   }
 
   private onSecond() {

@@ -5,6 +5,8 @@ import { ungzip } from "node-gzip";
 import { Readable, PassThrough } from "stream";
 import { appConfigs } from "./configs/app";
 import InjectHost from "./injects/inject_host";
+import { NetworkCountDirector } from "./wsclient/network_count_director";
+import { ETypeData } from "./models/network_count_director";
 
 export default class ProxyHTTPHandler {
   private proxy!: httpProxy;
@@ -40,9 +42,11 @@ export default class ProxyHTTPHandler {
       return;
     }
 
+
     if (this.req.headers['upgrade'] !== 'websocket') {
       const success = await this.captureRequestData();
       if (!success) {
+        NetworkCountDirector.getInstance().request(ETypeData.HTTP);
         this.res.destroy();
         return;        
       }
@@ -71,6 +75,7 @@ export default class ProxyHTTPHandler {
       reqDatas.push(chunk);
     }
     const reqData = Buffer.concat(reqDatas);
+    NetworkCountDirector.getInstance().request(ETypeData.HTTP, reqData.length);
 
     // inject data
     this.inject.setRequestData(reqData);

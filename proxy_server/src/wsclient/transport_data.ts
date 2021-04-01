@@ -19,8 +19,8 @@ export default  class TransportData extends EventEmitter {
     const d = data.data.toString();
     try {
       const socketData = <SocketData>JSON.parse(d)
-      if (socketData.command) {
-        this.emit(socketData.command, socketData.data);
+      if (socketData.c) {
+        this.emit(socketData.c, socketData.d);
       }
     } catch (e) {
       console.log(e);
