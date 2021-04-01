@@ -61,10 +61,12 @@ export default class SocketClient {
   }
 
   private async establish() {
+    const ip = await getIp();
     this.transportData.send({
       command: ESocketCommand.ESTABLISH,
-      data: await getIp(),
+      data: ip,
     });
+    console.log('ip', ip);
   }
 
   private ping() {
