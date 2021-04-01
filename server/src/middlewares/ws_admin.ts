@@ -1,9 +1,8 @@
 import combineMiddleware from '../helpers/combine_middleware';
-import { sessionMiddleware, passportAdminMiddleware } from ".";
+import { passportAdminMiddleware } from ".";
 import express, { Request, Response, NextFunction } from 'express';
-import passportConfigs from "../configs/passport";
-import cookieParser from "cookie-parser";
 import { IAdminDocument } from '../models/schema/admin';
+import { zoneSessionMiddleware } from './zone_session';
 
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   if (req.isAuthenticated()) {
@@ -15,10 +14,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 }
 
 export const wsAdminMiddleware = combineMiddleware(
-  express.json(),
-  express.urlencoded(),
-  cookieParser(passportConfigs.COOKIE_SECRET),
-  sessionMiddleware,
+  zoneSessionMiddleware,
   passportAdminMiddleware,
   authMiddleware
 );
