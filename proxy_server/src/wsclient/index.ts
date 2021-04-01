@@ -64,9 +64,8 @@ export default class SocketClient {
     const ip = await getIp();
     this.transportData.send({
       command: ESocketCommand.ESTABLISH,
-      data: ip,
+      data: ip
     });
-    console.log('ip', ip);
   }
 
   private ping() {
