@@ -40,7 +40,7 @@ export default class InjectMagicShootAuto extends InjectAbstract {
 
     // magic tree data    
     const uid = objReq._uid?.toString();
-    const box = objRes._d.data.targetBox;
+    const box = objRes?._d?.data?.targetBox;
 
     // save session
     if (uid) {

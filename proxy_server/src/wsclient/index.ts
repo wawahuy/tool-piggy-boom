@@ -1,9 +1,9 @@
 import Websocket from "ws";
 import { appConfigs } from "../configs/app";
 import getIp from "../helpers/get_ip";
-import { DataCountFrame, DataCount } from "../models/network_count_director";
+import { DataCountFrame, DataCount } from "../models/network_data";
 import { ESocketCommand } from "../models/socket";
-import { NetworkCountDirector } from "./network_count_director";
+import { NetworkDataDirector } from "./network_data";
 import TransportData from "./transport_data";
 
 enum EStatusSocket {
@@ -56,7 +56,7 @@ export default class SocketClient {
   private onError(e: Websocket.ErrorEvent) {}
 
   private onClose() {
-    console.log("wsclient close!");
+    // console.log("wsclient close!");
     this.clearPingPong();
     this.removeListenNetData();
     this.status = EStatusSocket.Close;
@@ -91,19 +91,19 @@ export default class SocketClient {
   }
 
   private listenNetData() {
-    const networkCount = NetworkCountDirector.getInstance();
+    const networkCount = NetworkDataDirector.getInstance();
     networkCount.on('request', this.onNetRequestCount);
-    networkCount.on('response', this.onNetRequestCount);
+    networkCount.on('response', this.onNetResponseCount);
     networkCount.on('second', this.onNetSecondCount);
-    networkCount.on('minute', this.onNetSecondCount);
+    networkCount.on('minute', this.onNetMinuteCount);
   }
 
   private removeListenNetData() {
-    const networkCount = NetworkCountDirector.getInstance();
+    const networkCount = NetworkDataDirector.getInstance();
     networkCount.off('request', this.onNetRequestCount);
-    networkCount.off('response', this.onNetRequestCount);
+    networkCount.off('response', this.onNetResponseCount);
     networkCount.off('second', this.onNetSecondCount);
-    networkCount.off('minute', this.onNetSecondCount);
+    networkCount.off('minute', this.onNetMinuteCount);
   }
 
   onNetRequestCount = (data: DataCountFrame) => {

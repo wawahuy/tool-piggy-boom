@@ -3,6 +3,7 @@ import querystring from 'querystring';
 import { EPushUserCode, PushUserResponse } from "../../models/inject_login";
 import InjectAbstract from "../inject_abstract";
 import { appConfigs } from '../../configs/app';
+import { NetworkDataDirector } from '../../wsclient/network_data';
 
 export default class InjectLogin extends InjectAbstract {
   async handlerRequest(): Promise<string | Buffer | null> {

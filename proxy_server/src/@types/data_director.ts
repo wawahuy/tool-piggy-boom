@@ -1,6 +1,6 @@
-import { DataCountFrame, DataCount } from "../models/network_count_director";
+import { DataCountFrame, DataCount } from "../models/network_data";
 
-declare module '../wsclient/network_count_director' {
+declare module '../wsclient/network_data' {
   interface NetworkCountDirector {
     on(event: 'second', listener: (data: DataCount) => void): this;
     on(event: 'minute', listener: (data: DataCount) => void): this;

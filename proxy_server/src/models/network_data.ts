@@ -31,14 +31,23 @@ export const defaultData: DataCount = {
 };
 
 
-export interface NetworkCountData {
-  total: DataCount;
-  second: DataCount;
-  minute: DataCount;
+export interface NetworkData {
+  net: {
+    total: DataCount;
+    second: DataCount;
+    minute: DataCount;
+  },
+  maintance: MaintanceData;
+  timeLimitCommand: number;
 }
 
 export interface DataCountFrame {
   type: ETypeData;
   count: number;
   bandwidth: number;
+}
+
+export interface MaintanceData {
+  status?: boolean;
+  msg?: string;
 }

@@ -1,13 +1,18 @@
 import http from "http";
 import net from "net";
 import { getHostPortFromString } from "./helpers/get_host_port";
+import { ETypeData } from "./models/network_data";
+import { NetworkDataDirector } from "./wsclient/network_data";
 
 export default class ProxyHTTPSHandler {
+  private networkData: NetworkDataDirector;
+
   private constructor(
     private request: http.IncomingMessage,
     private socket: net.Socket,
     private upgradeHead: Buffer
   ) {
+    this.networkData = NetworkDataDirector.getInstance();
     this.handler();
   }
 
@@ -23,6 +28,13 @@ export default class ProxyHTTPSHandler {
     const hostPort = getHostPortFromString(this.request.url || "", 443);
     const hostDomain = hostPort.host;
     const port = hostPort.port;
+    let bandwidthRequest = 0;
+    let bandwidthResponse = 0;
+
+    if (this.networkData.getMaintaince()?.status) {
+      this.socket.destroy();
+      return;
+    }
 
     const proxySocket = new net.Socket();
     proxySocket.connect(port, hostDomain, () => {
@@ -32,10 +44,12 @@ export default class ProxyHTTPSHandler {
     );
 
     proxySocket.on('data', (chunk) => {
+      bandwidthRequest += chunk?.length;
       this.socket.write(chunk);
     });
 
     proxySocket.on('end', () => {
+      NetworkDataDirector.getInstance().request(ETypeData.HTTPS, bandwidthRequest);
       this.socket.end();
     });
 
@@ -45,10 +59,12 @@ export default class ProxyHTTPSHandler {
     });
 
     this.socket.on('data', (chunk) => {
+      bandwidthResponse += chunk?.length;
       proxySocket.write(chunk);
     });
 
     this.socket.on('end', () => {
+      NetworkDataDirector.getInstance().request(ETypeData.HTTPS, bandwidthResponse);
       proxySocket.end();
     });
 

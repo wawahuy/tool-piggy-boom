@@ -5,12 +5,13 @@ import { ungzip } from "node-gzip";
 import { Readable, PassThrough } from "stream";
 import { appConfigs } from "./configs/app";
 import InjectHost from "./injects/inject_host";
-import { NetworkCountDirector } from "./wsclient/network_count_director";
-import { ETypeData } from "./models/network_count_director";
+import { NetworkDataDirector } from "./wsclient/network_data";
+import { ETypeData, MaintanceData } from "./models/network_data";
 
 export default class ProxyHTTPHandler {
   private proxy!: httpProxy;
   private inject: InjectHost;
+  private networkData: NetworkDataDirector;
 
   private get urlReq() {
     if (!this.req.url) {
@@ -29,6 +30,7 @@ export default class ProxyHTTPHandler {
     private req: http.IncomingMessage,
     private res: http.ServerResponse
   ) {
+    this.networkData = NetworkDataDirector.getInstance();
     this.inject = new InjectHost(req);
     this.handler();
   }
@@ -42,16 +44,22 @@ export default class ProxyHTTPHandler {
       return;
     }
 
+    /// maintance mode
+    if (this.checkMaintanceMode()) {
+      return;
+    }
 
-    if (this.req.headers['upgrade'] !== 'websocket') {
+    /// dif ws protocol, modify data request
+    if (this.req.headers["upgrade"] !== "websocket") {
       const success = await this.captureRequestData();
       if (!success) {
-        NetworkCountDirector.getInstance().request(ETypeData.HTTP);
+        this.networkData.request(ETypeData.HTTP);
         this.res.destroy();
-        return;        
+        return;
       }
     }
 
+    /// proxy net
     try {
       let url = this.urlReq;
       if (!url) {
@@ -75,7 +83,7 @@ export default class ProxyHTTPHandler {
       reqDatas.push(chunk);
     }
     const reqData = Buffer.concat(reqDatas);
-    NetworkCountDirector.getInstance().request(ETypeData.HTTP, reqData.length);
+    this.networkData.request(ETypeData.HTTP, reqData?.length || 0);
 
     // inject data
     this.inject.setRequestData(reqData);
@@ -85,8 +93,8 @@ export default class ProxyHTTPHandler {
     }
 
     // inject header
-    if (this.req.headers['content-length']) {
-      this.req.headers['content-length'] = reqDataInject?.length.toString();
+    if (this.req.headers["content-length"]) {
+      this.req.headers["content-length"] = reqDataInject?.length.toString();
     }
 
     // create readable stream
@@ -129,6 +137,7 @@ export default class ProxyHTTPHandler {
         ? await ungzip(resData).catch((e) => null)
         : resData;
       await this.handleResponse(res, resDataDecompressed);
+      this.networkData.request(ETypeData.HTTP, resData?.length || 0);
     });
 
     proxyRes.on("error", (e) => {
@@ -136,12 +145,37 @@ export default class ProxyHTTPHandler {
     });
   }
 
-  private async handleResponse(resTarget: http.ServerResponse, data: Buffer | null) {
+  private async handleResponse(
+    resTarget: http.ServerResponse,
+    data: Buffer | null
+  ) {
     let resData: Buffer | string | null = data;
     if (this.isHostGame && resData) {
       this.inject.setResponseData(resData);
       resData = await this.inject.getResponseInject();
     }
     resTarget.end(resData);
+  }
+
+  private checkMaintanceMode() {
+    const maintance = this.networkData.getMaintaince();
+    if (
+      !maintance?.status ||
+      this.urlReq?.pathname == "/planetpigth/m/appUpdate/check/"
+    ) {
+      return false;
+    }
+
+    const dataMaintance = {
+      _t: new Date().getTime() / 1000,
+      _s: [],
+      _d: {
+        ret: -20000,
+        msg: maintance.msg,
+      },
+    };
+    this.res.write(JSON.stringify(dataMaintance));
+    this.res.end();
+    return true;
   }
 }
