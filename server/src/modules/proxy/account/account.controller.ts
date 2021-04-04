@@ -27,16 +27,17 @@ export default class AccountGameController {
     const pwd = await player.getOrGeneratePwd();
     const response: IPushAccountResponse = {};
 
-    if (!await player.stillExpiredDate()) {
-      response.code = EPushAccountCode.MSG;
-      response.msg = 
-        `Xin chào, ${player.authDataResponse?.name}!\r\n` +
-        `Bạn đã kết nối thành công đến Heo Đến Rồi Tools, tuy nhiên bạn không thể vào game do account không còn thời gian dùng tools.\r\n` +
-        `Thêm thời gian sử dụng trong 24h (miễn phí) bạn truy cập vào:\n` +
-        `   ${appConfigs.ENDPOINT}\n` +
-        `   UID: ${player.authDataResponse?.uid}\n` + 
-        `   Mật khẩu: ${pwd}\n` + 
-        `Cảm ơn bạn!`
+    // if (!await player.stillExpiredDate()) {
+    if (false) {
+      // response.code = EPushAccountCode.MSG;
+      // response.msg = 
+      //   `Xin chào, ${player.authDataResponse?.name}!\r\n` +
+      //   `Bạn đã kết nối thành công đến Heo Đến Rồi Tools, tuy nhiên bạn không thể vào game do account không còn thời gian dùng tools.\r\n` +
+      //   `Thêm thời gian sử dụng trong 24h (miễn phí) bạn truy cập vào:\n` +
+      //   `   ${appConfigs.ENDPOINT}\n` +
+      //   `   UID: ${player.authDataResponse?.uid}\n` + 
+      //   `   Mật khẩu: ${pwd}\n` + 
+      //   `Cảm ơn bạn!`
     } else {
       response.code = EPushAccountCode.SUCCESS;
       response.msg = 'pwd: ' + pwd;

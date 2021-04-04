@@ -7,8 +7,8 @@ import {
 } from "../models/game_req/game";
 import GameApiConfig from "../../configs/game";
 import moment from "moment";
-import { BCLogTypeAdGiftBox } from "games/models/game_req/bclog";
-import { RewardAdType } from "games/models/game_req/reward";
+import { BCLogTypeAdGiftBox } from "../models/game_req/bclog";
+import { RewardAdType } from "../models/game_req/reward";
 import { logger } from "../../helpers/logger";
 
 class BCLogService {

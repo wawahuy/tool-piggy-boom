@@ -1,6 +1,6 @@
 import Mongoose, { Document, Model, Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
-import { RewardAdType } from 'games/models/game_req/reward';
+import { RewardAdType } from '../../games/models/game_req/reward';
 
 /***
  * Declare Schema

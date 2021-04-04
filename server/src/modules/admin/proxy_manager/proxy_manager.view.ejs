@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('header'); %>
+  <link rel="stylesheet" href="<%- _.style('logger.css') %>">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-xl-12 logo">PROXY MANAGER</div>
+    </div>
+    <div class="row content">
+      <div class="col-xl-12 overflow-auto">
+        <div class="alert alert-primary" role="alert" id='statusWsEle'>
+        </div>
+        <table class="table table-bordered mt-2 text-center">
+          <thead>
+            <tr>
+              <th rowspan="4">IP</th>
+              <th scope="col" colspan="12">HTTP</th>
+              <th scope="col" colspan="12">HTTP(s)</th>
+              <th scope="col" colspan="6">Websocket</th>
+            </tr>
+            <tr>
+              <th scope="col" colspan="6">Request</th>
+              <th scope="col" colspan="6">Response</th>
+              <th scope="col" colspan="6">Request</th>
+              <th scope="col" colspan="6">Response</th>
+              <th scope="col" rowspan="2" colspan="3">Online</th>
+              <th scope="col" rowspan="2" colspan="3">Bandwidth</th>
+            </tr>
+            <tr>
+              <th scope="col" colspan="3">Count</th>
+              <th scope="col" colspan="3">Bandwidth</th>
+              <th scope="col" colspan="3">Count</th>
+              <th scope="col" colspan="3">Bandwidth</th>
+              <th scope="col" colspan="3">Count</th>
+              <th scope="col" colspan="3">Bandwidth</th>
+              <th scope="col" colspan="3">Count</th>
+              <th scope="col" colspan="3">Bandwidth</th>
+            </tr>
+            <tr>
+              <th scope="col">Sec</th>
+              <th scope="col">Min</th>
+              <th scope="col">Total</th>
+              <th scope="col">Sec</th>
+              <th scope="col">Min</th>
+              <th scope="col">Total</th>
+              <th scope="col">Sec</th>
+              <th scope="col">Min</th>
+              <th scope="col">Total</th>
+              <th scope="col">Sec</th>
+              <th scope="col">Min</th>
+              <th scope="col">Total</th>
+              
+              <th scope="col">Sec</th>
+              <th scope="col">Min</th>
+              <th scope="col">Total</th>
+              <th scope="col">Sec</th>
+              <th scope="col">Min</th>
+              <th scope="col">Total</th>
+              <th scope="col">Sec</th>
+              <th scope="col">Min</th>
+              <th scope="col">Total</th>
+              <th scope="col">Sec</th>
+              <th scope="col">Min</th>
+              <th scope="col">Total</th>
+
+              <th scope="col">Sec</th>
+              <th scope="col">Min</th>
+              <th scope="col">Total</th>
+              <th scope="col">Sec</th>
+              <th scope="col">Min</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody id="trContent">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <%- include('footer'); %>
+</body>
+
+<script>
+  /// Ws connection
+  const StatusWs = {
+    connected: 'Connected!',
+    connecting: 'Connecting...',
+    closed: 'Closed!'
+  }
+
+  var ws = null;
+  var status = StatusWs.closed;
+  var commands = {};
+
+  function connectWebsocket() {
+    if (status !== StatusWs.closed) {
+      return;
+    }
+    $('#statusWsEle').show();
+    $('#statusWsEle').html(status);
+
+    status = StatusWs.connecting;
+    ws = new WebSocket('<%=socket %>/ws_admin');
+
+    ws.onopen = () => {
+      $('#statusWsEle').hide();
+      ws.send(JSON.stringify({ c: '<%=commandBase.joinGroup %>', d: '<%=groupProxyMgmt %>' }))
+      status = StatusWs.connected;
+    }
+
+    ws.onmessage = (data) => {
+      const d = data.data;
+      try {
+        const o = JSON.parse(d);
+        const command = commands[o.c];
+        if (command) {
+          command(o.d);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    ws.onerror = () => {
+      ws.close();
+    }
+
+    ws.onclose = () => {
+      $('#statusWsEle').show();
+      $('#statusWsEle').html(status);
+      setTimeout(connectWebsocket, 1000);
+      status = StatusWs.closed;
+    }
+  }
+  connectWebsocket();
+
+  // function
+  function getIdByIp(ip) {
+    return 'tr' + ip.replace(/(\.|\:)/g, '_');
+  }
+
+  // Ws command
+  const commandType = {
+    proxyData: '<%=commandAdmin.proxyData %>',
+  }
+
+  commands[commandType.proxyData] = (d) => {
+    const id = getIdByIp(d.ip);
+    const total = d.data.net.total;
+    const second = d.data.net.second;
+    const minute = d.data.net.minute;
+
+    const trElement = $('#' + id);
+    const trContent = `
+        <td>${d.ip}</td>
+        <td>${second.http.countRequest}</td>
+        <td>${minute.http.countRequest}</td>
+        <td class="table-success">${total.http.countRequest}</td>
+        <td>${second.http.bandwidthRequest}</td>
+        <td>${minute.http.bandwidthRequest}</td>
+        <td class="table-success">${total.http.bandwidthRequest}</td>
+        <td>${second.http.countResponse}</td>
+        <td>${minute.http.countResponse}</td>
+        <td class="table-success">${total.http.countResponse}</td>
+        <td>${second.http.bandwidthResponse}</td>
+        <td>${minute.http.bandwidthResponse}</td>
+        <td class="table-success">${total.http.bandwidthResponse}</td>
+        <td>${second.https.countRequest}</td>
+        <td>${minute.https.countRequest}</td>
+        <td class="table-success">${total.https.countRequest}</td>
+        <td>${second.https.bandwidthRequest}</td>
+        <td>${minute.https.bandwidthRequest}</td>
+        <td class="table-success">${total.https.bandwidthRequest}</td>
+        <td>${second.https.countResponse}</td>
+        <td>${minute.https.countResponse}</td>
+        <td class="table-success">${total.https.countResponse}</td>
+        <td>${second.https.bandwidthResponse}</td>
+        <td>${minute.https.bandwidthResponse}</td>
+        <td class="table-success">${total.https.bandwidthResponse}</td>
+        <td>${second.ws.countRequest}</td>
+        <td>${minute.ws.countRequest}</td>
+        <td class="table-success">${total.ws.countRequest}</td>
+        <td>${second.ws.bandwidthResponse}</td>
+        <td>${minute.ws.bandwidthResponse}</td>
+        <td class="table-success">${total.ws.bandwidthResponse}</td>
+      `;
+    if (trElement.length) {
+      trElement.attr('class', !d.status ? 'table-danger' : '');
+      trElement.html(trContent);
+    } else {
+      $('#trContent').append(`<tr class="${!d.status ? 'table-danger' : ''}" id='${id}'>${trContent}</tr>`);
+    }
+  }
+</script>
+</html>

@@ -1,16 +1,27 @@
 import WebSocket from 'ws';
+import ClientManager from '../client_manager';
+import WsProxyClient from './client';
+import { ECommandType } from './command';
+
+/**
+ * Server
+ * 
+ */
 const wsProxy = new WebSocket.Server({ noServer: true });
 
-wsProxy.on('connection', async (socket) => {
-  socket.on('message', async (dataChunk) => {
-    socket.send(dataChunk);
-  });
+/**
+ * Manager
+ * 
+ */
+export const wsProxyManager = new ClientManager<ECommandType, WsProxyClient>();
 
-  socket.on('close', () => {
-  });
-
-  socket.on('error', () => {
-  })
+/**
+ * Connection
+ * 
+ */
+wsProxy.on('connection', (ws: WebSocket) => {
+  const client = new WsProxyClient(ws);
+  wsProxyManager.connection(client);
 });
 
 export default wsProxy;

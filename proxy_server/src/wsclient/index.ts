@@ -1,8 +1,9 @@
+import { DebouncedFunc } from "lodash";
 import Websocket from "ws";
 import { appConfigs } from "../configs/app";
 import getIp from "../helpers/get_ip";
 import { DataCountFrame, DataCount } from "../models/network_data";
-import { ESocketCommand } from "../models/socket";
+import { ESocketCommand, SocketData } from "../models/socket";
 import { NetworkDataDirector } from "./network_data";
 import TransportData from "./transport_data";
 
@@ -23,6 +24,11 @@ export default class SocketClient {
   private status: EStatusSocket = EStatusSocket.Close;
   private transportData!: TransportData;
   private pingPong!: NodeJS.Timeout | null;
+  private networkData = NetworkDataDirector.getInstance();
+  private sendLimitRequest!: DebouncedFunc<(data: SocketData) => void>;
+  private sendLimitResponse!: DebouncedFunc<(data: SocketData) => void>;
+
+  readonly wsSendLimit: number = 200;
 
   get transport() {
     return this.transportData;
@@ -49,6 +55,8 @@ export default class SocketClient {
     console.log("wsclient connected!");
     this.status = EStatusSocket.Connected;
     this.transportData = new TransportData(this.ws);
+    this.sendLimitRequest = this.transportData.buildSendLimit(this.wsSendLimit);
+    this.sendLimitResponse = this.transportData.buildSendLimit(this.wsSendLimit);
     this.establish();
     this.setPingPong();
   }
@@ -56,7 +64,7 @@ export default class SocketClient {
   private onError(e: Websocket.ErrorEvent) {}
 
   private onClose() {
-    // console.log("wsclient close!");
+    console.log("wsclient close!");
     this.clearPingPong();
     this.removeListenNetData();
     this.status = EStatusSocket.Close;
@@ -68,7 +76,10 @@ export default class SocketClient {
     this.listenNetData();
     this.transportData.send({
       c: ESocketCommand.ESTABLISH,
-      d: ip
+      d: {
+        ip: ip + ':' + appConfigs.PORT,
+        ...this.networkData.getAll()
+      }
     });
   }
 
@@ -107,16 +118,31 @@ export default class SocketClient {
   }
 
   onNetRequestCount = (data: DataCountFrame) => {
-    console.log('request', data);
+    this.sendLimitRequest({
+      c: ESocketCommand.NET_REQUEST_COUNTER,
+      d: data
+    })    
   }
 
   onNetResponseCount = (data: DataCountFrame) => {
-    console.log('response', data);
+    this.sendLimitResponse({
+      c: ESocketCommand.NET_RESPONSE_COUNTER,
+      d: data
+    })    
   }
   
   onNetSecondCount = (data: DataCount) => {
+    this.transportData.send({
+      c: ESocketCommand.NET_SECOND_COUNTER,
+      d: data
+    })
   }
 
   onNetMinuteCount = (data: DataCount) => {
+    this.transportData.send({
+      c: ESocketCommand.NET_MINUTE_COUNTER,
+      d: data
+    })
+
   }
 }

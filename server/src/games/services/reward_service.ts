@@ -1,4 +1,4 @@
-import { RewardAdType } from "games/models/game_req/reward";
+import { RewardAdType } from "../models/game_req/reward";
 import { logger } from "../../helpers/logger";
 import GameService from "./game_services";
 

@@ -8,6 +8,7 @@ import HomeController from "../modules/admin/home/home.controller";
 import LoggerController from "../modules/admin/logger/logger.controller";
 import LoggerValidator from "../modules/admin/logger/logger.validator";
 import AuthValidator from "../modules/admin/auth/auth.validator";
+import ProxyManagerController from "../modules/admin/proxy_manager/proxy_manager.controller";
 
 const routerAdmin = Router();
 routerAdmin.use(zoneSessionMiddleware);
@@ -30,6 +31,7 @@ routerAuth.get("/", HomeController.homeView);
 routerAuth.get("/logout", AuthController.logout);
 routerAuth.use("/bull", bullBoardRouter);
 routerAuth.use("/logger", LoggerValidator.loggerView, LoggerController.loggerView);
+routerAuth.use("/proxy_manager", ProxyManagerController.homeView);
 
 // apply router
 routerAdmin.use(adminLoggedMiddleware, routerAuth);

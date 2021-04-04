@@ -1,6 +1,14 @@
 import * as _ from "lodash";
 import EventEmitter from "events";
-import { defaultData, defaultNetworkCounter, ETypeData, NetworkData, NetworkCounter, DataCount, MaintanceData as MaintanceData } from "../models/network_data";
+import {
+  defaultData,
+  defaultNetworkCounter,
+  ETypeData,
+  NetworkData,
+  NetworkCounter,
+  DataCount,
+  MaintanceData as MaintanceData,
+} from "../models/network_data";
 
 export class NetworkDataDirector extends EventEmitter {
   private static _instance = new NetworkDataDirector();
@@ -22,7 +30,7 @@ export class NetworkDataDirector extends EventEmitter {
 
   private constructor() {
     super();
-    this.netIntervalSecond = setInterval(this.onSecond.bind(this), 1000);
+    this.netIntervalSecond = setInterval(this.onSecond.bind(this), 1 * 1000);
     this.netIntervalMinute = setInterval(this.onMinute.bind(this), 60 * 1000);
   }
 
@@ -36,15 +44,15 @@ export class NetworkDataDirector extends EventEmitter {
       net: {
         total: this.net,
         second: this.netPerSecond,
-        minute: this.netPerMinute
+        minute: this.netPerMinute,
       },
       maintance: this.maintance,
-      timeLimitCommand: this.timeLimitCommand
-    }
+      timeLimitCommand: this.timeLimitCommand,
+    };
   }
 
   getMaintaince() {
-    return this.maintance; 
+    return this.maintance;
   }
 
   setMaintance(data: MaintanceData) {
@@ -63,10 +71,10 @@ export class NetworkDataDirector extends EventEmitter {
     dataMinute.bandwidthRequest += bandwidth;
     dataMinute.countRequest += counter;
 
-    this.emit('request', {
+    this.emit("request", {
       type,
       count: data.countRequest,
-      bandwidth: data.bandwidthRequest 
+      bandwidth: data.bandwidthRequest,
     });
   }
 
@@ -82,20 +90,41 @@ export class NetworkDataDirector extends EventEmitter {
     dataMinute.bandwidthResponse += bandwidth;
     dataMinute.countResponse += counter;
 
-    this.emit('response', {
+    this.emit("response", {
       type,
       count: data.countResponse,
-      bandwidth: data.bandwidthResponse 
+      bandwidth: data.bandwidthResponse,
     });
   }
 
   private onSecond() {
-    this.emit('second', this.netPerSecond);
-    this.netPerSecond = _.cloneDeep(defaultData);
+    if (this.hasDataCount(this.netPerSecond)) {
+      this.emit("second", this.netPerSecond);
+      this.netPerSecond = _.cloneDeep(defaultData);
+    }
   }
 
   private onMinute() {
-    this.emit('minute', this.netPerMinute);
-    this.netPerMinute = _.cloneDeep(defaultData);
+    if (this.hasDataCount(this.netPerMinute)) {
+      this.emit("minute", this.netPerMinute);
+      this.netPerMinute = _.cloneDeep(defaultData);
+    }
+  }
+
+  private hasDataCount(data: DataCount) {
+    return (
+      this.hasNetworkCounter(data.http) ||
+      this.hasNetworkCounter(data.https) ||
+      this.hasNetworkCounter(data.ws)
+    );
+  }
+
+  private hasNetworkCounter(data: NetworkCounter) {
+    return (
+      data.bandwidthRequest ||
+      data.bandwidthResponse ||
+      data.countRequest ||
+      data.countResponse
+    );
   }
 }

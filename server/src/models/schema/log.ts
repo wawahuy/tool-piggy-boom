@@ -1,6 +1,6 @@
 import Mongoose, { Document, Model, Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
-import { ELogLevel } from 'models/log';
+import { ELogLevel } from '../log';
 
 /***
  * Declare Schema

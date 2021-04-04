@@ -49,7 +49,7 @@ export default class ProxyHTTPSHandler {
     });
 
     proxySocket.on('end', () => {
-      NetworkDataDirector.getInstance().request(ETypeData.HTTPS, bandwidthRequest);
+      this.networkData.request(ETypeData.HTTPS, bandwidthRequest);
       this.socket.end();
     });
 
@@ -64,7 +64,7 @@ export default class ProxyHTTPSHandler {
     });
 
     this.socket.on('end', () => {
-      NetworkDataDirector.getInstance().request(ETypeData.HTTPS, bandwidthResponse);
+      this.networkData.response(ETypeData.HTTPS, bandwidthResponse);
       proxySocket.end();
     });
 
