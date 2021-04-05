@@ -28,8 +28,8 @@ export default class ProxyHTTPSHandler {
     const hostPort = getHostPortFromString(this.request.url || "", 443);
     const hostDomain = hostPort.host;
     const port = hostPort.port;
-    let bandwidthRequest = 0;
     let bandwidthResponse = 0;
+    let bandwidthRequest = 0;
 
     if (this.networkData.getMaintaince()?.status) {
       this.socket.destroy();
@@ -44,12 +44,12 @@ export default class ProxyHTTPSHandler {
     );
 
     proxySocket.on('data', (chunk) => {
-      bandwidthRequest += chunk?.length;
+      bandwidthResponse += chunk?.length;
       this.socket.write(chunk);
     });
 
     proxySocket.on('end', () => {
-      this.networkData.request(ETypeData.HTTPS, bandwidthRequest);
+      this.networkData.response(ETypeData.HTTPS, bandwidthResponse);
       this.socket.end();
     });
 
@@ -59,12 +59,12 @@ export default class ProxyHTTPSHandler {
     });
 
     this.socket.on('data', (chunk) => {
-      bandwidthResponse += chunk?.length;
+      bandwidthRequest += chunk?.length;
       proxySocket.write(chunk);
     });
 
     this.socket.on('end', () => {
-      this.networkData.response(ETypeData.HTTPS, bandwidthResponse);
+      this.networkData.request(ETypeData.HTTPS, bandwidthRequest);
       proxySocket.end();
     });
 

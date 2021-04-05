@@ -56,7 +56,7 @@ export default class ProxyWSHandler {
     head: any
   ) {
     proxyReq.on('upgrade', (proxyRes, proxySocket, proxyHead) => {
-      this.networkCounter.request(ETypeData.WS, 0);
+      this.networkCounter.request(ETypeData.WS, 0, 1);
 
       proxySocket.on('close', () => {
         this.networkCounter.request(ETypeData.WS, 0, -1);

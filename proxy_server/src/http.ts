@@ -137,7 +137,7 @@ export default class ProxyHTTPHandler {
         ? await ungzip(resData).catch((e) => null)
         : resData;
       await this.handleResponse(res, resDataDecompressed);
-      this.networkData.request(ETypeData.HTTP, resData?.length || 0);
+      this.networkData.response(ETypeData.HTTP, resData?.length || 0);
     });
 
     proxyRes.on("error", (e) => {
