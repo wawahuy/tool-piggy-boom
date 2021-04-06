@@ -1,6 +1,8 @@
 import http from "http";
 import net from "net";
+import { appConfigs } from "./configs/app";
 import { getHostPortFromString } from "./helpers/get_host_port";
+import getIp, { isIpLocal } from "./helpers/get_ip";
 import { ETypeData } from "./models/network_data";
 import { NetworkDataDirector } from "./wsclient/network_data";
 
@@ -30,6 +32,14 @@ export default class ProxyHTTPSHandler {
     const port = hostPort.port;
     let bandwidthResponse = 0;
     let bandwidthRequest = 0;
+
+    if (
+      (hostDomain === getIp() || isIpLocal(hostDomain)) &&
+      port == Number(appConfigs.PORT)
+    ) {
+      this.socket.destroy();
+      return;
+    }
 
     if (this.networkData.getMaintaince()?.status) {
       this.socket.destroy();

@@ -71,8 +71,8 @@ export default class SocketClient {
     setTimeout(() => this.connect(), 1000);
   }
 
-  private async establish() {
-    const ip = await getIp();
+  private establish() {
+    const ip = getIp();
     this.listenNetData();
     this.transportData.send({
       c: ESocketCommand.ESTABLISH,

@@ -5,6 +5,8 @@ import httpProxy from "http-proxy";
 import Server from "http-proxy";
 import { NetworkDataDirector } from "./wsclient/network_data";
 import { ETypeData } from "./models/network_data";
+import getIp, { isIpLocal } from "./helpers/get_ip";
+import { appConfigs } from "./configs/app";
 
 export default class ProxyWSHandler {
   private proxy!: httpProxy;
@@ -40,9 +42,18 @@ export default class ProxyWSHandler {
     if (!url) {
       return;
     }
+
+    if (
+      (url.hostname === getIp() || isIpLocal(url.hostname)) &&
+      url.port === appConfigs.PORT
+    ) {
+      this.socket.destroy();
+      return;
+    }
+
     const target = url.protocol + "//" + url.host;
     this.proxy = httpProxy.createProxyServer({});
-    this.proxy.on('proxyReqWs', this.onProxyReqWs.bind(this));
+    this.proxy.on("proxyReqWs", this.onProxyReqWs.bind(this));
     this.proxy.ws(this.request, this.socket, this.upgradeHead, {
       target: target,
     });
@@ -55,16 +66,16 @@ export default class ProxyWSHandler {
     options: Server.ServerOptions,
     head: any
   ) {
-    proxyReq.on('upgrade', (proxyRes, proxySocket, proxyHead) => {
+    proxyReq.on("upgrade", (proxyRes, proxySocket, proxyHead) => {
       this.networkCounter.request(ETypeData.WS, 0, 1);
 
-      proxySocket.on('close', () => {
+      proxySocket.on("close", () => {
         this.networkCounter.request(ETypeData.WS, 0, -1);
-      })
+      });
 
-      proxySocket.on('data', (chunk) => {
+      proxySocket.on("data", (chunk) => {
         this.networkCounter.response(ETypeData.WS, chunk?.byteLength, 0);
-      })
+      });
     });
   }
 }

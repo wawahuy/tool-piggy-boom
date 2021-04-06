@@ -2,11 +2,12 @@ import http from "http";
 import { URL } from "url";
 import httpProxy from "http-proxy";
 import { ungzip } from "node-gzip";
-import { Readable, PassThrough } from "stream";
+import { Readable } from "stream";
 import { appConfigs } from "./configs/app";
 import InjectHost from "./injects/inject_host";
 import { NetworkDataDirector } from "./wsclient/network_data";
-import { ETypeData, MaintanceData } from "./models/network_data";
+import { ETypeData } from "./models/network_data";
+import getIp, { isIpLocal } from "./helpers/get_ip";
 
 export default class ProxyHTTPHandler {
   private proxy!: httpProxy;
@@ -41,6 +42,16 @@ export default class ProxyHTTPHandler {
 
   private async handler() {
     if (!this.req.url) {
+      return;
+    }
+
+    /// denice loop-back
+    const urlReq = this.urlReq;
+    if (
+      (urlReq?.hostname === getIp() || isIpLocal(urlReq?.hostname)) &&
+      urlReq?.port === appConfigs.PORT
+    ) {
+      this.res.destroy();
       return;
     }
 

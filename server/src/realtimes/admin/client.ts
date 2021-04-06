@@ -10,6 +10,7 @@ export default class WsAdminClient extends WsClient<EAdminCommandType> {
     super(ws);
     this.connect();
     this.on(EWsCommandBase.JOIN_GROUP, this.onJoinGroup);
+    this.on(EAdminCommandType.PING, this.onPing);
   }
 
   private connect() {
@@ -22,7 +23,13 @@ export default class WsAdminClient extends WsClient<EAdminCommandType> {
     }
   }
 
-  private onJoinGroupProxy() {
+  private onPing = () => {
+    this.send({
+      c: EAdminCommandType.PONG,
+    });
+  }
+
+  private onJoinGroupProxy = () => {
     const clients = wsProxyManager.getClients();
     for (let id in clients) {
       const client = clients[id];

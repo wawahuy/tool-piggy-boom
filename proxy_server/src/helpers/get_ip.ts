@@ -2,6 +2,8 @@ import { networkInterfaces } from "os";
 import request from "request";
 import { appConfigs } from "../configs/app";
 
+let ipGlobal: string | null;
+
 export const getIpInterface = () => {
   const results = [];
   const nets = networkInterfaces();
@@ -27,11 +29,18 @@ export const getIpLookup = async (): Promise<string> => {
   });
 };
 
-export default async function getIp(): Promise<string | null> {
-  if (appConfigs.IS_DEVELOPMENT) {
-    return getIpInterface();
-  }
+export function isIpLocal(ip: string | null | undefined) {
+  return ip === "localhost" || ip === "127.0.0.1";
+}
 
-  const ip = await getIpLookup().catch(e => null);
-  return ip;
+(async function bootstrapIpLoad() {
+  if (appConfigs.IS_DEVELOPMENT) {
+    ipGlobal = getIpInterface();
+  } else {
+    ipGlobal = await getIpLookup().catch((e) => null);
+  }
+})();
+
+export default function getIp() {
+  return ipGlobal;
 }

@@ -16,6 +16,7 @@ export default class ProxyManagerController {
       groupProxyMgmt: EWsAdminGroup.PROXY_MGMT,
       commandAdmin: {
         proxyData: EAdminCommandType.PROXY_DATA,
+        ping: EAdminCommandType.PING
       },
       socket: appConfigs.SOCKET
     });

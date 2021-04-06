@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include('header'); %>
-  <link rel="stylesheet" href="<%- _.style('logger.css') %>">
+    <link rel="stylesheet" href="<%- _.style('logger.css') %>">
 </head>
 
 <body>
@@ -12,7 +13,7 @@
     </div>
     <div class="row content">
       <div class="col-xl-12 overflow-auto">
-        <div class="alert alert-primary" role="alert" id='statusWsEle'>
+        <div class="alert alert-primary " role="alert" id='statusWsEle'>
         </div>
         <table class="table table-bordered mt-2 text-center">
           <thead>
@@ -53,7 +54,7 @@
               <th scope="col">Sec</th>
               <th scope="col">Min</th>
               <th scope="col">Total</th>
-              
+
               <th scope="col">Sec</th>
               <th scope="col">Min</th>
               <th scope="col">Total</th>
@@ -94,22 +95,32 @@
 
   var ws = null;
   var status = StatusWs.closed;
+  var pingInterval = null;
   var commands = {};
+
+  $('#statusWsEle').hide();
 
   function connectWebsocket() {
     if (status !== StatusWs.closed) {
       return;
     }
-    $('#statusWsEle').show();
-    $('#statusWsEle').html(status);
+
+    if (ws) {
+      // only show when reconnect
+      $('#statusWsEle').show();
+      $('#statusWsEle').html(status);
+    }
 
     status = StatusWs.connecting;
     ws = new WebSocket('<%=socket %>/ws_admin');
 
     ws.onopen = () => {
       $('#statusWsEle').hide();
-      ws.send(JSON.stringify({ c: '<%=commandBase.joinGroup %>', d: '<%=groupProxyMgmt %>' }))
       status = StatusWs.connected;
+      ws.send(JSON.stringify({ c: '<%=commandBase.joinGroup %>', d: '<%=groupProxyMgmt %>' }))
+      pingInterval = setInterval(() => ws.send(JSON.stringify({
+        c: '<%=commandAdmin.ping %>'
+      })), 20000)
     }
 
     ws.onmessage = (data) => {
@@ -132,6 +143,7 @@
     ws.onclose = () => {
       $('#statusWsEle').show();
       $('#statusWsEle').html(status);
+      clearInterval(pingInterval);
       setTimeout(connectWebsocket, 1000);
       status = StatusWs.closed;
     }
@@ -196,4 +208,5 @@
     }
   }
 </script>
+
 </html>
