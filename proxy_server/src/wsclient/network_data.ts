@@ -11,9 +11,12 @@ import {
 } from "../models/network_data";
 
 export class NetworkDataDirector extends EventEmitter {
-  private static _instance = new NetworkDataDirector();
+  private static _instance: NetworkDataDirector;
 
   static getInstance() {
+    if (!NetworkDataDirector._instance) {
+      NetworkDataDirector._instance = new NetworkDataDirector;
+    }
     return NetworkDataDirector._instance;
   }
 
