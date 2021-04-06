@@ -33,13 +33,13 @@ export function isIpLocal(ip: string | null | undefined) {
   return ip === "localhost" || ip === "127.0.0.1";
 }
 
-(async function bootstrapIpLoad() {
+export async function bootstrapIpLoad() {
   if (appConfigs.IS_DEVELOPMENT) {
     ipGlobal = getIpInterface();
   } else {
     ipGlobal = await getIpLookup().catch((e) => null);
   }
-})();
+};
 
 export default function getIp() {
   return ipGlobal;

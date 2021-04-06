@@ -4,13 +4,22 @@ import ProxyHTTPHandler from './http';
 import ProxyHTTPSHandler from './https';
 import ProxyWSHandler from './ws';
 import WsClient from './wsclient';
+import { bootstrapIpLoad } from './helpers/get_ip';
 
-WsClient.getInstance();
+async function init() {
+  // boostrap
+  await bootstrapIpLoad();
 
-// create server
-const server = http.createServer(ProxyHTTPHandler.create);
-server.on('upgrade', ProxyWSHandler.create);
-server.on('connect', ProxyHTTPSHandler.create);
-server.listen(appConfigs.PORT, () => {
-  console.log('Proxy start listenning port:', appConfigs.PORT)
-});
+  // defined
+  WsClient.getInstance();
+
+  // create server
+  const server = http.createServer(ProxyHTTPHandler.create);
+  server.on('upgrade', ProxyWSHandler.create);
+  server.on('connect', ProxyHTTPSHandler.create);
+  server.listen(appConfigs.PORT, () => {
+    console.log('Proxy start listenning port:', appConfigs.PORT)
+  });
+}
+
+init();
