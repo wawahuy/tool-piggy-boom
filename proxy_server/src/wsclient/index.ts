@@ -14,9 +14,12 @@ enum EStatusSocket {
 }
 
 export default class SocketClient {
-  private static _instance: SocketClient = new SocketClient();
+  private static _instance: SocketClient;
 
   static getInstance(): SocketClient {
+    if (!SocketClient._instance) {
+      SocketClient._instance = new SocketClient;
+    }
     return SocketClient._instance;
   }
 
