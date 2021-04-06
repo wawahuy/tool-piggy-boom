@@ -2,7 +2,7 @@ import { networkInterfaces } from "os";
 import request from "request";
 import { appConfigs } from "../configs/app";
 
-let ipGlobal: string | null;
+let ipGlobal: string | null = null;
 
 export const getIpInterface = () => {
   const results = [];
@@ -37,6 +37,7 @@ export async function bootstrapIpLoad() {
   if (appConfigs.IS_DEVELOPMENT) {
     ipGlobal = getIpInterface();
   } else {
+    console.log('[boostrap] Load ip global!');
     ipGlobal = await getIpLookup().catch((e) => null);
   }
 };
