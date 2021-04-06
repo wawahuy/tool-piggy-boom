@@ -37,9 +37,10 @@ export async function bootstrapIpLoad() {
   if (appConfigs.IS_DEVELOPMENT) {
     ipGlobal = getIpInterface();
   } else {
-    console.log('[boostrap] Load ip global!');
     ipGlobal = await getIpLookup().catch((e) => null);
+    console.log('[boostrap] Load ip global!');
   }
+  console.log('[IP]', ipGlobal);
 };
 
 export default function getIp() {
