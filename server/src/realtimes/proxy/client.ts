@@ -21,6 +21,10 @@ export default class WsProxyClient extends WsClient<ECommandType> {
     this.on(EWsCommandBase.CLOSE, this.onCloseWs);
   }
 
+  getIp() {
+    return this.data?.ip;
+  }
+
   getProxyData(status: boolean = true) {
     return {
       c: EAdminCommandType.PROXY_DATA,

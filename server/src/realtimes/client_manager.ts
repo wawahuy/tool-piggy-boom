@@ -61,7 +61,7 @@ export default class ClientManager<
 
   broadcastGroup(group: string, command: WsCommand<CommandType>) {
     const clientIds = this.clientGroups[group];
-    clientIds.forEach((node) => {
+    clientIds?.forEach((node) => {
       if (node.key) {
         this.clients[node.key].send(command);
       }

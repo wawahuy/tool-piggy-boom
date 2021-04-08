@@ -4,7 +4,6 @@ import ppConfigs from "../configs/passport";
 
 const routerProxy = Router();
 routerProxy.post("/add_account", AccountGameController.addAccountGame);
-routerProxy.get('/', (req, res) => res.send('test!'));
 export default routerProxy;
 
 
