@@ -2,6 +2,7 @@ import {Container, Content, Header, Root, Title, View} from 'native-base';
 import React from 'react';
 import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import ButtonConnect from './src/components/button_connect';
+
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
