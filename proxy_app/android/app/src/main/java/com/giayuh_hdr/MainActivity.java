@@ -1,4 +1,4 @@
-package com.giayuh.heodenroi;
+package com.giayuh_hdr;
 
 import com.facebook.react.ReactActivity;
 

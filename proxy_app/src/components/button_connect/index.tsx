@@ -1,16 +1,35 @@
 import {Button, Text, View} from 'native-base';
-import React from 'react';
-import {NativeModules, StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {NativeModules, StyleSheet, NativeEventEmitter} from 'react-native';
 
 const ButtonConnect = () => {
+  const [status, setStatus] = useState<boolean>();
+
+  useEffect(() => {
+    const eventEmitter = new NativeEventEmitter(NativeModules.ToastExample);
+    const eventListener = eventEmitter.addListener(
+      'vpn_event',
+      (event: {status: boolean}) => {
+        setStatus(event.status);
+      },
+    );
+    return () => {
+      eventListener.remove();
+    };
+  }, []);
+
   const onPress = () => {
-    NativeModules.TestModule.show('abc', NativeModules.TestModule.LENG_LONG);
+    if (status) {
+      NativeModules.ProxyModule.stopVpn();
+    } else {
+      NativeModules.ProxyModule.startVpn('103.130.219.155', 10001);
+    }
   };
 
   return (
     <View>
       <Button style={styles.button} onPress={onPress}>
-        <Text>Kết nối</Text>
+        <Text>{!status ? 'Kết nối' : 'Ngắt'}</Text>
       </Button>
     </View>
   );

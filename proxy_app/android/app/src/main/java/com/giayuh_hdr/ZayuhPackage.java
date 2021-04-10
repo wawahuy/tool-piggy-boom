@@ -1,4 +1,4 @@
-package com.proxy_app;
+package com.giayuh_hdr;
 
 import androidx.annotation.NonNull;
 
@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TestPackage implements ReactPackage {
+public class ZayuhPackage implements ReactPackage {
     @NonNull
     @Override
     public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
-        modules.add(new TestModule(reactContext));
+        modules.add(new ProxyModule(reactContext));
         return modules;
     }
 
