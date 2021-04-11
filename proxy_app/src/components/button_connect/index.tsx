@@ -1,32 +1,36 @@
-import {Button, Text, View} from 'native-base';
-import React, {useEffect, useState} from 'react';
+import {Button, Spinner, Text, View} from 'native-base';
+import React from 'react';
 import {StyleSheet} from 'react-native';
-import {addEventListener, startVpn, stopVpn} from '../../modules/proxy_module';
 
-const ButtonConnect = () => {
-  const [status, setStatus] = useState<boolean>();
+export enum ButtonConnectStatus {
+  START,
+  STOP,
+  CONNECTING,
+}
 
-  useEffect(() => {
-    const eventListener = addEventListener((event: {status: boolean}) => {
-      setStatus(event.status);
-    });
-    return () => {
-      eventListener.remove();
-    };
-  }, []);
+export interface ButtonConnectProps {
+  onPress?: () => void;
+  status?: ButtonConnectStatus;
+}
 
-  const onPress = () => {
-    if (status) {
-      stopVpn();
-    } else {
-      startVpn('103.130.219.155', 10001, 'com.aladinfun.clashofsky_th_pig');
-    }
-  };
+function getContentButton(status: ButtonConnectStatus | undefined) {
+  switch (status) {
+    case ButtonConnectStatus.START:
+      return <Text style={styles.textBtn}>Tắt</Text>;
+    case ButtonConnectStatus.STOP:
+      return <Text style={styles.textBtn}>Mở</Text>;
+    case ButtonConnectStatus.CONNECTING:
+      return <Spinner color="#fee591" />;
+    default:
+      return <></>;
+  }
+}
 
+const ButtonConnect = (props: ButtonConnectProps) => {
   return (
     <View>
-      <Button style={styles.button} onPress={onPress}>
-        <Text>{!status ? 'Kết nối' : 'Ngắt'}</Text>
+      <Button rounded style={styles.button} onPress={props.onPress}>
+        {getContentButton(props.status)}
       </Button>
     </View>
   );
@@ -34,12 +38,17 @@ const ButtonConnect = () => {
 
 const styles = StyleSheet.create({
   button: {
-    height: 40,
+    height: 90,
+    width: 90,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 40,
-    backgroundColor: '#213A78',
+    borderRadius: 30,
+    backgroundColor: '#FFFFFF',
+  },
+  textBtn: {
+    color: '#555555',
+    fontWeight: 'bold',
   },
 });
 
