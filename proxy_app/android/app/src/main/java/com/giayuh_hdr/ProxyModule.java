@@ -27,7 +27,9 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.giayuh_hdr.service.Tun2HttpVpnService;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -38,6 +40,7 @@ public class ProxyModule extends ReactContextBaseJavaModule implements Lifecycle
     private Tun2HttpVpnService service;
     private String host;
     private int port;
+    private String pkg;
 
     Handler statusHandler;
 
@@ -89,9 +92,10 @@ public class ProxyModule extends ReactContextBaseJavaModule implements Lifecycle
     }
 
     @ReactMethod
-    private void startVpn(String host, int port) {
+    private void startVpn(String host, int port, String pkg) {
         this.host = host;
         this.port = port;
+        this.pkg = pkg;
         Intent i = VpnService.prepare(this.reactContext);
         if (i != null) {
             this.reactContext.startActivityForResult(i, REQUEST_VPN, null);
@@ -135,6 +139,7 @@ public class ProxyModule extends ReactContextBaseJavaModule implements Lifecycle
         }
         if (requestCode == REQUEST_VPN) {
             loadHostPort();
+            loadFilterPackage();
             updateStatus();
             Tun2HttpVpnService.start(reactContext);
         }
@@ -150,6 +155,13 @@ public class ProxyModule extends ReactContextBaseJavaModule implements Lifecycle
         edit.putString(Tun2HttpVpnService.PREF_PROXY_HOST, this.host);
         edit.putInt(Tun2HttpVpnService.PREF_PROXY_PORT, this.port);
         edit.commit();
+    }
+
+    private void loadFilterPackage() {
+        MainApplication.getInstance().storeVPNMode(MainApplication.VPNMode.ALLOW);
+        Set<String> list = new HashSet<String>();
+        list.add(pkg);
+        MainApplication.getInstance().storeVPNApplication(MainApplication.VPNMode.ALLOW, list);
     }
 
     private void sendEvent(@Nullable WritableMap params) {

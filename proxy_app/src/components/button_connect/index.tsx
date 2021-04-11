@@ -1,18 +1,15 @@
 import {Button, Text, View} from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {NativeModules, StyleSheet, NativeEventEmitter} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {addEventListener, startVpn, stopVpn} from '../../modules/proxy_module';
 
 const ButtonConnect = () => {
   const [status, setStatus] = useState<boolean>();
 
   useEffect(() => {
-    const eventEmitter = new NativeEventEmitter(NativeModules.ToastExample);
-    const eventListener = eventEmitter.addListener(
-      'vpn_event',
-      (event: {status: boolean}) => {
-        setStatus(event.status);
-      },
-    );
+    const eventListener = addEventListener((event: {status: boolean}) => {
+      setStatus(event.status);
+    });
     return () => {
       eventListener.remove();
     };
@@ -20,9 +17,9 @@ const ButtonConnect = () => {
 
   const onPress = () => {
     if (status) {
-      NativeModules.ProxyModule.stopVpn();
+      stopVpn();
     } else {
-      NativeModules.ProxyModule.startVpn('103.130.219.155', 10001);
+      startVpn('103.130.219.155', 10001, 'com.aladinfun.clashofsky_th_pig');
     }
   };
 
