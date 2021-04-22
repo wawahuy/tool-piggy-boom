@@ -1,6 +1,9 @@
 import {Button, Spinner, Text, View} from 'native-base';
 import React from 'react';
 import {StyleSheet} from 'react-native';
+import {SvgXml} from 'react-native-svg';
+import DisconnectIcon from '../../assets/svg/disconnect.svg';
+import ConnectIcon from '../../assets/svg/connect.svg';
 
 export enum ButtonConnectStatus {
   START,
@@ -16,9 +19,9 @@ export interface ButtonConnectProps {
 function getContentButton(status: ButtonConnectStatus | undefined) {
   switch (status) {
     case ButtonConnectStatus.START:
-      return <Text style={styles.textBtn}>Tắt</Text>;
+      return <SvgXml width={40} height={40} xml={ConnectIcon} />;
     case ButtonConnectStatus.STOP:
-      return <Text style={styles.textBtn}>Mở</Text>;
+      return <SvgXml width={40} height={40} xml={DisconnectIcon} />;
     case ButtonConnectStatus.CONNECTING:
       return <Spinner color="#fee591" />;
     default:
