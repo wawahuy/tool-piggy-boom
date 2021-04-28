@@ -15,9 +15,13 @@ export default class InjectHost {
     if (!this.request.url) {
       return null;
     }
-    const baseURL = "http://" + this.request.headers.host + "/";
-    const url = new URL(this.request.url, baseURL);
-    return url;
+    try {
+      const baseURL = "http://" + this.request.headers.host + "/";
+      const url = new URL(this.request.url, baseURL);
+      return url;
+    } catch (e) {
+      return null;
+    }
   }
 
   constructor(

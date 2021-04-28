@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import configs from "../../../configs/game";
 import { wsProxyManager } from "../../../realtimes/proxy";
 
 export default class ProxyController {
@@ -13,6 +14,7 @@ export default class ProxyController {
     // test response ip's
     res.json({
       ip: ips?.[0],
+      package: configs.package,
     });
   }
 }

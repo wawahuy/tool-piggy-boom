@@ -54,6 +54,9 @@ export default class ProxyWSHandler {
     const target = url.protocol + "//" + url.host;
     this.proxy = httpProxy.createProxyServer({});
     this.proxy.on("proxyReqWs", this.onProxyReqWs.bind(this));
+    this.proxy.on("error", function (err, req, res) {
+      res.end();
+    });
     this.proxy.ws(this.request, this.socket, this.upgradeHead, {
       target: target,
     });
