@@ -8,6 +8,7 @@ import ButtonConnect, {
 } from '../../components/button_connect';
 import {addEventListener, startVpn, stopVpn} from '../../modules/proxy_module';
 import {configs} from '../../configs/env';
+import HomeService from '../../services/home';
 
 const messages = {
   [ButtonConnectStatus.START]: 'Đã kết nối!',
@@ -21,7 +22,9 @@ export default function Home() {
   );
 
   useEffect(() => {
+    console.log('effect');
     const listener = addEventListener((event: {status: boolean}) => {
+      console.log(event);
       setStatus(
         event.status ? ButtonConnectStatus.START : ButtonConnectStatus.STOP,
       );
@@ -31,12 +34,37 @@ export default function Home() {
     };
   }, []);
 
-  const onChangeStatus = () => {
-    setStatus(ButtonConnectStatus.START);
-    if (!status) {
-      startVpn('', 0, '');
+  const onChangeStatus = async () => {
+    if (status === ButtonConnectStatus.STOP) {
+      setStatus(ButtonConnectStatus.CONNECTING);
+      try {
+        const homeService = new HomeService();
+        const [data] = await Promise.all([
+          homeService.getProxy(),
+          new Promise(res => setTimeout(res, 500)),
+        ]);
+        if (data && data.ip && data.port && data.package) {
+          startVpn(data.ip, data.port, data.package);
+          setStatus(ButtonConnectStatus.START);
+          showMessage({
+            message: 'Kết nối thành công',
+            type: 'info',
+            autoHide: true,
+          });
+        } else {
+          throw 'Lôi kết nối';
+        }
+      } catch (e) {
+        setStatus(ButtonConnectStatus.STOP);
+        showMessage({
+          message: e?.toString(),
+          type: 'danger',
+          autoHide: true,
+        });
+      }
     } else {
       stopVpn();
+      setStatus(ButtonConnectStatus.STOP);
     }
   };
 
@@ -63,7 +91,11 @@ export default function Home() {
       <View style={styles.containerConnect}>
         <View style={styles.containerTop}>
           <Title style={styles.titleLogo}>HEO ĐẾN RỒI</Title>
-          <ButtonConnect status={status} onPress={onChangeStatus} />
+          <ButtonConnect
+            status={status}
+            onPress={onChangeStatus}
+            disabled={status === ButtonConnectStatus.CONNECTING}
+          />
           <Text style={styles.status}>{messages[status]}</Text>
         </View>
         <Text style={styles.modBy} onPress={onClickAuthor}>

@@ -1,4 +1,4 @@
-import {Button, Spinner, Text, View} from 'native-base';
+import {Button, Spinner, View} from 'native-base';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {SvgXml} from 'react-native-svg';
@@ -13,6 +13,7 @@ export enum ButtonConnectStatus {
 
 export interface ButtonConnectProps {
   onPress?: () => void;
+  disabled: boolean;
   status?: ButtonConnectStatus;
 }
 
@@ -32,7 +33,11 @@ function getContentButton(status: ButtonConnectStatus | undefined) {
 const ButtonConnect = (props: ButtonConnectProps) => {
   return (
     <View>
-      <Button rounded style={styles.button} onPress={props.onPress}>
+      <Button
+        rounded
+        style={styles.button}
+        onPress={props.onPress}
+        disabled={props.disabled}>
         {getContentButton(props.status)}
       </Button>
     </View>

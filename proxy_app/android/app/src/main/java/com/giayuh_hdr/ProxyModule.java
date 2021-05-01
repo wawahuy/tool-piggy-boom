@@ -41,6 +41,7 @@ public class ProxyModule extends ReactContextBaseJavaModule implements Lifecycle
     private String host;
     private int port;
     private String pkg;
+    private boolean isRunningOld = false;
 
     Handler statusHandler;
 
@@ -113,6 +114,7 @@ public class ProxyModule extends ReactContextBaseJavaModule implements Lifecycle
             });
         }
         this.reactContext.runOnUiQueueThread(() -> {
+            this.isRunningOld = false;
             statusHandler.post(statusRunnable);
         });
         Intent intent = new Intent(this.reactContext, Tun2HttpVpnService.class);
@@ -174,8 +176,11 @@ public class ProxyModule extends ReactContextBaseJavaModule implements Lifecycle
         if (service == null) {
             return;
         }
-        WritableMap params = Arguments.createMap();
-        params.putBoolean("status", isRunning());
-        sendEvent(params);
+        if (isRunning() != isRunningOld) {
+            this.isRunningOld = isRunning();
+            WritableMap params = Arguments.createMap();
+            params.putBoolean("status", this.isRunningOld);
+            sendEvent(params);
+        }
     }
 }
