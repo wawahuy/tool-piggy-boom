@@ -11,9 +11,13 @@ export default class ProxyController {
       return proxies[id].getIp();
     });
 
+    // split host & port
+    const sp = ips?.[0]?.split(':');
+
     // test response ip's
     res.json({
-      ip: ips?.[0],
+      ip: sp?.[0],
+      port: Number(sp?.[1]),
       package: configs.package,
     });
   }
