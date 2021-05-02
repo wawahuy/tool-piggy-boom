@@ -22,9 +22,7 @@ export default function Home() {
   );
 
   useEffect(() => {
-    console.log('effect');
     const listener = addEventListener((event: {status: boolean}) => {
-      console.log(event);
       setStatus(
         event.status ? ButtonConnectStatus.START : ButtonConnectStatus.STOP,
       );
@@ -52,7 +50,7 @@ export default function Home() {
             autoHide: true,
           });
         } else {
-          throw 'Lôi kết nối';
+          throw data.msg || 'Lôi kết nối';
         }
       } catch (e) {
         setStatus(ButtonConnectStatus.STOP);

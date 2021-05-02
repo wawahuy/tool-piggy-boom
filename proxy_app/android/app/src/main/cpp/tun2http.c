@@ -162,7 +162,7 @@ Java_com_giayuh_1hdr_service_Tun2HttpVpnService_jni_1done(JNIEnv *env, jobject i
 // JNI Util
 
 JNIEXPORT jstring JNICALL
-Java_tun_utils_Util_jni_1getprop(JNIEnv *env, jclass type, jstring name_) {
+Java_com_giayuh_1hdr_utils_Util_jni_1getprop(JNIEnv *env, jclass type, jstring name_) {
     const char *name = (*env)->GetStringUTFChars(env, name_, 0);
 
     char value[PROP_VALUE_MAX + 1] = "";

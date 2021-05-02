@@ -4,7 +4,11 @@ import axiosService from './axios';
 export default class HomeService {
   async getProxy(): Promise<ProxyData> {
     return axiosService
-      .get('/proxy')
+      .get('/proxy', {
+        params: {
+          version: '1.0',
+        },
+      })
       .then(res => res.data)
       .catch(e =>
         Promise.reject(
