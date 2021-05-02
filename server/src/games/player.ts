@@ -10,15 +10,17 @@ import WeaponService from "./services/weapon_service";
 import { Firetarget } from "./models/game/fire";
 import _ from "lodash";
 import { EFireAttackType, FireRequest } from "./models/game_req/weapon";
-import RewardService from "./services/reward_service";
 import { RewardAdType } from "./models/game_req/reward";
 import { BCLogTypeAdGiftBox } from "./models/game_req/bclog";
+import RewardService from "./services/reward_service";
+import HarvestGoldService from "./services/harvest_gold_service";
 
 export default class Player {
   _gameService: GameService;
   _bcService: BCLogService;
   _weaponService: WeaponService;
   _rewardService: RewardService;
+  _harvestGoldService: HarvestGoldService;
 
   get authDataResponse() {
     return this._authData;
@@ -41,6 +43,7 @@ export default class Player {
     this._gameService = new GameService(gameData);
     this._weaponService = new WeaponService(this._gameService);
     this._rewardService = new RewardService(this._gameService);
+    this._harvestGoldService = new HarvestGoldService(this._gameService);
     this._bcService = new BCLogService();
   }
 
@@ -163,9 +166,15 @@ export default class Player {
 
   async getAdGiftBox(type: RewardAdType) {
     await this._rewardService.popAd(type);
+
+    // comment logs
     // await this._bcService.callUserActionAdGiftBox(this.uidGame, type, BCLogTypeAdGiftBox.POP);
+
     await new Promise(res => setTimeout(res, 20000));
+
+    // comment logs
     // await this._bcService.callUserActionAdGiftBox(this.uidGame, type, BCLogTypeAdGiftBox.REWARD);
+
     const reward = await this._rewardService.rewardAd(type);
     const boxInfo = reward?.data?.giftBoxInfo;
     if (!boxInfo) {
@@ -177,5 +186,27 @@ export default class Player {
       reward: reward?.data?.reward?.[0]?.type,
       delay: (wattingNext?.giftBoxCDTime || 0) * 1000 + 100
     };
+  }
+
+  async harvestGold() {
+    const detail = await this._harvestGoldService.getDetail();
+    if (!detail) {
+      return null;
+    }
+
+    const reward = await this._harvestGoldService.harvestGold();
+
+    /**
+     * total    -> 24h
+     * maxGold  -> ?
+     * ----------------
+     * only 80% time
+     */
+    const allTime = (detail.maxGold * 24 / detail.total) * 60 * 60 * 1000 * 0.8;
+
+    return {
+      reward: detail.curGold,
+      delay: allTime,
+    }
   }
 }

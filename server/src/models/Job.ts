@@ -15,3 +15,7 @@ export interface JobAdGiftboxData {
   uid?: string;
   type: RewardAdType
 }
+
+export interface JobHarvestGoldData {
+  uid?: string;
+}

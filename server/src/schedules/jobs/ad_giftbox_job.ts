@@ -81,13 +81,13 @@ export const jobAdGiftboxProccess = async (job: JobBull) => {
   if (!reward) {
     const testDelayed = await buildTestDelayedAdGiftUID();
     if (testDelayed.find(makeKeyDataJobAdGiftbox(data.uid, data.type))) {
-      return "Job reward error - no added deplay"
+      return "Job reward error - no added delay"
     }
 
     await adGiftBoxQueueInstance.addJob(
-      createJoAdGiftBox(data, type === RewardAdType.adGiftBox1 ? 60000 : 1000)
+      createJoAdGiftBox(data, 60000)
     );
-    return "Job reward error - added deplay!";
+    return "Job reward error - added delay!";
   }
 
   await ModelGiftboxReport.updateOne(

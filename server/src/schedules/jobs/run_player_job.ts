@@ -2,10 +2,19 @@ import { Job as JobBull } from "bullmq";
 import { AuthRequest, ELoginType } from "../../games/models/game_req/auth";
 import ModelAccountGame from "../../models/schema/account_game";
 import { Job, JobAdGiftboxData, JobRunPlayerData } from "../../models/Job";
-import { adGiftBoxQueueInstance } from "../director";
+import { adGiftBoxQueueInstance, harvestGoldQueueInstance } from "../director";
 import AVLTree from "avl";
-import { buildTestAdGiftUID, createJoAdGiftBox, makeKeyDataJobAdGiftbox, nameJobAdGiftbox } from "./ad_giftbox_job";
+import {
+  buildTestAdGiftUID,
+  createJoAdGiftBox,
+  makeKeyDataJobAdGiftbox,
+  nameJobAdGiftbox,
+} from "./ad_giftbox_job";
 import { RewardAdType } from "../../games/models/game_req/reward";
+import {
+  buildTestHarvestGoldUID,
+  createJobHavestGold,
+} from "./harvest_gold_job";
 
 export const nameJobRunPlayer = "RUN_PLAYER_JOB";
 
@@ -17,8 +26,6 @@ export const createJobRunPlayer = (uid: string): Job => {
     } as JobRunPlayerData,
   };
 };
-
-
 
 export const jobRunPlayerProccess = async (job: JobBull) => {
   const data = <JobRunPlayerData>job.data;
@@ -60,5 +67,15 @@ export const jobRunPlayerProccess = async (job: JobBull) => {
     );
   }
 
+  // check harvest gold
+  const uidHarvestGoldTest = await buildTestHarvestGoldUID();
+  if (!uidHarvestGoldTest.find(account?.uid)) {
+    await harvestGoldQueueInstance.addJob(
+      createJobHavestGold({
+        uid: account.uid,
+      })
+    );
+  }
+  
   return "Good jobs!";
 };
