@@ -24,6 +24,9 @@ export const createJobRunPlayer = (uid: string): Job => {
     data: {
       uid,
     } as JobRunPlayerData,
+    ops: {
+      removeOnComplete: true
+    }
   };
 };
 

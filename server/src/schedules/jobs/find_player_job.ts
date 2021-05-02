@@ -21,6 +21,7 @@ export const jobFindPlayer: Job = {
       count: 0,
     },
     attempts: 0,
+    removeOnComplete: true
   },
 };
 
