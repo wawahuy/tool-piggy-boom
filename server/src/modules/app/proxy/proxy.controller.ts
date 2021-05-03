@@ -18,7 +18,7 @@ export default class ProxyController {
 
     // find best proxy
     // priority hight: min bandwdith
-    const minBandwidth = _.maxBy(datas, o => o.bandwidthPerMinute);
+    const minBandwidth = _.minBy(datas, o => o.bandwidthPerMinute);
 
     // split host & port
     const sp = minBandwidth?.ip?.split(':');
