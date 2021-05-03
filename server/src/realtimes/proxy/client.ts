@@ -25,37 +25,61 @@ export default class WsProxyClient extends WsClient<ECommandType> {
     return this.data?.ip;
   }
 
+  getCountWebsocketConnection() {
+    return this.data?.net?.total?.ws?.countRequest;
+  }
+
+  getBandwidthAllPerMinute() {
+    const data = this.data?.net?.minute;
+    return (
+      data?.http?.bandwidthRequest +
+      data?.http?.bandwidthResponse +
+      data?.https?.bandwidthRequest +
+      data?.https?.bandwidthResponse +
+      data?.ws?.bandwidthResponse
+    );
+  }
+
   getProxyData(status: boolean = true) {
     return {
       c: EAdminCommandType.PROXY_DATA,
-      d: this.createBoundData(this.data, status)
+      d: this.createBoundData(this.data, status),
     };
   }
 
-  private createBoundData<T>(data: T, status: boolean = true): WsProxyBoundData<T> {
+  private createBoundData<T>(
+    data: T,
+    status: boolean = true
+  ): WsProxyBoundData<T> {
     return {
       ip: this.data.ip || "",
       status,
-      data
-    }
+      data,
+    };
   }
 
   private onCloseWs = () => {
-    wsAdminManager.broadcastGroup(EWsAdminGroup.PROXY_MGMT, this.getProxyData(false));
-  }
+    wsAdminManager.broadcastGroup(
+      EWsAdminGroup.PROXY_MGMT,
+      this.getProxyData(false)
+    );
+  };
 
   private onEstablish = (data: NetworkData) => {
     this.data = data;
 
     // broadcast admin's
-    wsAdminManager.broadcastGroup(EWsAdminGroup.PROXY_MGMT, this.getProxyData());
-  }
+    wsAdminManager.broadcastGroup(
+      EWsAdminGroup.PROXY_MGMT,
+      this.getProxyData()
+    );
+  };
 
   private onPing = () => {
     this.send({
-      c: ECommandType.PONG
+      c: ECommandType.PONG,
     });
-  }
+  };
 
   private onNetRequest = (data: DataCountFrame) => {
     const total = this.data?.net?.total;
@@ -63,13 +87,16 @@ export default class WsProxyClient extends WsClient<ECommandType> {
       total[data.type] = {
         ...total[data.type],
         countRequest: data.count,
-        bandwidthRequest: data.bandwidth
-      }
+        bandwidthRequest: data.bandwidth,
+      };
     }
 
     // broadcast admin's
-    wsAdminManager.broadcastGroup(EWsAdminGroup.PROXY_MGMT, this.getProxyData());
-  }
+    wsAdminManager.broadcastGroup(
+      EWsAdminGroup.PROXY_MGMT,
+      this.getProxyData()
+    );
+  };
 
   private onNetResponse = (data: DataCountFrame) => {
     const total = this.data?.net?.total;
@@ -77,13 +104,16 @@ export default class WsProxyClient extends WsClient<ECommandType> {
       total[data.type] = {
         ...total[data.type],
         countResponse: data.count,
-        bandwidthResponse: data.bandwidth
-      }
+        bandwidthResponse: data.bandwidth,
+      };
     }
 
     // broadcast admin's
-    wsAdminManager.broadcastGroup(EWsAdminGroup.PROXY_MGMT, this.getProxyData());
-  }
+    wsAdminManager.broadcastGroup(
+      EWsAdminGroup.PROXY_MGMT,
+      this.getProxyData()
+    );
+  };
 
   private onNetSecond = (data: DataCount) => {
     const net = this.data?.net;
@@ -92,8 +122,11 @@ export default class WsProxyClient extends WsClient<ECommandType> {
     }
 
     // broadcast admin's
-    wsAdminManager.broadcastGroup(EWsAdminGroup.PROXY_MGMT, this.getProxyData());
-  }
+    wsAdminManager.broadcastGroup(
+      EWsAdminGroup.PROXY_MGMT,
+      this.getProxyData()
+    );
+  };
 
   private onNetMinute = (data: DataCount) => {
     const net = this.data?.net;
@@ -102,6 +135,9 @@ export default class WsProxyClient extends WsClient<ECommandType> {
     }
 
     // broadcast admin's
-    wsAdminManager.broadcastGroup(EWsAdminGroup.PROXY_MGMT, this.getProxyData());
-  }
+    wsAdminManager.broadcastGroup(
+      EWsAdminGroup.PROXY_MGMT,
+      this.getProxyData()
+    );
+  };
 }

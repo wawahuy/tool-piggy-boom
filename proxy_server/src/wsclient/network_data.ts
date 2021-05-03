@@ -31,6 +31,10 @@ export class NetworkDataDirector extends EventEmitter {
   private timeLimitCommand: number = 0;
   private maintance: MaintanceData = {};
 
+  // check data
+  private hasTickSecond: boolean = false;
+  private hasTickMinute: boolean = false;
+
   private constructor() {
     super();
     this.netIntervalSecond = setInterval(this.onSecond.bind(this), 1 * 1000);
@@ -101,21 +105,25 @@ export class NetworkDataDirector extends EventEmitter {
   }
 
   private onSecond() {
-    if (this.hasDataCount(this.netPerSecond)) {
+    const hasTickOld = this.hasTickSecond;
+    this.hasTickSecond = this.hasDataCount(this.netPerSecond)
+    if (this.hasTickSecond || hasTickOld) {
       this.emit("second", this.netPerSecond);
       this.netPerSecond = _.cloneDeep(defaultData);
     }
   }
 
   private onMinute() {
-    if (this.hasDataCount(this.netPerMinute)) {
+    const hasTickOld = this.hasTickMinute;
+    this.hasTickMinute = this.hasDataCount(this.netPerMinute)
+    if (this.hasTickMinute || hasTickOld) {
       this.emit("minute", this.netPerMinute);
       this.netPerMinute = _.cloneDeep(defaultData);
     }
   }
 
   private hasDataCount(data: DataCount) {
-    return (
+    return !!(
       this.hasNetworkCounter(data.http) ||
       this.hasNetworkCounter(data.https) ||
       this.hasNetworkCounter(data.ws)
@@ -123,7 +131,7 @@ export class NetworkDataDirector extends EventEmitter {
   }
 
   private hasNetworkCounter(data: NetworkCounter) {
-    return (
+    return !!(
       data.bandwidthRequest ||
       data.bandwidthResponse ||
       data.countRequest ||
