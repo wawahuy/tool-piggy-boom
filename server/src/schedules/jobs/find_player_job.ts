@@ -6,7 +6,6 @@ import { Job, JobRunPlayerData } from "../../models/Job";
 import { createJobRunPlayer, nameJobRunPlayer } from "./run_player_job";
 import ModelAccountGame from "../../models/schema/account_game";
 import appConfigs from '../../configs/app';
-import ModelIPProxyConfig from "../../models/schema/ip_proxy_config";
 
 export const nameJobFindPlayer = "FIND_PLAYER_JOB";
 
@@ -32,13 +31,13 @@ async function buildTestRunPlayerUID() {
   const avl = new AVLTree();
 
   active.map(job => {
-    if (job.name === nameJobRunPlayer) {
+    if (job?.name === nameJobRunPlayer) {
       avl.insert((<JobRunPlayerData>job.data).uid)
     }
   })
 
   watting.map(job => {
-    if (job.name === nameJobRunPlayer) {
+    if (job?.name === nameJobRunPlayer) {
       avl.insert((<JobRunPlayerData>job.data).uid)
     }
   })
