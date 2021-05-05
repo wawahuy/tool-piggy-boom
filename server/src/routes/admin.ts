@@ -9,6 +9,8 @@ import LoggerController from "../modules/admin/logger/logger.controller";
 import LoggerValidator from "../modules/admin/logger/logger.validator";
 import AuthValidator from "../modules/admin/auth/auth.validator";
 import ProxyManagerController from "../modules/admin/proxy_manager/proxy_manager.controller";
+import AppVersionController from "../modules/admin/app_version/app_version.controller";
+import AppVersionValidator from "../modules/admin/app_version/app_version.validator";
 
 const routerAdmin = Router();
 routerAdmin.use(zoneSessionMiddleware);
@@ -29,9 +31,11 @@ routerAdmin.use(
 const routerAuth = Router();
 routerAuth.get("/", HomeController.homeView);
 routerAuth.get("/logout", AuthController.logout);
+routerAuth.get("/logger", LoggerValidator.loggerView, LoggerController.loggerView);
+routerAuth.get("/proxy_manager", ProxyManagerController.homeView);
+routerAuth.get("/app_version", AppVersionController.appVersionView);
+routerAuth.post("/app_version", AppVersionValidator.appVersionForm, AppVersionController.uploadMiddleware, AppVersionController.appVersionUpdate);
 routerAuth.use("/bull", bullBoardRouter);
-routerAuth.use("/logger", LoggerValidator.loggerView, LoggerController.loggerView);
-routerAuth.use("/proxy_manager", ProxyManagerController.homeView);
 
 // apply router
 routerAdmin.use(adminLoggedMiddleware, routerAuth);

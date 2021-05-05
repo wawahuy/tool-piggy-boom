@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('header'); %>
+  <link rel="stylesheet" href="<%- _.style('logger.css') %>">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row header">
+      <div class="col-xl-2 logo">APP VERSION</div>
+      <div class="col-xl-10 group-detail">
+        <div class="detail mr-4">
+          <span class="title">Version</span>
+          <span class="value">1.0</span>
+        </div>
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col-xl-3 p-5">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Phiên bản hiện tại:</h5>
+            <h6 class="card-subtitle mb-2 text-muted"><%= version; %></h6>
+            <p class="card-text align-left" style="white-space: pre-wrap"><%= detail || '-' %></p>
+            <a href="<%= link %>" class="card-link">Tải về</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-7 p-5">
+        <form method="POST" action="?" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Version</label>
+            <div class="input-group mb-2 mr-sm-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">V</div>
+              </div>
+              <input required type="text" name="version" value="<%= version; %>" class="form-control" aria-describedby="versionHelp" placeholder="Enter version">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Detail</label>
+            <textarea name="detail" class="form-control" placeholder="Detail"><%= detail; %></textarea>
+          </div>
+          <div class="form-group">
+            <label for="customFile">File</label>
+            <div class="custom-file">
+              <input name="file" type="file" class="custom-file-input" id="customFile" required>
+              <label class="custom-file-label" for="customFile">Choose file...</label>
+            </div> 
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <%- include('footer'); %>
+</body>
+</html>

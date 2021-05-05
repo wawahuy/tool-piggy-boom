@@ -1,3 +1,5 @@
+import { join } from "path";
+
 const configs = {
   APP_PORT: (process.env.PORT || -1) as number,
   WS_USER: '/ws',
@@ -9,7 +11,8 @@ const configs = {
   ENDPOINT: process.env.ENDPOINT,
   MAIN_WORKER: process.env.MAIN_WORKER,
   IS_DEVELOPMENT: process.env.NODE_ENV == "DEVELOPMENT",
-  UTC_OFFSET: "+07:00"
+  UTC_OFFSET: "+07:00",
+  UPLOAD_DIR: process.env.NODE_ENV == "DEVELOPMENT" ? join(__dirname, "../../uploads") : '/data/uploads'
 }
 
 export default configs;

@@ -6,10 +6,12 @@ import routerAdmin from "./admin";
 import routerUsers from "./user";
 import routerProxy from "./proxy";
 import routerApp from "./app";
+import DownloadController from "../modules/common/download/download.controller";
 
 const routerGlobals = Router();
 routerGlobals.use('/assets', express.static(path.join(__dirname, '../assets')));
 routerGlobals.use("/proxy_prohibition", ProxyProhibitionController.indexView);
+routerGlobals.use("/download/:filename", DownloadController.download);
 routerGlobals.use("/adm", routerAdmin);
 routerGlobals.use("/pro", routerProxy);
 routerGlobals.use("/app", routerApp);

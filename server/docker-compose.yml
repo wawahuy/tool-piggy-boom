@@ -10,6 +10,8 @@ services:
     links:
       - redis
       - mongodb
+    volumes:
+      - "~/data/.docker/data/uploads:/data/uploads"
 
   redis:
     image: redis:6.2.1
