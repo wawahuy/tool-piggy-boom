@@ -15,7 +15,7 @@ routerGlobals.use("/download/:filename", DownloadController.download);
 routerGlobals.use("/adm", routerAdmin);
 routerGlobals.use("/pro", routerProxy);
 routerGlobals.use("/app", routerApp);
-routerGlobals.use("/u", routerUsers);
+routerGlobals.use("/", routerUsers);
 
 /**
  * Page Not Found

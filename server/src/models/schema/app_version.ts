@@ -8,6 +8,7 @@ export interface IAppVersionDocument extends Document {
   version?: string;
   link?: string;
   detail?: string;
+  youtube?: string;
 }
 
 export interface IAppVersionModal extends Model<IAppVersionDocument> {
@@ -19,6 +20,7 @@ const AppVersionSchema = new Schema<IAppVersionDocument, IAppVersionModal>(
     version: { type: Schema.Types.String },
     link: { type: Schema.Types.String },
     detail: { type: Schema.Types.String },
+    youtube: { type: Schema.Types.String },
   },
   { timestamps: true }
 );

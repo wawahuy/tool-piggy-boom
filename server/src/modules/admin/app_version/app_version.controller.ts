@@ -4,6 +4,7 @@ import multer from "multer";
 import urljoin from "url-join";
 import configs from "../../../configs/app";
 import ModelAppVersion from "../../../models/schema/app_version";
+import { AppVersionForm } from "./model";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -23,7 +24,8 @@ export default class AppVersionController {
     res.render("admin/app_version/app_version.view.ejs", {
       version: data?.version,
       detail: data?.detail,
-      link: data?.link
+      link: data?.link,
+      youtube: data?.youtube,
     });
   }
 
@@ -35,21 +37,18 @@ export default class AppVersionController {
     req: Request<core.ParamsDictionary, any, any, any>,
     res: Response
   ) {
+    const data: AppVersionForm = {
+      detail: req.body.detail,
+      version: req.body.version,
+      youtube: req.body.youtube
+    };
+
     const file = req.file;
-    if (!file) {
-      res.status(400).send("Upload failed!");
-      return;
+    if (file) {
+      data.link = urljoin(configs.ENDPOINT || "", "/download/", file.filename);
     }
 
-    await ModelAppVersion.updateOne(
-      {},
-      {
-        detail: req.body.detail,
-        version: req.body.version,
-        link: urljoin(configs.ENDPOINT || "", "/download/", file.filename),
-      },
-      { upsert: true }
-    );
+    await ModelAppVersion.updateOne({}, data, { upsert: true });
 
     AppVersionController.appVersionView(req, res);
   }
