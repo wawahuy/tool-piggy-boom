@@ -20,6 +20,14 @@
         height: 480px;
       }
     }
+    .barner {
+      background-color: rgb(151, 151, 151);
+      box-shadow: inset 0px -1px 5px rgb(92, 90, 90);
+    }
+    footer div {
+      background-color: rgb(51, 50, 50);
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -27,18 +35,39 @@
     <div class="header">
       <img src='<%- _.image("logo.png") %>' class="logo" />
     </div>
-    <div class="jumbotron jumbotron-fluid mt-5">
+    <div class="jumbotron jumbotron-fluid barner">
       <div class="container">
         <h1 class="display-4">Heo Đến Rồi Tools</h1>
         <p class="lead">Tận hưởng cảm giác của tự động hóa.</p>
       </div>
     </div>
-    <div class="row p-3">
+    <div class="row p-3 m-0">
       <div class="col-sm-12 col-md-6 mb-3 p-3">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Đăng nhập</h5>
+            <form>
+              <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+              <div class="form-group">
+                <label for="exampleInputEmail1">UID</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập UID">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Mật khẩu</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Nhập mật khẩu">
+              </div>
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Lưu thông tin đăng nhập</label>
+              </div>
+              <button type="submit" class="btn btn-primary">Vào</button>
+            </form>
+          </div>
+        </div>
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">V<%=version;%></h5>
-            <h6 class="card-subtitle mb-2 text-muted">Tính năng</h6>
+            <h5 class="card-title">Phiên bản mới nhất</h5>
+            <h6 class="card-subtitle mb-2 text-muted">V<%=version;%></h6>
             <p class="card-text" style="white-space: pre-line;"><%=detail;%></p>
             <a href="<%=link;%>" class="card-link">Tải về</a>
           </div>
@@ -56,9 +85,9 @@
       </div>
     </div>
     <footer class="bg-light text-center text-lg-start">
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      <div class="text-center p-3">
         © 2020 Copyright
-        <a class="text-dark" href="https://giayuh.com/"> giayuh.com</a>
+        <a class="text-light" href="https://giayuh.com/"> giayuh.com</a>
       </div>
     </footer>
   </div>
