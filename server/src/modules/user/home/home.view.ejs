@@ -24,10 +24,6 @@
       background-color: rgb(151, 151, 151);
       box-shadow: inset 0px -1px 5px rgb(92, 90, 90);
     }
-    footer div {
-      background-color: rgb(51, 50, 50);
-      color: white;
-    }
   </style>
 </head>
 <body>
@@ -46,19 +42,21 @@
         <div class="card mb-3">
           <div class="card-body">
             <h5 class="card-title">Đăng nhập</h5>
-            <form>
-              <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <form method="POST" action="/login">
+              <%if (error) { %>
+                <small class="form-text text-danger"><%=error;%></small>
+              <% } %>
               <div class="form-group">
-                <label for="exampleInputEmail1">UID</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập UID">
+                <label for="inputUID">UID</label>
+                <input type="number" name="uid" class="form-control" id="inputUID" aria-describedby="uidHelp" placeholder="Nhập UID">
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">Mật khẩu</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Nhập mật khẩu">
+                <label for="inputPassword">Mật khẩu</label>
+                <input type="password" name="password"  class="form-control" id="inputPassword" placeholder="Nhập mật khẩu">
               </div>
               <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Lưu thông tin đăng nhập</label>
+                <input type="checkbox" name="save" class="form-check-input" id="inputCheck">
+                <label class="form-check-label" for="inputCheck">Lưu thông tin đăng nhập</label>
               </div>
               <button type="submit" class="btn btn-primary">Vào</button>
             </form>
@@ -84,14 +82,40 @@
         </div>
       </div>
     </div>
-    <footer class="bg-light text-center text-lg-start">
-      <div class="text-center p-3">
-        © 2020 Copyright
-        <a class="text-light" href="https://giayuh.com/"> giayuh.com</a>
-      </div>
-    </footer>
   </div>
-  
+
+  <script>
+    window.onload = () => {
+      let uid = document.getElementById('inputUID');
+      let pwd = document.getElementById('inputPassword');
+      let check = document.getElementById('inputCheck');
+      uid.value = Cookies.get('uid');
+      pwd.value = Cookies.get('pwd');
+      check.checked = Cookies.get('save');
+      function save() {
+        Cookies.set('save', check.checked, { expires: 365 });
+        Cookies.set('uid', uid.value, { expires: 365 });
+        Cookies.set('pwd', pwd.value, { expires: 365 });
+      }
+      check.onchange = () => {
+        if (check.checked) {
+          save();
+        } else {
+          Cookies.set('save', false, { expires: 365 });
+        }
+      }
+      uid.onchange = () => {
+        if (check.checked) {
+          Cookies.set('uid', uid.value, { expires: 365 });
+        }
+      }
+      pwd.onchange = () => {
+        if (check.checked) {
+          Cookies.set('pwd', pwd.value, { expires: 365 });
+        }
+      }
+    }
+  </script>
   <%- include('footer'); %>
 </body>
 </html>

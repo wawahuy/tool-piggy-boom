@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('header'); %>
+  <style>
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url('<%- _.image("bg_header.jpg") %>');
+      box-shadow: 1px 1px 2px #ccc;
+    }
+    .logo {
+      width: 100px;
+      object-fit: contain;
+    }
+    .logout-header {
+      display: none;
+    }
+    @media screen and (min-width: 768px) {
+      .header {
+        margin-left: 20px;
+        justify-content: space-between;
+      }
+      .logout-header {
+        display: block;
+        margin-right: 20px;
+      }
+    }
+    .barner {
+      background-color: rgb(151, 151, 151);
+      box-shadow: inset 0px -1px 5px rgb(92, 90, 90);
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid p-0">
+    <div class="header">
+      <img src='<%- _.image("logo.png") %>' class="logo" />
+      <a href="#" class="logout-header">Đăng xuất</a>
+    </div>
+    <div class="jumbotron jumbotron-fluid barner">
+      <div class="container">
+        <h1 class="display-4">Xin chào, <%=name || '-';%></h1>
+        <p class="lead">Tận hưởng cảm giác của tự động hóa.</p>
+      </div>
+    </div>
+
+    <div class="row p-3 m-0">
+      <div class="col-sm-12 col-md-6 mb-3 p-3">
+        <!-- user -->
+        <div class="card mb-3">
+          <div class="card-body">
+            <dl class="row">
+              <dt class="col-sm-3">Tải khoản</dt>
+              <dd class="col-sm-9">
+                <p>
+                  0
+                  <small class="text-muted">xu</small>
+                  <small>(Nạp xu chat zalo 0942100614)</small>
+                </p>
+              </dd>
+            
+              <dt class="col-sm-3">Thời gian còn lại</dt>
+              <dd class="col-sm-9">
+                <p>29 ngày 30' 40s</p>
+                <p>
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                    <button class="btn btn-success">
+                      12h / 
+                      <small>miễn phí</small>
+                    </button>
+                    <button class="btn btn-warning">
+                      24h / 
+                      <small>400 xu</small>
+                    </button>
+                  </div>
+                </p>
+              </dd>
+            
+            </dl>
+          </div>
+        </div>
+
+        <!-- phien ban moi -->
+        <div class="card">
+          <div class="card-header">
+            Phiên bản mới nhất
+          </div>
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted">V<%=version;%></h6>
+            <p class="card-text" style="white-space: pre-line;"><%=detail;%></p>
+            <a href="<%=link;%>" class="card-link">Tải về</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- feature -->
+      <div class="col-sm-12 col-md-6 p-3 pl-0">
+        <div class="card "> 
+          <div class="card-header">
+            Tính năng
+          </div>
+          <ul class="list-group list-group-flush">
+            <% for (let item of listFeature ) { %>
+              <%  if(item.type === EFeatureType.Toggle) { %>
+                <li class="list-group-item">
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch<%=item.id%>">
+                    <label class="custom-control-label" for="customSwitch<%=item.id%>">
+                      <%=item.name%>
+                    </label>
+                  </div>
+                </li>
+              <% } else if(item.type === EFeatureType.Option) { %>
+                <li class="list-group-item">
+                  <div>
+                    <label><%=item.name%></label>
+                    <select class="custom-select">
+                      <% for (let option of item.options ) { %>
+                        <option value="<%=item.id%>">
+                          <%=option.name;%>
+                        </option>
+                      <% } %>
+                    </select>
+                  </div>
+                </li>
+              <% } %>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card text-center m-3">
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Active</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+  </script>
+  <%- include('footer'); %>
+</body>
+</html>

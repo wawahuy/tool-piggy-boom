@@ -59,9 +59,10 @@ export default class Player {
       mac: auth.mac,
       deviceModel: auth.deviceModel,
       uid: authResponse.uid,
+      name: authResponse.name,
       mtkey: authResponse.mtkey,
       skey: authResponse.skey,
-      loginType: ELoginType.Login
+      loginType: ELoginType.Login,
     }
     const instance = new Player(account, authResponse);
     await instance.insertOrUpdateAccount();

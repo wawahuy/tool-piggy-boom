@@ -4,5 +4,5 @@ export const userLoggedMiddleware = (req: Request, res: Response, next: NextFunc
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/u');
+  res.redirect('/');
 }
