@@ -2,6 +2,8 @@
 - Chỉnh cấu hình trong thư muc env
 - Chạy dev: npm run dev (trên project proxy & server)
 
+## Vì một số lý do cá nhân nên dữ án này sẽ được dừng phát triễn ở tiến độ 80%, chỉ phục vụ mục đích cá nhân không công đồng
+
 ## Deploy project server
 - Start nginx với subdomain /server/nginx.conf
 - Thực hiện call shell '/server/deploy.sh' tại user trùng với config docker
